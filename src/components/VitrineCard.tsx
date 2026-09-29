@@ -25,18 +25,23 @@ export function VitrineCard({
   ...props
 }: VitrineCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    setMousePos({ x, y });
+    cardRef.current.style.setProperty("--vitrine-mouse-x", `${x.toFixed(1)}px`);
+    cardRef.current.style.setProperty("--vitrine-mouse-y", `${y.toFixed(1)}px`);
+  }, []);
+
+  const handleMouseEnter = useCallback(() => {
+    setIsHovered(true);
   }, []);
 
   const handleMouseLeave = useCallback(() => {
-    setMousePos(null);
+    setIsHovered(false);
   }, []);
 
   const glowBorderRgba =
@@ -50,19 +55,20 @@ export function VitrineCard({
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={`relative rounded-3xl bg-[#0c0c10]/80 backdrop-blur-2xl border border-white/10 hover:border-[#d4af37]/40 transition-all duration-500 shadow-[0_12px_40px_rgba(0,0,0,0.6)] group overflow-hidden ${className}`}
       {...props}
     >
-      {/* Dynamic Cursor-Following Ambient Sheen (Clean & Bug-Free across all browsers) */}
-      {mousePos && (
-        <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-40 group-hover:opacity-100"
-          style={{
-            background: `radial-gradient(260px circle at ${mousePos.x}px ${mousePos.y}px, rgba(212, 175, 55, 0.12), transparent 70%)`,
-          }}
-        />
-      )}
+      {/* Dynamic Cursor-Following Ambient Sheen (0 React re-renders, pure GPU accelerated) */}
+      <div
+        className={`absolute inset-0 pointer-events-none transition-opacity duration-300 ${
+          isHovered ? "opacity-100" : "opacity-0"
+        }`}
+        style={{
+          background: `radial-gradient(260px circle at var(--vitrine-mouse-x, -500px) var(--vitrine-mouse-y, -500px), rgba(212, 175, 55, 0.12), transparent 70%)`,
+        }}
+      />
 
       {/* Top Specular Hairline Sheen */}
       {showSheen && (

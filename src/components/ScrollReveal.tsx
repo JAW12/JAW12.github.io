@@ -181,7 +181,7 @@ export function ScrollReveal({
         margin: "0px 0px -70px 0px",
         amount: 0.1,
       }}
-      className={className}
+      className={`${className} will-change-[transform,opacity]`}
       style={{ perspective: variant === "vitrine-dock" ? "1200px" : undefined }}
     >
       {children}

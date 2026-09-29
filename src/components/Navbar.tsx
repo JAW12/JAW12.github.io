@@ -34,12 +34,24 @@ export function Navbar({ onOpenCheatSheet }: NavbarProps) {
       }
 
       if (isHome) {
+        // Bottom of the page check (activate contact when scrolled to the end)
+        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80) {
+          setActiveSection("#contact");
+          return;
+        }
+
+        // Top of hero
+        if (window.scrollY < 120) {
+          setActiveSection("#hero");
+          return;
+        }
+
         const sections = ["contact", "credentials", "skills", "experience", "projects", "about", "hero"];
         for (const section of sections) {
           const el = document.getElementById(section);
           if (el) {
             const rect = el.getBoundingClientRect();
-            if (rect.top <= 250) {
+            if (rect.top <= 220) {
               setActiveSection(`#${section}`);
               break;
             }
@@ -47,6 +59,8 @@ export function Navbar({ onOpenCheatSheet }: NavbarProps) {
         }
       }
     };
+
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isHome]);
@@ -130,13 +144,14 @@ export function Navbar({ onOpenCheatSheet }: NavbarProps) {
                 <a
                   key={link.id}
                   href={link.href}
+                  onClick={() => setActiveSection(link.id)}
                   className="relative py-1 text-xs uppercase tracking-wider text-zinc-300 hover:text-white transition-colors duration-200 flex items-center gap-1 group/link whitespace-nowrap shrink-0"
                 >
                   <span className={isActive ? "text-white font-semibold" : "font-medium"}>
                     {link.label}
                   </span>
                   {isActive && (
-                    <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#d4af37] shadow-[0_0_6px_#d4af37]" />
+                    <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#d4af37] shadow-[0_0_8px_#d4af37] transition-all duration-300 animate-in fade-in zoom-in-50" />
                   )}
                 </a>
               ) : (

@@ -28,6 +28,7 @@ export function EngineeringProcessSection() {
     {
       id: "packaging",
       badge: "-25°C NYLON · PANTONE CERTIFIED",
+      badgeId: "-25°C NILON · TERCERTIFIKASI PANTONE",
       badgeZh: "-25°C 尼龙复合 · PANTONE认证",
       title: "PHYSICAL PACKAGING ENGINEERING",
       titleId: "REKAYASA MANUFAKTUR KEMASAN FISIK",
@@ -41,6 +42,7 @@ export function EngineeringProcessSection() {
     {
       id: "local-rag",
       badge: "SUB-SECOND EMBEDDINGS · FAISS",
+      badgeId: "EMBEDDING SUB-DETIK · FAISS",
       badgeZh: "毫秒级向量检索 · FAISS",
       title: "LOCAL RAG & VECTOR SYNTHESIS",
       titleId: "SINTESIS VEKTOR & RAG LOKAL",
@@ -54,6 +56,7 @@ export function EngineeringProcessSection() {
     {
       id: "enterprise-erp",
       badge: "100% AUDITABLE · ZERO DOWNTIME",
+      badgeId: "100% TER-AUDIT · TANPA DOWNTIME",
       badgeZh: "100% 可审计 · 零宕机运维",
       title: "ENTERPRISE SYSTEMS ARCHITECTURE",
       titleId: "ARSITEKTUR SISTEM ENTERPRISE",

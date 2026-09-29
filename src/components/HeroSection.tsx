@@ -218,9 +218,21 @@ export function HeroSection({ onOpenCheatSheet }: HeroSectionProps) {
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-zinc-300">
             <span>Surabaya, Indonesia</span>
             <span className="text-zinc-600">·</span>
-            <span>Trilingual (Indonesian · English · Mandarin)</span>
+            <span>
+              {language === "zh"
+                ? "三语熟练 (印尼语 · 英语 · 中文普通话)"
+                : language === "id"
+                ? "Trilingual (Indonesia · Inggris · Mandarin)"
+                : "Trilingual (Indonesian · English · Mandarin)"}
+            </span>
             <span className="text-zinc-600">·</span>
-            <span className="text-[#ebdca4]">Open for Remote Systems & Web Roles</span>
+            <span className="text-[#ebdca4]">
+              {language === "zh"
+                ? "开放远程系统架构与全栈开发职位"
+                : language === "id"
+                ? "Terbuka untuk Peran Arsitektur Sistem & Web Remote"
+                : "Open for Remote Systems & Web Roles"}
+            </span>
           </div>
 
           <a

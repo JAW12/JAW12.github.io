@@ -71,7 +71,13 @@ export function AboutSection() {
                   <span className="text-zinc-500 uppercase tracking-widest">
                     {language === "zh" ? "核心方向" : language === "id" ? "Fokus Utama" : "Focus"}
                   </span>
-                  <span className="text-zinc-300 font-medium">Business Systems & AI Workflows</span>
+                  <span className="text-zinc-300 font-medium">
+                    {language === "zh"
+                      ? "业务系统与 AI 工作流"
+                      : language === "id"
+                      ? "Sistem Bisnis & Alur Kerja AI"
+                      : "Business Systems & AI Workflows"}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-zinc-500 uppercase tracking-widest">

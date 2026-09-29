@@ -185,6 +185,7 @@ export interface TranslationContent {
     subtitle: string;
     educationTitle: string;
     awardsTitle: string;
+    leadershipTitle: string;
     certificationsTitle: string;
     languagesTitle: string;
   };
@@ -524,6 +525,7 @@ export const translations: Record<Language, TranslationContent> = {
         "Formal verification of analytical excellence, clean code discipline, industry certifications, and trilingual fluency.",
       educationTitle: "Formal Degrees & Honors",
       awardsTitle: "4x Best Academic Practitioner Awards (iSTTS Computer Lab)",
+      leadershipTitle: "Leadership & Academic Organizational Roles",
       certificationsTitle: "Verified Industry Licenses & Certifications",
       languagesTitle: "Certified Language Proficiency (Trilingual)",
     },
@@ -873,6 +875,7 @@ export const translations: Record<Language, TranslationContent> = {
         "Validasi formal atas kompetensi analitis, dedikasi kode bersih, sertifikasi industri, dan kemahiran trilingual.",
       educationTitle: "Pendidikan Formal & Kelulusan Terbaik",
       awardsTitle: "4x Penghargaan Praktikan Terbaik (Laboratorium Komputer iSTTS)",
+      leadershipTitle: "Pengalaman Kepemimpinan & Organisasi Mahasiswa",
       certificationsTitle: "Lisensi & Sertifikasi Industri Terverifikasi",
       languagesTitle: "Kemampuan Bahasa Bersertifikasi (Trilingual)",
     },
@@ -1222,6 +1225,7 @@ export const translations: Record<Language, TranslationContent> = {
         "对分析素养、整洁代码自律、行业官方认证及三语精通的正式背书。",
       educationTitle: "正规大学学历与最高荣誉毕业",
       awardsTitle: "4次最佳实训生大奖（iSTTS计算机核心实验室）",
+      leadershipTitle: "学生领导力与学术组织经历",
       certificationsTitle: "权威行业资质与专业认证",
       languagesTitle: "官方语言能力认证（精通三语：英/印尼/中）",
     },

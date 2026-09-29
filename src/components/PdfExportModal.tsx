@@ -163,15 +163,15 @@ export function PdfExportModal({
 
   const masterTrack = {
     id: "all" as ExportTrack,
-    title: language === "zh" ? "完整工程履历总档 (Master Compendium)" : language === "id" ? "Portofolio Lengkap (Master Portfolio)" : "Complete Master Portfolio",
-    subtitle: language === "zh" ? "全部15页横版A4幻灯片 · 全领域全覆盖 (强烈推荐)" : language === "id" ? "Seluruh 15 Slide A4 Lanskap Tanpa Kompromi (Direkomendasikan)" : "Full 15 Landscape Spreads · All Disciplines (Recommended)",
-    badge: language === "zh" ? "⭐ 15页全量内容" : language === "id" ? "⭐ 15 SLIDES LENGKAP" : "⭐ 15 SLIDES FULL",
+    title: language === "zh" ? "完整工程履历总档 (Master Portfolio)" : language === "id" ? "Portofolio Lengkap (Master Portfolio)" : "Complete Master Portfolio",
+    subtitle: language === "zh" ? "横版A4完整作品集 · 全领域全覆盖 (强烈推荐)" : language === "id" ? "Dokumen Portofolio Lengkap A4 Lanskap Tanpa Kompromi (Direkomendasikan)" : "Full Comprehensive A4 Landscape Spreads · All Disciplines (Recommended)",
+    badge: language === "zh" ? "⭐ 完整作品集" : language === "id" ? "⭐ PORTOFOLIO LENGKAP" : "⭐ FULL PORTFOLIO",
     desc:
       language === "zh"
-        ? "包含全部15页完整工程文档：涵盖Next.js系统案例、确定性AI与RAG知识库、-25°C极寒冷链包装、4段职业履历总账、20+真实工程项目归档、技能矩阵与4.00满绩荣誉学位。"
+        ? "包含完整总览工程文档：涵盖Next.js系统案例、确定性AI与RAG知识库、-25°C极寒冷链包装、6段职业履历总账、20+真实工程项目归档、技能矩阵与4.00满绩荣誉学位。"
         : language === "id"
-        ? "Seluruh 15 slide dokumen portofolio komprehensif tanpa potongan: mencakup seluruh studi kasus web Next.js, pipeline AI RAG, kemasan industri -25°C, buku besar pengalaman, 20+ arsip proyek, matriks keahlian, dan ijazah IPK 4.00 murni."
-        : "Complete 15-page master compendium without compromise: covers all Next.js systems, deterministic AI RAG, -25°C cold-chain packaging, career history, 20+ project ledger, skills matrix, and verified 4.00 GPA honors.",
+        ? "Dokumen portofolio komprehensif tanpa potongan: mencakup seluruh studi kasus web Next.js, pipeline AI RAG, kemasan industri -25°C, buku besar 6 pengalaman karier, 20+ arsip proyek, matriks keahlian, dan ijazah IPK 4.00 murni."
+        : "Complete master compendium portfolio without compromise: covers all Next.js systems, deterministic AI RAG, -25°C cold-chain packaging, 6 career roles ledger, 20+ project ledger, skills matrix, and verified 4.00 GPA honors.",
     icon: <Layers className="w-5 h-5 text-[#ebdca4]" />,
   };
 
@@ -253,7 +253,7 @@ export function PdfExportModal({
     {
       key: "includeExperience",
       label: t.pdfModal?.includeExperience || "Buku Besar Pengalaman Kerja",
-      desc: language === "zh" ? "4段经过事实核验的职业任职履历 (PT KBT, Enevti 等)。" : language === "id" ? "Buku besar 4 peran profesional dengan tanggung jawab terverifikasi (PT KBT, Enevti, dll)." : "4 factual professional roles with verified responsibilities.",
+      desc: language === "zh" ? "6段经过事实核验的职业任职与创业履历 (PT KBT, Sailly, Enevti, QLP 等)。" : language === "id" ? "Buku besar 6 peran profesional & wirausaha dengan tanggung jawab terverifikasi (PT KBT, Sailly, Enevti, QLP, dll)." : "6 factual professional & venture roles with verified responsibilities.",
     },
     {
       key: "includeFeatured",
@@ -509,7 +509,7 @@ export function PdfExportModal({
             {language === "zh" ? "已选档案路线：" : language === "id" ? "Jalur Terpilih: " : "Selected Track: "}
             <strong className="text-[#ebdca4] uppercase tracking-wider">
               {exportOptions.track === "all"
-                ? (language === "zh" ? "15页完整总纲 (MASTER)" : language === "id" ? "15 SLIDES LENGKAP (MASTER)" : "15 COMPLETE SLIDES (MASTER)")
+                ? (language === "zh" ? "完整作品集总纲 (MASTER)" : language === "id" ? "PORTOFOLIO LENGKAP (MASTER)" : "COMPLETE PORTFOLIO (MASTER)")
                 : exportOptions.track}
             </strong>
           </span>

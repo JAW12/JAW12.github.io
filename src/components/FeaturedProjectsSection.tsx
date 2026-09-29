@@ -743,7 +743,7 @@ export function FeaturedProjectsSection() {
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 hover:border-[#d4af37]/50 text-white hover:text-[#ebdca4] font-mono text-xs uppercase tracking-wider transition-all duration-300 font-semibold"
                           >
-                            <span>LIVE DEMO</span>
+                            <span>{language === "zh" ? "在线演示" : language === "id" ? "DEMO LANGSUNG" : "LIVE DEMO"}</span>
                             <ExternalLink className="w-3.5 h-3.5 text-[#d4af37]" />
                           </a>
                         )}
@@ -755,7 +755,7 @@ export function FeaturedProjectsSection() {
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 hover:border-[#d4af37]/50 text-white hover:text-[#ebdca4] font-mono text-xs uppercase tracking-wider transition-all duration-300 font-semibold"
                           >
-                            <span>SOURCE CODE</span>
+                            <span>{language === "zh" ? "源码仓库" : language === "id" ? "KODE SUMBER" : "SOURCE CODE"}</span>
                             <ExternalLink className="w-3.5 h-3.5 text-[#d4af37]" />
                           </a>
                         )}
@@ -813,20 +813,25 @@ export function FeaturedProjectsSection() {
                     {/* 3 Horizontal Metric Inscription Cards Directly Underneath */}
                     {project.metrics && project.metrics.length > 0 && (
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3.5">
-                        {project.metrics.slice(0, 3).map((metric, mIdx) => (
-                          <div
-                            key={mIdx}
-                            title={`${language === "zh" && metric.labelZh ? metric.labelZh : language === "id" ? metric.labelId : metric.label}: ${metric.value}`}
-                            className="p-3 sm:p-3.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 hover:border-[#d4af37]/30 transition-all space-y-1 text-left"
-                          >
-                            <span className="text-[10px] sm:text-[11px] font-mono text-[#d4af37] uppercase tracking-wider block font-semibold truncate">
-                              {language === "zh" && metric.labelZh ? metric.labelZh : language === "id" ? metric.labelId : metric.label}
-                            </span>
-                            <span className="text-white text-xs sm:text-sm font-bold block leading-snug break-words">
-                              {metric.value}
-                            </span>
-                          </div>
-                        ))}
+                        {project.metrics.slice(0, 3).map((metric, mIdx) => {
+                          const label = language === "zh" && metric.labelZh ? metric.labelZh : language === "id" ? metric.labelId : metric.label;
+                          const val = language === "zh" && metric.valueZh ? metric.valueZh : language === "id" && metric.valueId ? metric.valueId : metric.value;
+
+                          return (
+                            <div
+                              key={mIdx}
+                              title={`${label}: ${val}`}
+                              className="p-3 sm:p-3.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 hover:border-[#d4af37]/30 transition-all space-y-1 text-left"
+                            >
+                              <span className="text-[10px] sm:text-[11px] font-mono text-[#d4af37] uppercase tracking-wider block font-semibold truncate">
+                                {label}
+                              </span>
+                              <span className="text-white text-xs sm:text-sm font-bold block leading-snug break-words">
+                                {val}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
                     )}
                   </ScrollReveal>

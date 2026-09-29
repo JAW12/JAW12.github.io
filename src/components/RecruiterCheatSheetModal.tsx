@@ -114,10 +114,10 @@ export function RecruiterCheatSheetModal({
                     onOpenPdfModal();
                   }}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-mono text-xs uppercase tracking-wider transition-all cursor-pointer font-medium"
-                  title="Open 15-Slide Monograph Deck"
+                  title="Open Complete Master Portfolio"
                 >
                   <Sparkles className="w-3 h-3 text-[#d4af37]" />
-                  <span>{language === "zh" ? "15页图录" : language === "id" ? "15 Slide" : "15 Slides"}</span>
+                  <span>{language === "zh" ? "完整作品集" : language === "id" ? "Portofolio Lengkap" : "Full Portfolio"}</span>
                 </button>
               )}
 

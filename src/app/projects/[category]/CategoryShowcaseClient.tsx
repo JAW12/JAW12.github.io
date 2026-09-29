@@ -46,13 +46,13 @@ function CleanProjectMediaPlaceholder({ project }: { project: ProjectItem }) {
     <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-[#111114] via-[#141418] to-[#0c0c10] border border-white/10 shadow-2xl p-6 sm:p-8 flex flex-col justify-between group">
       <div className="space-y-3">
         <span className="font-mono text-[11px] text-[#ebdca4] uppercase tracking-wider block font-semibold">
-          {language === "id" && project.roleId ? project.roleId : project.role}
+          {language === "zh" && project.roleZh ? project.roleZh : language === "id" && project.roleId ? project.roleId : project.role}
         </span>
         <h4 className="font-serif-editorial text-2xl sm:text-3xl text-white font-medium">
-          {language === "id" && project.titleId ? project.titleId : project.title}
+          {language === "zh" && project.titleZh ? project.titleZh : language === "id" && project.titleId ? project.titleId : project.title}
         </h4>
         <p className="font-mono text-xs text-zinc-300 leading-relaxed line-clamp-3">
-          {language === "id" && project.taglineId ? project.taglineId : project.tagline}
+          {language === "zh" && project.taglineZh ? project.taglineZh : language === "id" && project.taglineId ? project.taglineId : project.tagline}
         </p>
       </div>
 
@@ -189,10 +189,10 @@ function ProjectMediaVitrine({ project }: { project: ProjectItem }) {
           <div className="absolute bottom-3 left-3 right-3 p-3 rounded-xl bg-black/80 backdrop-blur-md border border-white/15 flex items-center justify-between z-10 shadow-lg">
             <div className="min-w-0 pr-2">
               <span className="font-serif-editorial text-sm text-white font-medium block truncate">
-                {language === "id" && project.roleId ? project.roleId : project.role}
+                {language === "zh" && project.roleZh ? project.roleZh : language === "id" && project.roleId ? project.roleId : project.role}
               </span>
               <span className="text-[11px] font-mono text-zinc-400 block truncate">
-                {project.client || "Proprietary Architecture"}
+                {language === "zh" && project.clientZh ? project.clientZh : project.client || (language === "zh" ? "自主研发系统架构" : language === "id" ? "Arsitektur Sistem Mandiri" : "Proprietary Architecture")}
               </span>
             </div>
           </div>
@@ -286,7 +286,7 @@ function ProjectMediaVitrine({ project }: { project: ProjectItem }) {
                 type="button"
                 onClick={() => setIsLightboxOpen(false)}
                 className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-white cursor-pointer transition-colors"
-                title="Tutup (Esc)"
+                title={language === "zh" ? "关闭 (Esc)" : language === "id" ? "Tutup (Esc)" : "Close (Esc)"}
               >
                 <X className="w-5 h-5" />
               </button>
@@ -318,13 +318,15 @@ function ProjectMediaVitrine({ project }: { project: ProjectItem }) {
             {/* Footer Information */}
             <div className="mt-4 text-center space-y-1 max-w-2xl px-2">
               <p className="font-serif-editorial text-lg sm:text-xl text-white font-medium">
-                {language === "id" && project.titleId ? project.titleId : project.title}
+                {language === "zh" && project.titleZh ? project.titleZh : language === "id" && project.titleId ? project.titleId : project.title}
               </p>
               <p className="font-mono text-xs sm:text-sm text-zinc-300">
-                {language === "id" && project.roleId ? project.roleId : project.role} · {project.client || "Proprietary Architecture"}
+                {language === "zh" && project.roleZh ? project.roleZh : language === "id" && project.roleId ? project.roleId : project.role} · {language === "zh" && project.clientZh ? project.clientZh : project.client || (language === "zh" ? "自主研发系统架构" : language === "id" ? "Arsitektur Sistem Mandiri" : "Proprietary Architecture")}
               </p>
               <p className="text-xs font-mono text-zinc-400 pt-1">
-                {language === "id"
+                {language === "zh"
+                  ? "使用 ← / → 箭头或点击按钮切换 · [Esc] 关闭"
+                  : language === "id"
                   ? "Gunakan panah ← / → atau klik tombol untuk navigasi · [Esc] untuk menutup"
                   : "Use ← / → keys or buttons to navigate · Press [Esc] to close"}
               </p>
@@ -368,11 +370,11 @@ function CategoryShowcaseInner({ ecosystemId }: CategoryShowcaseClientProps) {
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 font-mono text-xs text-zinc-400">
             <Link href="/" className="inline-flex items-center gap-1.5 hover:text-white transition-colors">
               <Home className="w-3.5 h-3.5" />
-              <span>Home</span>
+              <span>{language === "zh" ? "首页" : language === "id" ? "Beranda" : "Home"}</span>
             </Link>
             <span>/</span>
             <Link href="/#projects" className="hover:text-white transition-colors">
-              Projects
+              {language === "zh" ? "项目总览" : language === "id" ? "Proyek" : "Projects"}
             </Link>
             <span>/</span>
             <span className="text-[#d4af37] font-semibold">{categoryName}</span>
@@ -383,7 +385,7 @@ function CategoryShowcaseInner({ ecosystemId }: CategoryShowcaseClientProps) {
             className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-zinc-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>{language === "id" ? "Kembali ke Overview" : "Back to Overview"}</span>
+            <span>{language === "zh" ? "返回概览" : language === "id" ? "Kembali ke Overview" : "Back to Overview"}</span>
           </Link>
         </div>
 
@@ -394,7 +396,7 @@ function CategoryShowcaseInner({ ecosystemId }: CategoryShowcaseClientProps) {
           <div className="relative z-10 space-y-4 max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d4af37]/15 border border-[#d4af37]/30 text-xs font-mono uppercase tracking-widest text-[#ebdca4] font-semibold">
               <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
-              <span>DISCIPLINE 0{currentIdx + 1} / 05</span>
+              <span>{language === "zh" ? `领域 0${currentIdx + 1} / 05` : language === "id" ? `BIDANG 0${currentIdx + 1} / 05` : `DISCIPLINE 0${currentIdx + 1} / 05`}</span>
             </div>
 
             <h1 className="font-serif-editorial text-4xl sm:text-6xl lg:text-7xl font-light text-white leading-tight">
@@ -402,14 +404,16 @@ function CategoryShowcaseInner({ ecosystemId }: CategoryShowcaseClientProps) {
             </h1>
 
             <p className="text-sm sm:text-base text-zinc-300 font-light leading-relaxed">
-              {language === "id"
+              {language === "zh"
+                ? `关于 ${categoryName} 领域的工程实践与系统架构归档。以下每个项目均详细记载了核心系统架构、技术栈以及具体的工程成果。`
+                : language === "id"
                 ? `Dokumentasi dan arsip portofolio implementasi sistem dalam bidang ${categoryName}. Setiap proyek di bawah ini memuat rincian arsitektur, teknologi, dan pencapaian teknis nyata.`
                 : `Portfolio documentation of systems engineering in ${categoryName}. Every project below outlines the core architecture, tech stack, and practical deliverables.`}
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-mono text-zinc-400">
               <span className="text-[#ebdca4] font-semibold">
-                {allProjects.length} {language === "id" ? "Proyek & Implementasi Sistem" : "Systems & Projects"}
+                {allProjects.length} {language === "zh" ? "项系统实现与工程项目" : language === "id" ? "Proyek & Implementasi Sistem" : "Systems & Projects"}
               </span>
             </div>
           </div>
@@ -523,7 +527,7 @@ function CategoryShowcaseInner({ ecosystemId }: CategoryShowcaseClientProps) {
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 hover:border-[#d4af37]/50 text-white hover:text-[#ebdca4] font-mono text-xs uppercase tracking-wider transition-all duration-300 font-semibold"
                           >
-                            <span>{language === "id" && demo.labelId ? demo.labelId : demo.label}</span>
+                            <span>{language === "zh" && demo.labelZh ? demo.labelZh : language === "id" && demo.labelId ? demo.labelId : demo.label}</span>
                             <ExternalLink className="w-3.5 h-3.5 text-[#d4af37]" />
                           </a>
                         ))
@@ -535,7 +539,7 @@ function CategoryShowcaseInner({ ecosystemId }: CategoryShowcaseClientProps) {
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 hover:border-[#d4af37]/50 text-white hover:text-[#ebdca4] font-mono text-xs uppercase tracking-wider transition-all duration-300 font-semibold"
                           >
-                            <span>Live Demo</span>
+                            <span>{language === "zh" ? "在线演示" : language === "id" ? "Demo Live" : "Live Demo"}</span>
                             <ExternalLink className="w-3.5 h-3.5 text-[#d4af37]" />
                           </a>
                         )
@@ -549,7 +553,7 @@ function CategoryShowcaseInner({ ecosystemId }: CategoryShowcaseClientProps) {
                           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 hover:border-[#d4af37]/50 text-white hover:text-[#ebdca4] font-mono text-xs uppercase tracking-wider transition-all duration-300 font-semibold"
                         >
                           <GithubIcon className="w-3.5 h-3.5 text-zinc-400" />
-                          <span>Repository</span>
+                          <span>{language === "zh" ? "源码仓库" : language === "id" ? "Repositori" : "Repository"}</span>
                         </a>
                       )}
                     </div>
@@ -567,20 +571,25 @@ function CategoryShowcaseInner({ ecosystemId }: CategoryShowcaseClientProps) {
                     {/* Metric Inscription Cards */}
                     {project.metrics && project.metrics.length > 0 && (
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
-                        {project.metrics.map((m, mIdx) => (
-                          <div
-                            key={mIdx}
-                            title={`${language === "zh" && m.labelZh ? m.labelZh : language === "id" && m.labelId ? m.labelId : m.label}: ${m.value}`}
-                            className="p-3 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 hover:border-[#d4af37]/30 transition-all text-xs font-mono space-y-1"
-                          >
-                            <span className="text-[#d4af37] block font-semibold uppercase text-[10px] tracking-wider truncate">
-                              {language === "zh" && m.labelZh ? m.labelZh : language === "id" && m.labelId ? m.labelId : m.label}
-                            </span>
-                            <span className="text-white text-xs sm:text-sm font-bold block leading-snug break-words">
-                              {m.value}
-                            </span>
-                          </div>
-                        ))}
+                        {project.metrics.map((m, mIdx) => {
+                          const label = language === "zh" && m.labelZh ? m.labelZh : language === "id" ? m.labelId : m.label;
+                          const val = language === "zh" && m.valueZh ? m.valueZh : language === "id" && m.valueId ? m.valueId : m.value;
+
+                          return (
+                            <div
+                              key={mIdx}
+                              title={`${label}: ${val}`}
+                              className="p-3 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 hover:border-[#d4af37]/30 transition-all text-xs font-mono space-y-1"
+                            >
+                              <span className="text-[#d4af37] block font-semibold uppercase text-[10px] tracking-wider truncate">
+                                {label}
+                              </span>
+                              <span className="text-white text-xs sm:text-sm font-bold block leading-snug break-words">
+                                {val}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
                     )}
                   </div>

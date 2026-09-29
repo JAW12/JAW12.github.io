@@ -45,6 +45,9 @@ export interface CertificationItem {
   image?: string;
 }
 
+export { leadershipExperiencesData as leadershipData } from "./experiences";
+export type { LeadershipExperienceItem as LeadershipItem } from "./experiences";
+
 export const educationData: EducationItem[] = [
   {
     degree: "Sarjana Komputer (S.Kom.) in Business Information Systems",

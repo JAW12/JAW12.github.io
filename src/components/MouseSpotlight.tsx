@@ -85,22 +85,37 @@ export function MouseSpotlight() {
       animFrameId.current = requestAnimationFrame(updateLoop);
     };
 
+    let isRunning = true;
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        isRunning = false;
+        if (animFrameId.current) cancelAnimationFrame(animFrameId.current);
+      } else {
+        if (!isRunning) {
+          isRunning = true;
+          animFrameId.current = requestAnimationFrame(updateLoop);
+        }
+      }
+    };
+
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("mouseup", handleMouseUp);
     document.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
     animFrameId.current = requestAnimationFrame(updateLoop);
 
     return () => {
+      isRunning = false;
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       if (animFrameId.current) cancelAnimationFrame(animFrameId.current);
     };
-  }, [isVisible]);
-
-  if (!isVisible) return null;
+  }, []);
 
   return (
     <>
@@ -128,7 +143,7 @@ export function MouseSpotlight() {
         aria-hidden="true"
         className="pointer-events-none fixed top-0 left-0 z-[999999] hidden md:block will-change-transform"
         style={{
-          opacity: isHoveringInput ? 0 : 1,
+          opacity: isVisible && !isHoveringInput ? 1 : 0,
           transition: "opacity 0.15s ease",
         }}
       >

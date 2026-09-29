@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 interface InteractiveTiltCardProps {
   children: React.ReactNode;
@@ -19,34 +19,39 @@ export function InteractiveTiltCard({
   roundedClassName = "rounded-2xl",
 }: InteractiveTiltCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
-  const [glarePos, setGlarePos] = useState({ x: 50, y: 50 });
   const [isHovered, setIsHovered] = useState(false);
+
+  // Hardware accelerated motion values (zero React re-renders on mousemove)
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [maxTilt, -maxTilt]), {
+    stiffness: 260,
+    damping: 20,
+    mass: 0.6,
+  });
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-maxTilt, maxTilt]), {
+    stiffness: 260,
+    damping: 20,
+    mass: 0.6,
+  });
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       if (!cardRef.current) return;
       const rect = cardRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
+      mouseX.set(x);
+      mouseY.set(y);
 
-      // Noticeable 3D Tilt angles (amplified for tactile response)
-      const rotX = ((y - centerY) / centerY) * -maxTilt;
-      const rotY = ((x - centerX) / centerX) * maxTilt;
-
-      // Specular sheen highlight coordinate
-      const glX = (x / rect.width) * 100;
-      const glY = (y / rect.height) * 100;
-
-      setRotateX(rotX);
-      setRotateY(rotY);
-      setGlarePos({ x: glX, y: glY });
+      const glX = ((e.clientX - rect.left) / rect.width) * 100;
+      const glY = ((e.clientY - rect.top) / rect.height) * 100;
+      cardRef.current.style.setProperty("--tilt-glare-x", `${glX.toFixed(1)}%`);
+      cardRef.current.style.setProperty("--tilt-glare-y", `${glY.toFixed(1)}%`);
     },
-    [maxTilt]
+    [mouseX, mouseY]
   );
 
   const handleMouseEnter = () => {
@@ -55,8 +60,8 @@ export function InteractiveTiltCard({
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    setRotateX(0);
-    setRotateY(0);
+    mouseX.set(0);
+    mouseY.set(0);
   };
 
   return (
@@ -69,9 +74,12 @@ export function InteractiveTiltCard({
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+        }}
         animate={{
-          rotateX: isHovered ? rotateX : 0,
-          rotateY: isHovered ? rotateY : 0,
           scale: isHovered ? 1.025 : 1,
           translateZ: isHovered ? 16 : 0,
         }}
@@ -81,24 +89,21 @@ export function InteractiveTiltCard({
           damping: 20,
           mass: 0.6,
         }}
-        style={{
-          transformStyle: "preserve-3d",
-        }}
         className={`relative w-full h-full ${roundedClassName} overflow-hidden will-change-transform`}
       >
         {children}
 
-        {/* Dynamic Specular Sheen Glare - Strictly rounded & clipped to prevent sharp rectangle borders */}
-        {isHovered && (
-          <div
-            aria-hidden="true"
-            className={`pointer-events-none absolute inset-0 ${roundedClassName} overflow-hidden z-30 transition-opacity duration-300 hidden md:block`}
-            style={{
-              background: `radial-gradient(circle 320px at ${glarePos.x}% ${glarePos.y}%, rgba(212, 175, 55, ${glareOpacity * 1.2}) 0%, rgba(255, 255, 255, ${glareOpacity * 0.8}) 20%, transparent 70%)`,
-              mixBlendMode: "screen",
-            }}
-          />
-        )}
+        {/* Dynamic Specular Sheen Glare - Hardware accelerated via CSS custom properties */}
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-0 ${roundedClassName} overflow-hidden z-30 transition-opacity duration-300 hidden md:block ${
+            isHovered ? "opacity-100" : "opacity-0"
+          }`}
+          style={{
+            background: `radial-gradient(circle 320px at var(--tilt-glare-x, 50%) var(--tilt-glare-y, 50%), rgba(212, 175, 55, ${glareOpacity * 1.2}) 0%, rgba(255, 255, 255, ${glareOpacity * 0.8}) 20%, transparent 70%)`,
+            mixBlendMode: "screen",
+          }}
+        />
       </motion.div>
     </div>
   );

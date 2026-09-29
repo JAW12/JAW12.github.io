@@ -48,9 +48,25 @@ export function CosmicAtmosphere() {
       initParticles();
     };
 
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let isRunning = true;
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        isRunning = false;
+        if (animId) cancelAnimationFrame(animId);
+      } else {
+        if (!isRunning) {
+          isRunning = true;
+          animId = requestAnimationFrame(render);
+        }
+      }
+    };
+
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     document.addEventListener("mouseleave", handleMouseLeave);
     window.addEventListener("resize", handleResize);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     // Particle definition
     interface Particle {
@@ -67,16 +83,19 @@ export function CosmicAtmosphere() {
     }
 
     let particles: Particle[] = [];
-    const count = Math.min(65, Math.floor((width * height) / 28000));
+    const isMobile = width < 768;
+    const count = isMobile ? Math.min(25, Math.floor((width * height) / 38000)) : Math.min(65, Math.floor((width * height) / 28000));
 
     const initParticles = () => {
       particles = [];
-      for (let i = 0; i < count; i++) {
+      const currentIsMobile = width < 768;
+      const currentCount = currentIsMobile ? Math.min(25, Math.floor((width * height) / 38000)) : Math.min(65, Math.floor((width * height) / 28000));
+      for (let i = 0; i < currentCount; i++) {
         particles.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.25,
-          vy: (Math.random() - 0.5) * 0.25,
+          vx: (Math.random() - 0.5) * (prefersReducedMotion ? 0 : 0.25),
+          vy: (Math.random() - 0.5) * (prefersReducedMotion ? 0 : 0.25),
           size: Math.random() < 0.25 ? 1.8 : Math.random() < 0.6 ? 1.2 : 0.8,
           baseAlpha: Math.random() * 0.45 + 0.25,
           currentAlpha: 0.3,
@@ -89,9 +108,12 @@ export function CosmicAtmosphere() {
 
     initParticles();
 
-    // 60fps render loop
+    // 60fps render loop with smart mobile throttling
     const render = () => {
+      if (!isRunning) return;
       ctx.clearRect(0, 0, width, height);
+
+      const isFinePointer = window.matchMedia("(pointer: fine)").matches;
 
       // 1. Update and draw particles
       for (let i = 0; i < particles.length; i++) {
@@ -112,16 +134,39 @@ export function CosmicAtmosphere() {
         const twinkle = Math.sin(p.phase) * 0.2;
         p.currentAlpha = Math.max(0.1, Math.min(1, p.baseAlpha + twinkle));
 
-        // Interactive mouse interaction (gentle proximity drift & glow)
-        const dx = p.x - mouse.x;
-        const dy = p.y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+        // Interactive mouse interaction (desktop fine-pointer only)
+        if (isFinePointer && mouse.x > 0) {
+          const dx = p.x - mouse.x;
+          const dy = p.y - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < mouse.radius && mouse.x > 0) {
-          const force = (1 - dist / mouse.radius) * 1.5;
-          p.x += (dx / dist) * force;
-          p.y += (dy / dist) * force;
-          p.currentAlpha = Math.min(1, p.currentAlpha + 0.4);
+          if (dist < mouse.radius) {
+            const force = (1 - dist / mouse.radius) * 1.5;
+            p.x += (dx / dist) * force;
+            p.y += (dy / dist) * force;
+            p.currentAlpha = Math.min(1, p.currentAlpha + 0.4);
+          }
+
+          // Connect nearby particles near cursor with faint celestial filaments
+          if (dist < mouse.radius * 1.2 && !isMobile) {
+            for (let j = i + 1; j < particles.length; j++) {
+              const p2 = particles[j];
+              const p2Dx = p2.x - p.x;
+              const p2Dy = p2.y - p.y;
+              const p2Dist = Math.sqrt(p2Dx * p2Dx + p2Dy * p2Dy);
+
+              if (p2Dist < 85) {
+                const lineAlpha = (1 - p2Dist / 85) * 0.22;
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.strokeStyle = `rgba(212, 175, 55, ${lineAlpha})`;
+                ctx.lineWidth = 0.6;
+                ctx.shadowBlur = 0;
+                ctx.stroke();
+              }
+            }
+          }
         }
 
         // Draw particle
@@ -133,27 +178,6 @@ export function CosmicAtmosphere() {
         ctx.shadowBlur = p.size > 1.2 ? 6 : 0;
         ctx.shadowColor = p.gold ? "rgba(212, 175, 55, 0.6)" : "rgba(255, 255, 255, 0.4)";
         ctx.fill();
-
-        // 2. Connect nearby particles near the cursor with faint celestial filaments
-        if (dist < mouse.radius * 1.2) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const p2 = particles[j];
-            const p2Dx = p2.x - p.x;
-            const p2Dy = p2.y - p.y;
-            const p2Dist = Math.sqrt(p2Dx * p2Dx + p2Dy * p2Dy);
-
-            if (p2Dist < 85) {
-              const lineAlpha = (1 - p2Dist / 85) * 0.22;
-              ctx.beginPath();
-              ctx.moveTo(p.x, p.y);
-              ctx.lineTo(p2.x, p2.y);
-              ctx.strokeStyle = `rgba(212, 175, 55, ${lineAlpha})`;
-              ctx.lineWidth = 0.6;
-              ctx.shadowBlur = 0;
-              ctx.stroke();
-            }
-          }
-        }
       }
 
       animId = requestAnimationFrame(render);
@@ -162,9 +186,11 @@ export function CosmicAtmosphere() {
     animId = requestAnimationFrame(render);
 
     return () => {
+      isRunning = false;
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
       window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       if (animId) cancelAnimationFrame(animId);
     };
   }, []);

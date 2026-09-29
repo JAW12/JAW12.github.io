@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
-import { educationData, awardsData, certificationsData } from "@/data/credentials";
+import { educationData, awardsData, certificationsData, leadershipData } from "@/data/credentials";
 import {
   Award,
   GraduationCap,
@@ -18,6 +18,7 @@ import {
   ChevronRight,
   ExternalLink,
   Eye,
+  Users,
 } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { InteractiveTiltCard } from "@/components/InteractiveTiltCard";
@@ -357,7 +358,87 @@ export function CredentialsSection() {
           </div>
         </div>
 
-        {/* 3. Industry Certifications (Chronological Latest to Oldest, Clean Cards, Click-to-Lightbox) */}
+        {/* 3. Leadership & Academic Organizational Roles (Campus & Student Executive Experience) */}
+        <div className="mt-16 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#d4af37] font-semibold">
+              <Users className="w-4 h-4 text-[#d4af37]" />
+              <span>{t.credentials.leadershipTitle}</span>
+            </div>
+            <span className="text-xs font-mono text-zinc-400">
+              {language === "id"
+                ? `[ ${leadershipData.length} Peran Kepemimpinan Kampus · iSTTS SIB ]`
+                : language === "zh"
+                ? `[ 共 ${leadershipData.length} 项校园学术领导职务 · iSTTS ]`
+                : `[ ${leadershipData.length} Campus Leadership Roles · iSTTS SIB ]`}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+            {leadershipData.map((item, idx) => {
+              const role = language === "zh" && item.roleZh ? item.roleZh : language === "id" ? item.roleId : item.role;
+              const company = language === "zh" && item.companyZh ? item.companyZh : language === "id" ? item.companyId : item.company;
+              const period = language === "zh" && item.periodZh ? item.periodZh : language === "id" ? item.periodId : item.period;
+              const description = language === "zh" && item.descriptionZh ? item.descriptionZh : language === "id" ? item.descriptionId : item.description;
+              const bullets = language === "zh" && item.bulletsZh ? item.bulletsZh : language === "id" ? item.bulletsId : item.bullets;
+
+              return (
+                <InteractiveTiltCard key={item.id || idx} maxTilt={6} roundedClassName="rounded-2xl" className="h-full">
+                  <div className="p-6 sm:p-7 rounded-2xl bg-[#0c0c10]/85 backdrop-blur-2xl border border-white/10 hover:border-[#d4af37]/60 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between space-y-5 shadow-[0_12px_36px_rgba(0,0,0,0.5)] relative overflow-hidden group h-full">
+                    {/* Ambient Glow */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4af37]/[0.03] rounded-full blur-2xl pointer-events-none group-hover:bg-[#d4af37]/[0.08] transition-colors" />
+
+                    <div className="space-y-3 relative z-10">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <span className="text-xs font-mono text-[#d4af37] uppercase tracking-wider font-semibold">
+                          {period}
+                        </span>
+                        <span className="px-2.5 py-0.5 rounded text-[11px] font-mono uppercase bg-white/5 border border-white/10 text-zinc-300">
+                          {item.type}
+                        </span>
+                      </div>
+
+                      <div>
+                        <h4 className="font-serif-editorial text-xl sm:text-2xl text-white font-medium group-hover:text-[#ebdca4] transition-colors leading-snug">
+                          {role}
+                        </h4>
+                        <div className="text-xs sm:text-sm font-mono text-[#ebdca4] pt-1">
+                          {company}
+                        </div>
+                        <div className="text-xs font-mono text-zinc-400 pt-0.5">
+                          {item.location}
+                        </div>
+                      </div>
+
+                      <p className="text-xs text-zinc-300 leading-relaxed font-light pt-1">
+                        {description}
+                      </p>
+                    </div>
+
+                    <div className="space-y-2.5 pt-4 border-t border-white/10 relative z-10">
+                      {bullets.map((bullet, bIdx) => (
+                        <div key={bIdx} className="flex items-start gap-2 text-xs text-zinc-300">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#d4af37] shrink-0 mt-0.5" />
+                          <span className="leading-snug">{bullet}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/5 relative z-10">
+                      {item.tags.map((tag) => (
+                        <span key={tag} className="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-zinc-400">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </InteractiveTiltCard>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* 4. Industry Certifications (Chronological Latest to Oldest, Clean Cards, Click-to-Lightbox) */}
         <div className="mt-16 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#d4af37]">

@@ -44,7 +44,7 @@ export interface ProjectItem {
   highlights: string[];
   highlightsId: string[];
   highlightsZh?: string[];
-  metrics?: { label: string; labelId: string; labelZh?: string; value: string }[];
+  metrics?: { label: string; labelId: string; labelZh?: string; value: string; valueId?: string; valueZh?: string }[];
   blueprintFlow?: BlueprintStep[];
   liveUrl?: string;
   githubUrl?: string;
@@ -105,9 +105,9 @@ export const flagshipProjects: ProjectItem[] = [
       "将整本 150+ 页个性化定制书籍的起草与排版周期从数周人工撰写缩短至 1 个工作日。",
     ],
     metrics: [
-      { label: "Book Output Volume", labelId: "Volume Halaman", labelZh: "书籍页数产出", value: "150+ Halaman" },
-      { label: "Production Turnaround", labelId: "Waktu Kompilasi", labelZh: "生产编译周期", value: "1 Hari Kerja" },
-      { label: "Physical Finish", labelId: "Finishing Fisik", labelZh: "装帧工艺标准", value: "Hardcover Foil Emas" },
+      { label: "Book Output Volume", labelId: "Volume Halaman", labelZh: "书籍页数产出", value: "150+ Pages", valueId: "150+ Halaman", valueZh: "150+ 页" },
+      { label: "Production Turnaround", labelId: "Waktu Kompilasi", labelZh: "生产编译周期", value: "1 Business Day", valueId: "1 Hari Kerja", valueZh: "1 个工作日" },
+      { label: "Physical Finish", labelId: "Finishing Fisik", labelZh: "装帧工艺标准", value: "Gold Foil Hardcover", valueId: "Hardcover Foil Emas", valueZh: "烫金精装" }
     ],
     images: [
       "/assets/projects/secret-of-life/white_desk.png",
@@ -205,10 +205,10 @@ export const flagshipProjects: ProjectItem[] = [
       "双客群分析模态与推广中台：无缝支持 Gen-Z 恋爱人际测算与成人/职场商业合盘双重体系，配备参数化推广链接追踪。",
     ],
     metrics: [
-      { label: "Compute Latency", labelId: "Latensi Komputasi", labelZh: "计算响应延迟", value: "< 15 ms" },
-      { label: "Engineering Model", labelId: "Model Rekayasa", labelZh: "研发协作范式", value: "AI-Assisted Dev" },
-      { label: "Operational Modes", labelId: "Mode Sistem", labelZh: "双模分析体系", value: "Gen-Z & Adult (11 Modul)" },
-      { label: "Server Cost", labelId: "Beban Server", labelZh: "单次计算成本", value: "Rp 0 / Hitung" },
+      { label: "Compute Latency", labelId: "Latensi Komputasi", labelZh: "计算响应延迟", value: "< 15 ms", valueId: "< 15 ms", valueZh: "< 15 毫秒" },
+      { label: "Engineering Model", labelId: "Model Rekayasa", labelZh: "研发协作范式", value: "AI-Assisted Dev", valueId: "AI-Assisted Dev", valueZh: "AI 辅助工程研发" },
+      { label: "Operational Modes", labelId: "Mode Sistem", labelZh: "双模分析体系", value: "Gen-Z & Adult (11 Modules)", valueId: "Gen-Z & Dewasa (11 Modul)", valueZh: "Gen-Z 与成人双模 (11个模块)" },
+      { label: "Server Cost", labelId: "Beban Server", labelZh: "单次计算成本", value: "Rp 0 / Compute", valueId: "Rp 0 / Hitung", valueZh: "0 服务器成本 / 次" }
     ],
     blueprintFlow: [
       {
@@ -298,9 +298,9 @@ export const flagshipProjects: ProjectItem[] = [
       "打造高拟真度真空包装渲染视觉资产，并搭建 WhatsApp 大宗采购即时询价转化路径。",
     ],
     metrics: [
-      { label: "Cold-Chain Standard", labelId: "Suhu Rantai Dingin", labelZh: "冷链温控标准", value: "-18°C Stabil" },
-      { label: "Legal Compliance", labelId: "Legalitas & Izin", labelZh: "法定资质合规", value: "Halal & Kementan" },
-      { label: "Distribution Model", labelId: "Segmen Distribusi", labelZh: "分销模式定位", value: "B2B & Horeca" },
+      { label: "Cold-Chain Standard", labelId: "Suhu Rantai Dingin", labelZh: "冷链温控标准", value: "-18°C Stabilized", valueId: "-18°C Stabil", valueZh: "-18°C 恒温冷链" },
+      { label: "Legal Compliance", labelId: "Legalitas & Izin", labelZh: "法定资质合规", value: "Halal & Kementan Certified", valueId: "Tersertifikasi Halal & Kementan", valueZh: "Halal 清真与农业部认证" },
+      { label: "Distribution Model", labelId: "Segmen Distribusi", labelZh: "分销模式定位", value: "B2B & Horeca Focus", valueId: "Fokus B2B & Horeca", valueZh: "B2B 与连锁餐饮 (Horeca)" }
     ],
     liveUrl: "https://www.nangkapremium.id",
     demoLinks: [
@@ -394,9 +394,9 @@ export const flagshipProjects: ProjectItem[] = [
       "主导开展多周期算法量化前瞻性测试，验证风险调整后的资产收益表现模型。",
     ],
     metrics: [
-      { label: "Academic Evaluation", labelId: "Evaluasi Skripsi", labelZh: "学术答辩评级", value: "Nilai A Sempurna" },
-      { label: "Schema Normalization", labelId: "Normalisasi Basis Data", labelZh: "数据库规范化", value: "3NF Relasional" },
-      { label: "Analytics Scope", labelId: "Cakupan Analitik", labelZh: "核心分析维度", value: "DCA · PnL · RR" },
+      { label: "Academic Evaluation", labelId: "Evaluasi Skripsi", labelZh: "学术答辩评级", value: "Grade A Honors", valueId: "Nilai A Sempurna", valueZh: "最高满分 A 评定" },
+      { label: "Schema Normalization", labelId: "Normalisasi Basis Data", labelZh: "数据库规范化", value: "3NF Relational", valueId: "3NF Relasional", valueZh: "3NF 关系范式" },
+      { label: "Analytics Scope", labelId: "Cakupan Analitik", labelZh: "核心分析维度", value: "DCA · PnL · RR", valueId: "DCA · PnL · RR", valueZh: "DCA · 盈亏 · 风险收益比" }
     ],
     images: [
       "/assets/projects/catatcrypto/catatcrypto_dashboard.png",
@@ -488,9 +488,9 @@ export const flagshipProjects: ProjectItem[] = [
       "制定中央厨房调味配方与后厨出餐标准化 SOP，确保全域门店口味高度一致。",
     ],
     metrics: [
-      { label: "Franchise Network", labelId: "Jaringan Cabang", labelZh: "连锁门店规模", value: "26 Outlet Aktif" },
-      { label: "Franchise BEP", labelId: "Proyeksi Balik Modal", labelZh: "投资回本周期", value: "95 Hari Kerja" },
-      { label: "Packaging Security", labelId: "Standar Kemasan", labelZh: "包装工艺标准", value: "100% Glue-Free Lock" },
+      { label: "Franchise Network", labelId: "Jaringan Cabang", labelZh: "连锁门店规模", value: "26 Active Outlets", valueId: "26 Cabang Aktif", valueZh: "26 家在营门店" },
+      { label: "Franchise BEP", labelId: "Proyeksi Balik Modal", labelZh: "投资回本周期", value: "95 Business Days", valueId: "95 Hari Kerja", valueZh: "95 个工作日" },
+      { label: "Packaging Security", labelId: "Standar Kemasan", labelZh: "包装工艺标准", value: "100% Glue-Free Lock", valueId: "Kancing 100% Bebas Lem", valueZh: "100% 免胶卡扣结构" }
     ],
     images: [
       "/assets/projects/branding/janok-packaging.png",
@@ -1287,9 +1287,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "严密校准视听节奏与动态文字律动，在 TikTok 与 Instagram Reels 平台斩获极佳完播率。",
       ],
       metrics: [
-        { label: "Aspect Ratio", labelId: "Format Video", labelZh: "视频画幅", value: "9:16 Vertical Reel" },
-        { label: "Production Pacing", labelId: "Ritme Produksi", labelZh: "生产节拍", value: "Rapid Iteration" },
-        { label: "Visual Quality", labelId: "Kualitas Visual", labelZh: "输出画质", value: "High-Bitrate 1080p" },
+        { label: "Aspect Ratio", labelId: "Format Video", labelZh: "视频画幅", value: "9:16 Vertical Reel", valueId: "9:16 Reel Vertikal", valueZh: "9:16 竖屏短视频" },
+        { label: "Production Pacing", labelId: "Ritme Produksi", labelZh: "生产节拍", value: "Rapid Iteration", valueId: "Iterasi Cepat", valueZh: "极速迭代产出" },
+        { label: "Visual Quality", labelId: "Kualitas Visual", labelZh: "输出画质", value: "High-Bitrate 1080p", valueId: "1080p Bitrate Tinggi", valueZh: "1080p 高码率超清" }
       ],
       images: [
         "/assets/projects/ai-video/BASKORO_ABIMANYU_EDITED.mp4",
@@ -1342,9 +1342,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "WhatsApp 智能机器人：配置实时 Webhook 监听器与多条件路由分支，实现全自动客户即时响应。",
       ],
       metrics: [
-        { label: "Execution Reliability", labelId: "Keandalan Eksekusi", labelZh: "执行可靠性", value: "99.9% Automated" },
-        { label: "Manual Effort Saved", labelId: "Efisiensi Waktu", labelZh: "工时节约", value: "10+ Jam/Minggu" },
-        { label: "Trigger Response", labelId: "Respon Pemicu", labelZh: "触发时延", value: "< 200ms" },
+        { label: "Execution Reliability", labelId: "Keandalan Eksekusi", labelZh: "执行可靠性", value: "99.9% Automated", valueId: "99.9% Otomatis", valueZh: "99.9% 自动化率" },
+        { label: "Manual Effort Saved", labelId: "Efisiensi Waktu", labelZh: "工时节约", value: "10+ Hours/Week", valueId: "10+ Jam/Minggu", valueZh: "10+ 小时/周" },
+        { label: "Trigger Response", labelId: "Respon Pemicu", labelZh: "触发时延", value: "< 200ms Direct", valueId: "< 200ms Instan", valueZh: "< 200ms 极速响应" }
       ],
       blueprintFlow: [
         {
@@ -1416,9 +1416,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "基于纯本地文件系统架构，提供 100% 绝对隐私保障与无网完全可用性。",
       ],
       metrics: [
-        { label: "Data Privacy", labelId: "Privasi Data", labelZh: "数据隐私性", value: "100% Local" },
-        { label: "Sparring Modes", labelId: "Mode Debat", labelZh: "思维对练模式", value: "Adversarial & Synthesis" },
-        { label: "Vault Architecture", labelId: "Arsitektur Vault", labelZh: "知识库图谱", value: "Bi-Directional Graph" },
+        { label: "Data Privacy", labelId: "Privasi Data", labelZh: "数据隐私性", value: "100% Local Storage", valueId: "100% Lokal", valueZh: "100% 本地存储" },
+        { label: "Sparring Modes", labelId: "Mode Debat", labelZh: "思维对练模式", value: "Adversarial & Synthesis", valueId: "Adversarial & Sintesis", valueZh: "对抗性辩论与综合归纳" },
+        { label: "Vault Architecture", labelId: "Arsitektur Vault", labelZh: "知识库图谱", value: "Bi-Directional Graph", valueId: "Grafik Dua Arah", valueZh: "双向网状知识图谱" }
       ],
       images: [
         "/assets/projects/ai-automation/ai-sparring.png",
@@ -1464,9 +1464,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "瞬时反思生成管线：优化前端渲染机制，实现毫秒级圣经金句检索与每日灵修卡片呈现。",
       ],
       metrics: [
-        { label: "Reflection Latency", labelId: "Latensi Refleksi", labelZh: "反思响应耗时", value: "< 1.5s" },
-        { label: "Scripture Source", labelId: "Sumber Kitab", labelZh: "灵修经文源", value: "Holy Bible (Alkitab)" },
-        { label: "UI Focus", labelId: "Fokus Desain", labelZh: "界面体验", value: "Zero-Distraction" },
+        { label: "Reflection Latency", labelId: "Latensi Refleksi", labelZh: "反思响应耗时", value: "< 1.5s Streaming", valueId: "< 1.5d Streaming", valueZh: "< 1.5秒 流式响应" },
+        { label: "Scripture Source", labelId: "Sumber Kitab", labelZh: "灵修经文源", value: "Holy Bible (TB / KJV)", valueId: "Alkitab (TB / KJV)", valueZh: "圣经经文 (TB / KJV)" },
+        { label: "UI Focus", labelId: "Fokus Desain", labelZh: "界面体验", value: "Zero-Distraction Calm", valueId: "Bebas Distraksi & Tenang", valueZh: "极简沉浸零干扰" }
       ],
       images: [
         "/assets/projects/ai-automation/satu-ayat/1.png",
@@ -1523,9 +1523,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "高品质有声母带交付：生成并归档具备卓越动态范围与丰富声场细节的高清完整单曲录音室音频母带。",
       ],
       metrics: [
-        { label: "Musical Arrangements", labelId: "Aransemen Musik", labelZh: "编曲版本总量", value: "5 Studio Iterations" },
-        { label: "Genre Diversity", labelId: "Ragam Genre", labelZh: "曲风跨度", value: "Acoustic, Pop, R&B" },
-        { label: "Production Stack", labelId: "Stack Produksi", labelZh: "音频生成引擎", value: "Suno AI v3/v4 & Prompts" },
+        { label: "Musical Arrangements", labelId: "Aransemen Musik", labelZh: "编曲版本总量", value: "5 Studio Iterations", valueId: "5 Iterasi Studio", valueZh: "5 版母带级编曲" },
+        { label: "Genre Diversity", labelId: "Ragam Genre", labelZh: "曲风跨度", value: "Acoustic, Pop & R&B", valueId: "Akustik, Pop & R&B", valueZh: "原声、流行与 R&B" },
+        { label: "Production Stack", labelId: "Stack Produksi", labelZh: "音频生成引擎", value: "Suno AI v3/v4 & DAW", valueId: "Suno AI v3/v4 & DAW", valueZh: "Suno AI v3/v4 与 DAW 混音" }
       ],
       audioTracks: [
         {
@@ -1606,9 +1606,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "反爬虫对抗与数据清洗：构建动态代理轮换与原始 HTML 净化管道，实现 99.9% 标准化结构化入库。",
       ],
       metrics: [
-        { label: "Extraction Speed", labelId: "Kecepatan Ekstraksi", labelZh: "抓取速率", value: "High-Throughput" },
-        { label: "Data Accuracy", labelId: "Akurasi Data", labelZh: "数据精准度", value: "99.9% Normalized" },
-        { label: "Bypass Rate", labelId: "Keberhasilan Bypass", labelZh: "防爬突破率", value: "> 98%" },
+        { label: "Extraction Speed", labelId: "Kecepatan Ekstraksi", labelZh: "抓取速率", value: "High-Throughput Concurrent", valueId: "Throughput Tinggi Konkuren", valueZh: "高并发高吞吐" },
+        { label: "Data Accuracy", labelId: "Akurasi Data", labelZh: "数据精准度", value: "99.9% Normalized", valueId: "99.9% Ternormalisasi", valueZh: "99.9% 结构化精准度" },
+        { label: "Bypass Rate", labelId: "Keberhasilan Bypass", labelZh: "防爬突破率", value: "> 98% Anti-Bot Pass", valueId: "> 98% Lolos Anti-Bot", valueZh: "> 98% 防爬穿透率" }
       ],
       images: [
         "/assets/projects/scraping/sma-surabaya.png",
@@ -1645,9 +1645,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "Membangun algoritma evaluasi papan instan untuk mendeteksi kondisi menang, kalah, atau seri seketika."
       ],
       metrics: [
-        { label: "AI Loss Rate", labelId: "Kekalahan AI", value: "0% (Unbeatable)" },
-        { label: "Compute Speed", labelId: "Kecepatan Hitung", value: "< 1 ms" },
-        { label: "Permutation Depth", labelId: "Kedalaman Cabang", value: "9-Grid Exhaustive" }
+        { label: "AI Loss Rate", labelId: "Tingkat Kekalahan AI", labelZh: "AI 负率", value: "0% (Unbeatable)", valueId: "0% (Tak Terkalahkan)", valueZh: "0% (绝对不败)" },
+        { label: "Compute Speed", labelId: "Kecepatan Hitung", labelZh: "计算响应速度", value: "< 1 ms Instant", valueId: "< 1 ms Instan", valueZh: "< 1 毫秒瞬时响应" },
+        { label: "Permutation Depth", labelId: "Kedalaman Cabang", labelZh: "博弈搜索深度", value: "9-Grid Minimax Exhaustive", valueId: "Minimax 9-Grid Lengkap", valueZh: "九宫格 Minimax 全状态遍历" }
       ],
       images: [
         "/assets/projects/software/Untitled 41.png"
@@ -1698,9 +1698,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "合同交付完美履约：按期高质量交付全部6项 SPK 商业开发任务，通过严格的回归测试验收。",
       ],
       metrics: [
-        { label: "Contract Milestones", labelId: "Milestone Kontrak", labelZh: "合同研发里程碑", value: "6/6 Completed" },
-        { label: "Turn Logic", labelId: "Logika Giliran", labelZh: "回合流转机制", value: "Skip & Surrender" },
-        { label: "Testing Standard", labelId: "Standar Pengujian", labelZh: "测试验收标准", value: "Full Regression Pass" },
+        { label: "Contract Milestones", labelId: "Milestone Kontrak", labelZh: "合同研发里程碑", value: "6/6 Fully Delivered", valueId: "6/6 Selesai Lengkap", valueZh: "6/6 阶段全量交付" },
+        { label: "Turn Logic", labelId: "Logika Giliran", labelZh: "回合流转机制", value: "Skip & Surrender Engine", valueId: "Engine Skip & Surrender", valueZh: "跳过与投降机制引擎" },
+        { label: "Testing Standard", labelId: "Standar Pengujian", labelZh: "测试验收标准", value: "100% Full Regression Pass", valueId: "100% Lolos Uji Regresi", valueZh: "100% 全量回归测试通过" }
       ],
       images: [],
     },
@@ -1745,9 +1745,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "商业外包圆满交付：按期高质量交付全部开发成果，开具正式结算发票并获客户完工验收确认。",
       ],
       metrics: [
-        { label: "Type Safety", labelId: "Keamanan Tipe", labelZh: "类型安全保障", value: "100% Type-Safe tRPC" },
-        { label: "ORM Layer", labelId: "Layer ORM", labelZh: "数据层架构", value: "Prisma Normalized" },
-        { label: "Validation Engine", labelId: "Engine Validasi", labelZh: "运行时校验", value: "Zod Schema Guard" },
+        { label: "Type Safety", labelId: "Keamanan Tipe", labelZh: "类型安全保障", value: "100% End-to-End Type-Safe", valueId: "100% Type-Safe End-to-End", valueZh: "100% 端到端全链路类型安全" },
+        { label: "ORM Layer", labelId: "Layer ORM", labelZh: "数据层架构", value: "Prisma 3NF Normalized", valueId: "Prisma 3NF Relasional", valueZh: "Prisma 3NF 关系范式" },
+        { label: "Validation Engine", labelId: "Engine Validasi", labelZh: "运行时校验", value: "Zod Schema Guard", valueId: "Validasi Zod Schema", valueZh: "Zod 模式守卫" }
       ],
       images: [],
     },
@@ -1792,9 +1792,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "商业外包高质量交付：在 Projects.co.id 平台圆满结项并获得客户高满意度评价。",
       ],
       metrics: [
-        { label: "Access Control", labelId: "Kontrol Akses", labelZh: "权限控制模型", value: "Granular RBAC" },
-        { label: "Middleware Pipeline", labelId: "Pipeline Middleware", labelZh: "中间件安全拦截", value: "Multi-Role Guard" },
-        { label: "Platform Stack", labelId: "Stack Platform", labelZh: "技术架构栈", value: "Laravel + Inertia" },
+        { label: "Access Control", labelId: "Kontrol Akses", labelZh: "权限控制模型", value: "Granular Multi-Tenant RBAC", valueId: "RBAC Multi-Tenant Granular", valueZh: "多租户细粒度 RBAC" },
+        { label: "Middleware Pipeline", labelId: "Pipeline Middleware", labelZh: "中间件安全拦截", value: "Multi-Role Guard", valueId: "Guard Multi-Role", valueZh: "多角色守卫拦截" },
+        { label: "Platform Stack", labelId: "Stack Platform", labelZh: "技术架构栈", value: "Laravel + Inertia + Vue", valueId: "Laravel + Inertia + Vue", valueZh: "Laravel + Inertia + Vue 架构" }
       ],
       images: [],
     },
@@ -1836,9 +1836,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "在敏捷跨职能团队中协作，实施端到端后端接口测试与联调。"
       ],
       metrics: [
-        { label: "Database Normalization", labelId: "Normalisasi Skema", labelZh: "数据库范式", value: "3NF Relational" },
-        { label: "Filter Scope", labelId: "Cakupan Filter", labelZh: "筛选维度", value: "Multi-Category" },
-        { label: "Team Velocity", labelId: "Metodologi Kerja", labelZh: "研发协作模式", value: "Agile / Scrum" }
+        { label: "Database Normalization", labelId: "Normalisasi Basis Data", labelZh: "数据库范式", value: "3NF Relational Structure", valueId: "Struktur Relasional 3NF", valueZh: "3NF 关系范式结构" },
+        { label: "Filter Scope", labelId: "Cakupan Filter", labelZh: "筛选维度", value: "Multi-Category Matrix", valueId: "Matriks Multi-Kategori", valueZh: "多品类测评筛选矩阵" },
+        { label: "Team Velocity", labelId: "Metodologi Kerja", labelZh: "研发协作模式", value: "Agile / Scrum Sprint", valueId: "Agile / Scrum Sprint", valueZh: "Agile / Scrum 敏捷迭代" }
       ],
       images: [],
       blueprintFlow: [
@@ -1906,9 +1906,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "基于 RecyclerView 适配器与显式/隐式 Intent 架构开发原生 Android 应用。"
       ],
       metrics: [
-        { label: "Professional Certs", labelId: "Sertifikasi", labelZh: "专业认证数", value: "8 Industry Certs" },
-        { label: "Code Review Rating", labelId: "Rating Evaluasi", labelZh: "代码评审评级", value: "5.0 / 5.0 (100%)" },
-        { label: "Architecture", labelId: "Arsitektur", labelZh: "工程架构标准", value: "SOLID & Clean Code" }
+        { label: "Professional Certs", labelId: "Sertifikasi Profesional", labelZh: "专业认证数", value: "8 Industry Certifications", valueId: "8 Sertifikasi Industri", valueZh: "8 项行业权威认证" },
+        { label: "Code Review Rating", labelId: "Rating Evaluasi Kode", labelZh: "代码评审评级", value: "5.0 / 5.0 (100% Score)", valueId: "5.0 / 5.0 (Skor 100%)", valueZh: "5.0 / 5.0 (100% 满分)" },
+        { label: "Architecture", labelId: "Standar Arsitektur", labelZh: "工程架构标准", value: "SOLID & Clean Architecture", valueId: "SOLID & Clean Architecture", valueZh: "SOLID 与整洁架构" }
       ],
       images: [
         "/assets/projects/dicoding/dicoding_react_notes.png",
@@ -1980,9 +1980,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "Mengembangkan logika pembalikan bidak 8 arah lengkap yang mematuhi 100% aturan resmi turnamen Reversi."
       ],
       metrics: [
-        { label: "Search Depth", labelId: "Kedalaman Pencarian", value: "6–8 Plies Deep" },
-        { label: "Pruning Efficiency", labelId: "Efisiensi Pruning", value: "> 60% Nodes Cut" },
-        { label: "Rule Conformance", labelId: "Kepatuhan Aturan", value: "100% Reversi Standard" }
+        { label: "Search Depth", labelId: "Kedalaman Pencarian", labelZh: "博弈搜索深度", value: "6–8 Plies Lookahead", valueId: "6–8 Langkah Lookahead", valueZh: "6–8 层博弈前瞻" },
+        { label: "Pruning Efficiency", labelId: "Efisiensi Pruning", labelZh: "剪枝优化效率", value: "> 60% Alpha-Beta Pruned", valueId: "> 60% Node Terpangkas", valueZh: "> 60% Alpha-Beta 剪枝率" },
+        { label: "Rule Conformance", labelId: "Kepatuhan Aturan", labelZh: "规则符合度", value: "100% Official Reversi Rules", valueId: "100% Standar Reversi Resmi", valueZh: "100% 国际黑白棋官方规则" }
       ],
       images: [],
       githubUrl: "https://github.com/JAW12/C-Desktop-Application-Othello-Game-Maret-2021"
@@ -2025,9 +2025,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "底层驱动直连 POS 热敏打印机硬件，输出规范对账单与消费小票。"
       ],
       metrics: [
-        { label: "Academic Evaluation", labelId: "Evaluasi Akademik", labelZh: "学术评审等级", value: "Grade A (Sempurna)" },
-        { label: "Hardware Integration", labelId: "Integrasi Hardware", labelZh: "硬件驱动集成", value: "Thermal POS Printer" },
-        { label: "State Management", labelId: "Manajemen Status", labelZh: "状态同步机制", value: "Multi-Station Sync" }
+        { label: "Academic Evaluation", labelId: "Evaluasi Akademik", labelZh: "学术评审等级", value: "Grade A Honors", valueId: "Nilai A Sempurna", valueZh: "最高满分 A 评定" },
+        { label: "Hardware Integration", labelId: "Integrasi Perangkat", labelZh: "硬件驱动集成", value: "Thermal POS Esc/Pos Printer", valueId: "Printer POS Termal Esc/Pos", valueZh: "Esc/Pos 热敏小票打印驱动" },
+        { label: "State Management", labelId: "Manajemen Status", labelZh: "状态同步机制", value: "Multi-Station Sync", valueId: "Sinkronisasi Multi-Stasiun", valueZh: "多工作站实时状态同步" }
       ],
       images: [
         "/assets/projects/software/Untitled 19.png",
@@ -2103,9 +2103,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "搭建仓库出库调度看板与订单全链路物流追踪界面。"
       ],
       metrics: [
-        { label: "Academic Grade", labelId: "Nilai Proyek", labelZh: "学术评审等级", value: "Grade A (Sempurna)" },
-        { label: "Logistics Feature", labelId: "Fitur Logistik", labelZh: "核心物流创新", value: "Tonnage Freight Calc" },
-        { label: "Data Architecture", labelId: "Basis Data", labelZh: "底层数据模型", value: "Relational MySQL" }
+        { label: "Academic Grade", labelId: "Nilai Proyek", labelZh: "学术评审等级", value: "Grade A Honors", valueId: "Nilai A Sempurna", valueZh: "最高满分 A 评定" },
+        { label: "Logistics Feature", labelId: "Fitur Logistik", labelZh: "核心物流创新", value: "Tonnage Freight Calculation", valueId: "Kalkulasi Tonase Kargo", valueZh: "阶梯吨位运费精算" },
+        { label: "Data Architecture", labelId: "Basis Data", labelZh: "底层数据模型", value: "Relational MySQL 3NF", valueId: "MySQL Relasional 3NF", valueZh: "MySQL 3NF 规范化模型" }
       ],
       images: [
         "/assets/projects/software/Untitled 3.png",
@@ -2180,9 +2180,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "纯原生 JavaScript/DOM 执行，零重型运行时依赖，瞬时流畅运行。"
       ],
       metrics: [
-        { label: "Academic Grade", labelId: "Nilai Proyek", labelZh: "学术评审等级", value: "Grade A (Sempurna)" },
-        { label: "Execution Logic", labelId: "Logika Eksekusi", labelZh: "核心计算架构", value: "State Machine" },
-        { label: "Architecture", labelId: "Arsitektur", labelZh: "渲染引擎标准", value: "Native DOM Engine" }
+        { label: "Academic Grade", labelId: "Nilai Proyek", labelZh: "学术评审等级", value: "Grade A Honors", valueId: "Nilai A Sempurna", valueZh: "最高满分 A 评定" },
+        { label: "Execution Logic", labelId: "Logika Eksekusi", labelZh: "核心计算架构", value: "Deterministic State Machine", valueId: "Mesin Status Deterministik", valueZh: "确定性有限状态机" },
+        { label: "Architecture", labelId: "Arsitektur Render", labelZh: "渲染引擎标准", value: "Native DOM & CSS Engine", valueId: "Engine DOM & CSS Native", valueZh: "原生 DOM 与 CSS 渲染引擎" }
       ],
       images: [
         "/assets/projects/software/Untitled 42.png",
@@ -2244,9 +2244,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "Mengonfigurasi tabel relasional SQL Server yang dioptimalkan untuk pencatatan transaksi cepat dan pengurangan stok."
       ],
       metrics: [
-        { label: "Transaction Speed", labelId: "Kecepatan Transaksi", value: "< 15s per Customer" },
-        { label: "Cash Reconciliation", labelId: "Akurasi Kasir", value: "100% Shift Balanced" },
-        { label: "Architecture", labelId: "Platform", value: "C# Windows Forms" }
+        { label: "Transaction Speed", labelId: "Kecepatan Transaksi", labelZh: "单笔收银时效", value: "< 15s per Customer", valueId: "< 15d per Pelanggan", valueZh: "< 15秒 / 单次结账" },
+        { label: "Cash Reconciliation", labelId: "Akurasi Kasir", labelZh: "账目交接精度", value: "100% Shift Balanced", valueId: "100% Rekonsiliasi Shift Seimbang", valueZh: "100% 班次交接对账平衡" },
+        { label: "Architecture", labelId: "Platform Sistem", labelZh: "系统技术架构", value: "C# .NET Windows Forms", valueId: "C# .NET Windows Forms", valueZh: "C# .NET Windows Forms 原生架构" }
       ],
       images: [
         "/assets/projects/software/Untitled 37.png",
@@ -2294,9 +2294,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "构建多景深多图层视差滚动摄像机跟随系统。"
       ],
       metrics: [
-        { label: "Academic Evaluation", labelId: "Evaluasi Akademik", labelZh: "学术评审等级", value: "Grade A (Sempurna)" },
-        { label: "Physics Engine", labelId: "Engine Fisika", labelZh: "物理动力学", value: "Rigidbody2D Vector" },
-        { label: "Visual Mechanics", labelId: "Mekanika Visual", labelZh: "视觉视差技术", value: "Multi-Layer Parallax" }
+        { label: "Academic Evaluation", labelId: "Evaluasi Akademik", labelZh: "学术评审等级", value: "Grade A Honors", valueId: "Nilai A Sempurna", valueZh: "最高满分 A 评定" },
+        { label: "Physics Engine", labelId: "Engine Fisika", labelZh: "物理动力学", value: "Rigidbody2D Vector Math", valueId: "Vektor Fisika Rigidbody2D", valueZh: "Rigidbody2D 矢量动力学" },
+        { label: "Visual Mechanics", labelId: "Mekanika Visual", labelZh: "视觉视差技术", value: "Multi-Layer Parallax Scrolling", valueId: "Scrolling Parallax Multi-Layer", valueZh: "多层动态视差滚动" }
       ],
       liveUrl: "https://youtu.be/ILx1zyAd-C4",
       images: [
@@ -2367,9 +2367,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "零外部第三方库依赖，纯原生 DOM 操作，极低内存消耗与瞬时响应。"
       ],
       metrics: [
-        { label: "Academic Evaluation", labelId: "Evaluasi Akademik", labelZh: "学术评审等级", value: "Grade A (Sempurna)" },
-        { label: "Algorithm Logic", labelId: "Logika Algoritma", labelZh: "核心算法设计", value: "Recursive Flood-Fill" },
-        { label: "Bundle Size", labelId: "Ukuran Bundle", labelZh: "资源加载体积", value: "< 15 KB Native" }
+        { label: "Academic Evaluation", labelId: "Evaluasi Akademik", labelZh: "学术评审等级", value: "Grade A Honors", valueId: "Nilai A Sempurna", valueZh: "最高满分 A 评定" },
+        { label: "Algorithm Logic", labelId: "Logika Algoritma", labelZh: "核心算法设计", value: "Recursive Flood-Fill", valueId: "Rekursif Flood-Fill", valueZh: "递归漫水填充算法" },
+        { label: "Bundle Size", labelId: "Ukuran Bundle", labelZh: "资源加载体积", value: "< 15 KB Native JS", valueId: "< 15 KB JS Native", valueZh: "< 15 KB 原生零依赖" }
       ],
       images: [],
       githubUrl: "https://github.com/JAW12/HTML-CSS-JS-Website-Minesweeper-Mini-Game-Maret-2020",
@@ -2438,9 +2438,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "自主研发四子棋重力落子动画与横/竖/斜四连胜状态判定引擎。"
       ],
       metrics: [
-        { label: "Academic Evaluation", labelId: "Evaluasi Akademik", labelZh: "学术评审等级", value: "Grade A (Sempurna)" },
-        { label: "App Suite Count", labelId: "Jumlah Aplikasi", labelZh: "涵盖独立应用数", value: "4 Native Apps" },
-        { label: "Framework", labelId: "Framework Mobile", labelZh: "移动原生架构", value: "Java Android SDK" }
+        { label: "Academic Evaluation", labelId: "Evaluasi Akademik", labelZh: "学术评审等级", value: "Grade A Honors", valueId: "Nilai A Sempurna", valueZh: "最高满分 A 评定" },
+        { label: "App Suite Count", labelId: "Jumlah Aplikasi", labelZh: "涵盖独立应用数", value: "4 Native Apps", valueId: "4 Aplikasi Native", valueZh: "4 款原生移动应用" },
+        { label: "Framework", labelId: "Framework Mobile", labelZh: "移动原生架构", value: "Java Android SDK", valueId: "Java Android SDK", valueZh: "Java Android SDK 原生开发" }
       ],
       images: [],
       githubUrl: "https://github.com/JAW12/Java-Android-Application-Sederhana-Belajar-Membuat-Aplikasi-Android-untuk-Pemula-Oktober-2020",
@@ -2498,9 +2498,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "Menghasilkan sertifikat kelulusan PDF digital yang dilengkapi nomor seri verifikasi keaslian."
       ],
       metrics: [
-        { label: "Curriculum Structure", labelId: "Struktur Materi", value: "Multi-Chapter Sequential" },
-        { label: "Grading Automation", labelId: "Otomasi Penilaian", value: "Instant Sub-Second Score" },
-        { label: "Certificate Engine", labelId: "Modul Sertifikat", value: "Automated PDF Generation" }
+        { label: "Curriculum Structure", labelId: "Struktur Materi", labelZh: "课程内容架构", value: "Multi-Chapter Sequential", valueId: "Multi-Bab Berurutan", valueZh: "多章节递进式课程体系" },
+        { label: "Grading Automation", labelId: "Otomasi Penilaian", labelZh: "自动阅卷时效", value: "Instant Sub-Second Scoring", valueId: "Penilaian Instan < 1 Detik", valueZh: "秒级自动化阅卷打分" },
+        { label: "Certificate Engine", labelId: "Modul Sertifikat", labelZh: "证书颁发引擎", value: "Automated PDF Generation", valueId: "Generasi PDF Otomatis", valueZh: "PDF 结业证书自动化生成" }
       ],
       images: [
         "/assets/projects/squeecourse/squeecourse_logo.png",
@@ -2534,9 +2534,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "Membuat corong kontak berkonversi tinggi yang menghubungkan calon pembeli langsung ke staf sales via WhatsApp."
       ],
       metrics: [
-        { label: "Specification Attributes", labelId: "Atribut Spesifikasi", value: "25+ Parameters per Car" },
-        { label: "Loan Math Accuracy", labelId: "Akurasi Simulasi Kredit", value: "Exact Amortization" },
-        { label: "Inquiry Speed", labelId: "Konversi Prospek", value: "Direct WhatsApp Funnel" }
+        { label: "Specification Attributes", labelId: "Atribut Spesifikasi", labelZh: "车型参数维度", value: "25+ Parameters per Vehicle", valueId: "25+ Parameter per Kendaraan", valueZh: "每车 25+ 项核心配置参数" },
+        { label: "Loan Math Accuracy", labelId: "Akurasi Simulasi Kredit", labelZh: "车贷金融精算", value: "Exact Amortization Math", valueId: "Amortisasi Finansial Akurat", valueZh: "精确等额本息还款测算" },
+        { label: "Inquiry Speed", labelId: "Konversi Prospek", labelZh: "意向直达漏斗", value: "Direct WhatsApp Funnel", valueId: "Funnel WhatsApp Langsung", valueZh: "WhatsApp 意向直达获客漏斗" }
       ],
       images: [
         "/assets/projects/software/Untitled 33.png",
@@ -2584,9 +2584,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "集成 POS 热敏收银小票格式化打印，支持退换货流水查验与对账。"
       ],
       metrics: [
-        { label: "Barcode Scanning", labelId: "Pemindaian Barcode", labelZh: "扫码识别响应", value: "< 50ms Direct" },
-        { label: "Inventory Sync", labelId: "Sinkronisasi Stok", labelZh: "库存联动扣减", value: "Real-Time Auto" },
-        { label: "Academic Grade", labelId: "Evaluasi Akademik", labelZh: "项目评审评级", value: "Grade A (Sempurna)" }
+        { label: "Barcode Scanning", labelId: "Pemindaian Barcode", labelZh: "扫码识别响应", value: "< 50ms Direct Laser", valueId: "< 50ms Laser Langsung", valueZh: "< 50ms 极速激光识别" },
+        { label: "Inventory Sync", labelId: "Sinkronisasi Stok", labelZh: "库存联动扣减", value: "Real-Time Auto-Deduction", valueId: "Otomatis Real-Time", valueZh: "实时自动库存联动扣减" },
+        { label: "Academic Grade", labelId: "Evaluasi Akademik", labelZh: "学术评审评级", value: "Grade A Honors", valueId: "Nilai A Sempurna", valueZh: "最高满分 A 评定" }
       ],
       images: [
         "/assets/projects/software/Untitled 24.png",
@@ -2662,9 +2662,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "设计关系型数据库行级事务锁，确保多终端高并发操作下的 ACID 数据一致性。"
       ],
       metrics: [
-        { label: "Cohort Award", labelId: "Penghargaan", labelZh: "专业荣誉奖项", value: "Best Practitioner #1" },
-        { label: "Transaction Pipeline", labelId: "Siklus Transaksi", labelZh: "交易闭环流转", value: "SQ ➔ SO ➔ DO ➔ Inv" },
-        { label: "Data Integrity", labelId: "Integritas Data", labelZh: "数据一致性保障", value: "ACID Transactional" }
+        { label: "Cohort Award", labelId: "Penghargaan", labelZh: "专业荣誉奖项", value: "Best Practitioner #1", valueId: "Praktisi Terbaik #1", valueZh: "专业第一优秀示范" },
+        { label: "Transaction Pipeline", labelId: "Siklus Transaksi", labelZh: "交易闭环流转", value: "SQ ➔ SO ➔ DO ➔ Invoice", valueId: "SQ ➔ SO ➔ DO ➔ Faktur", valueZh: "SQ ➔ SO ➔ DO ➔ 发票全流程" },
+        { label: "Data Integrity", labelId: "Integritas Data", labelZh: "数据一致性保障", value: "100% ACID Transactional", valueId: "100% Transaksional ACID", valueZh: "100% ACID 事务一致性" }
       ],
       images: [
         "/assets/projects/software/Untitled 8.png",
@@ -2745,9 +2745,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "动态粒子与打击感动画：编写受击高亮闪烁、射击枪口火焰、战机毁灭爆炸以及道具生成光晕动效。"
       ],
       metrics: [
-        { label: "Academic Grade", labelId: "Nilai Proyek", labelZh: "学术评审等级", value: "Grade A (Sempurna)" },
-        { label: "Enemy Archetypes", labelId: "Tipe Musuh", labelZh: "敌机行为模式", value: "3 Trajectory Models" },
-        { label: "Power-Up Variety", labelId: "Variasi Power-Up", labelZh: "能量道具矩阵", value: "5 Distinct Power-Ups" }
+        { label: "Academic Grade", labelId: "Nilai Proyek", labelZh: "学术评审等级", value: "Grade A Honors", valueId: "Nilai A Sempurna", valueZh: "最高满分 A 评定" },
+        { label: "Enemy Archetypes", labelId: "Tipe Musuh", labelZh: "敌机行为模式", value: "3 Trajectory Models", valueId: "3 Model Lintasan", valueZh: "3 种弹道飞行路径模型" },
+        { label: "Power-Up Variety", labelId: "Variasi Power-Up", labelZh: "能量道具矩阵", value: "5 Distinct Power-Ups", valueId: "5 Variasi Power-Up", valueZh: "5 种战术功能道具" }
       ],
       images: [
         "/assets/projects/software/Untitled 30.png",
@@ -2823,9 +2823,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "进销存实时联动扣减：客户确认下单后毫秒级扣减原料库存。"
       ],
       metrics: [
-        { label: "Academic Grade", labelId: "Nilai Proyek", labelZh: "学术评审等级", value: "Grade A (Sempurna)" },
-        { label: "Initial Capital", labelId: "Modal Awal", labelZh: "初始营运资金", value: "Rp 1.000.000" },
-        { label: "Visualization", labelId: "Visualisasi", labelZh: "可视化图表", value: "Tooltip Bar Charts" }
+        { label: "Academic Grade", labelId: "Nilai Proyek", labelZh: "学术评审等级", value: "Grade A Honors", valueId: "Nilai A Sempurna", valueZh: "最高满分 A 评定" },
+        { label: "Initial Capital", labelId: "Modal Awal", labelZh: "初始营运资金", value: "Rp 1.000.000 Simulation", valueId: "Simulasi Rp 1.000.000", valueZh: "100万印尼盾模拟资金" },
+        { label: "Visualization", labelId: "Visualisasi", labelZh: "可视化图表", value: "Interactive Tooltip Bar Charts", valueId: "Grafik Batang Interaktif", valueZh: "交互式悬浮柱状图表" }
       ],
       images: [
         "/assets/projects/software/Untitled 16.png",
@@ -2898,9 +2898,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "全品类库存统计报表：一键生成各品类食材平均库存水平的多彩统计柱状图看板。"
       ],
       metrics: [
-        { label: "Academic Grade", labelId: "Nilai Proyek", labelZh: "学术评审等级", value: "Grade A (Sempurna)" },
-        { label: "Rendering Tech", labelId: "Teknologi Visual", labelZh: "图形渲染引擎", value: "GDI+ Layering" },
-        { label: "Billing Precision", labelId: "Format Nota", labelZh: "账单明细规格", value: "Itemized Slip Receipt" }
+        { label: "Academic Grade", labelId: "Nilai Proyek", labelZh: "学术评审等级", value: "Grade A Honors", valueId: "Nilai A Sempurna", valueZh: "最高满分 A 评定" },
+        { label: "Rendering Tech", labelId: "Teknologi Visual", labelZh: "图形渲染引擎", value: "GDI+ Dynamic Layering", valueId: "Layering Dinamis GDI+", valueZh: "GDI+ 动态图层拼贴渲染" },
+        { label: "Billing Precision", labelId: "Format Nota", labelZh: "账单明细规格", value: "Itemized Thermal Slip", valueId: "Struk Rinci Item", valueZh: "标准化逐项小票明细" }
       ],
       images: [
         "/assets/projects/software/Untitled 2.png",
@@ -2971,9 +2971,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "调研测评专家业务需求，优化数据录入交互表单与报告输出可靠性。"
       ],
       metrics: [
-        { label: "Turnaround Time", labelId: "Efisiensi Waktu", labelZh: "交付周期优化", value: "Jam ➔ Menit" },
-        { label: "Calculation Error", labelId: "Akurasi Kalkulasi", labelZh: "计算误差率", value: "0% Error" },
-        { label: "Evaluation Methods", labelId: "Metode Profiling", labelZh: "融合测评模型", value: "4 Frameworks" }
+        { label: "Turnaround Time", labelId: "Efisiensi Waktu", labelZh: "交付周期优化", value: "Hours ➔ Minutes", valueId: "Jam ➔ Menit", valueZh: "数小时 ➔ 数分钟" },
+        { label: "Calculation Error", labelId: "Akurasi Kalkulasi", labelZh: "计算误差率", value: "0% Mathematical Error", valueId: "0% Kesalahan Hitung", valueZh: "0% 数学计算误差" },
+        { label: "Evaluation Methods", labelId: "Metode Profiling", labelZh: "融合测评模型", value: "4 Integrated Frameworks", valueId: "4 Kerangka Kerja Terintegrasi", valueZh: "4 大经典心理与命理测评体系" }
       ],
       images: [
         "/assets/projects/software/Untitled.png",
@@ -3053,9 +3053,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "维护专业权威的品牌调性，确保家庭顾问咨询服务的内容真实性与高信任度。"
       ],
       metrics: [
-        { label: "Social Platforms", labelId: "Platform Sosial", labelZh: "覆盖社交平台", value: "5 Active Channels" },
-        { label: "Unified Handle", labelId: "Username Resmi", labelZh: "官方统一账号", value: "@hadiarwanaw" },
-        { label: "Inquiry Channel", labelId: "Saluran Konsultasi", labelZh: "咨询直达通道", value: "WhatsApp Direct Funnel" }
+        { label: "Social Platforms", labelId: "Platform Sosial", labelZh: "覆盖社交平台", value: "5 Active Channels", valueId: "5 Kanal Aktif", valueZh: "5 大主流社媒渠道" },
+        { label: "Unified Handle", labelId: "Username Resmi", labelZh: "官方统一账号", value: "@hadiarwanaw Brand", valueId: "Merek @hadiarwanaw", valueZh: "@hadiarwanaw 官方统一品牌" },
+        { label: "Inquiry Channel", labelId: "Saluran Konsultasi", labelZh: "咨询直达通道", value: "WhatsApp Direct Funnel", valueId: "Funnel WhatsApp Langsung", valueZh: "WhatsApp 意向直达获客漏斗" }
       ],
       liveUrl: "https://www.instagram.com/hadiarwanaw/",
       demoLinks: [
@@ -3110,9 +3110,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "打通 Instagram、Tokopedia、GrabFood 与 GoFood 全渠道分销体系。"
       ],
       metrics: [
-        { label: "Catalog Scope", labelId: "Katalog Produk", labelZh: "产品品类覆盖", value: "90+ Fruit SKUs" },
-        { label: "Commercial Growth", labelId: "Pertumbuhan Klien", labelZh: "商业客户增长", value: "5 Klien Tetap / 3 Bln" },
-        { label: "Storage Standard", labelId: "Standar Suhu", labelZh: "冷链温控标准", value: "Cold-Chain -18°C" }
+        { label: "Catalog Scope", labelId: "Katalog Produk", labelZh: "产品品类覆盖", value: "90+ Tropical Fruit SKUs", valueId: "90+ SKU Buah Tropis", valueZh: "90+ 款热带冷冻水果 SKU" },
+        { label: "Commercial Growth", labelId: "Pertumbuhan Klien", labelZh: "商业客户增长", value: "5 Retainer Clients / 3 Mos", valueId: "5 Klien Tetap / 3 Bln", valueZh: "3个月落地5家核心大客户" },
+        { label: "Storage Standard", labelId: "Standar Suhu", labelZh: "冷链温控标准", value: "-18°C Cold Chain Standard", valueId: "Standar Rantai Dingin -18°C", valueZh: "-18°C 恒温工业冷链标准" }
       ],
       liveUrl: "https://www.instagram.com/gudangbuahbeku/",
       demoLinks: [
@@ -3176,9 +3176,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "Menyederhanakan alur onboarding duta merek menggunakan dokumentasi panduan terstandarisasi."
       ],
       metrics: [
-        { label: "Ambassadors Onboarded", labelId: "Mitra Ter-onboard", value: "15+ Brand Ambassadors" },
-        { label: "Workflow Sprint", labelId: "Metodologi", value: "Agile / Scrum" },
-        { label: "Communication", labelId: "Komunikasi", value: "Standardized Briefs" }
+        { label: "Ambassadors Onboarded", labelId: "Mitra Ter-onboard", labelZh: "签约品牌大使", value: "15+ Brand Ambassadors", valueId: "15+ Duta Merek", valueZh: "15+ 位行业知名品牌大使" },
+        { label: "Workflow Sprint", labelId: "Metodologi Kerja", labelZh: "协作研发流程", value: "Agile / Scrum Framework", valueId: "Kerangka Agile / Scrum", valueZh: "Agile / Scrum 敏捷协作流程" },
+        { label: "Communication", labelId: "Standar Komunikasi", labelZh: "对接交付标准", value: "Standardized Strategic Briefs", valueId: "Brief Strategis Terstandarisasi", valueZh: "标准化战略宣发指南" }
       ],
       images: [
         "/assets/projects/enevti/Enevti.png"
@@ -3225,10 +3225,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "生鲜供应链原点工程：作为首个生鲜科技创业项目，为后续创办 Gudang Buah Beku 及深耕 PT. Karya Buah Tropis 积累了核心供应链经验。"
       ],
       metrics: [
-        { label: "Startup Model", labelId: "Model Startup", labelZh: "商业模式", value: "Farm-to-Door E-Grocery" },
-        { label: "Mobile UX Flow", labelId: "Arsitektur Mobile", labelZh: "移动交互原型", value: "8 Complete Screens" },
-        { label: "Executive Role", labelId: "Peran Eksekutif", labelZh: "主导角色", value: "Founder & CEO (Age 15)" },
-        { label: "Design Quality", labelId: "Standar Visual", labelZh: "视觉标准", value: "High-Res Posters (3.5MB)" }
+        { label: "Startup Model", labelId: "Model Startup", labelZh: "商业模式", value: "Farm-to-Door E-Grocery", valueId: "E-Grocery Dari Kebun", valueZh: "农场直达家庭生鲜电商" },
+        { label: "Mobile UX Flow", labelId: "Arsitektur Mobile", labelZh: "移动交互原型", value: "8 Complete High-Fi Screens", valueId: "8 Layar Lengkap High-Fi", valueZh: "8 个完整高保真移动交互界面" },
+        { label: "Executive Role", labelId: "Peran Eksekutif", labelZh: "主导角色", value: "Founder & CEO (Age 15)", valueId: "Founder & CEO (Usia 15)", valueZh: "创始人兼 CEO (15岁)" },
+        { label: "Design Quality", labelId: "Standar Visual", labelZh: "视觉标准", value: "High-Res Posters (3.5MB+)", valueId: "Poster High-Res (3.5MB+)", valueZh: "3.5MB+ 超高清印刷级海报" }
       ],
       liveUrl: "https://www.youtube.com/@thefresh5198",
       demoLinks: [
@@ -3307,10 +3307,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "青少年法治逻辑启蒙原点：12 岁早期接触商业合同与民事法律条款，沉淀了严密审慎的契约精神与分析思维。"
       ],
       metrics: [
-        { label: "Timeline", labelId: "Periode Proyek", labelZh: "项目周期", value: "June 2012" },
-        { label: "Document Quality", labelId: "Standar Dokumen", labelZh: "文档质量", value: "100% Typo-Free Proofing" },
-        { label: "Brand Identity", labelId: "Identitas Merek", labelZh: "视觉产出", value: "Executive Business Cards" },
-        { label: "Domain", labelId: "Bidang Praktik", labelZh: "核心业务", value: "Commercial Agreements" }
+        { label: "Timeline", labelId: "Periode Proyek", labelZh: "项目周期", value: "June 2012", valueId: "Juni 2012", valueZh: "2012年6月" },
+        { label: "Document Quality", labelId: "Standar Dokumen", labelZh: "文档质量标准", value: "100% Typo-Free Proofing", valueId: "100% Bebas Tipografi", valueZh: "100% 严谨零错字校对" },
+        { label: "Brand Identity", labelId: "Identitas Merek", labelZh: "视觉形象产出", value: "Executive Business Cards", valueId: "Kartu Nama Eksekutif", valueZh: "高端商务行政名片套件" },
+        { label: "Domain", labelId: "Bidang Praktik", labelZh: "核心法律领域", value: "Commercial Agreements & IP", valueId: "Perjanjian Komersial & HKI", valueZh: "商业合同与知识产权" }
       ],
       images: [
         "/assets/projects/design/law-protection-card.png"
@@ -3395,10 +3395,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "发布官方开源共享 Notion 模板，赋能个人第二大脑搭建与高效自律生活管理。"
       ],
       metrics: [
-        { label: "Timeline", labelId: "Periode", labelZh: "项目周期", value: "2022 – 2025" },
-        { label: "System Generations", labelId: "Generasi Sistem", labelZh: "系统演进代际", value: "Universe V1, V2, V3" },
-        { label: "Core Modules", labelId: "Modul Utama", labelZh: "核心架构模块", value: "Journal, Ikigai & Finance" },
-        { label: "Public Releases", labelId: "Template Publik", labelZh: "公开发布版本", value: "Live Notion Templates" }
+        { label: "Timeline", labelId: "Periode", labelZh: "项目周期", value: "2022 – 2025", valueId: "2022 – 2025", valueZh: "2022 – 2025" },
+        { label: "System Generations", labelId: "Generasi Sistem", labelZh: "系统演进代际", value: "Universe V1, V2, V3", valueId: "Universe V1, V2, V3", valueZh: "Universe V1, V2, V3 三代迭代" },
+        { label: "Core Modules", labelId: "Modul Utama", labelZh: "核心架构模块", value: "Journal, Ikigai & Finance", valueId: "Jurnal, Ikigai & Finansial", valueZh: "日程管理 · Ikigai · 个人财务" },
+        { label: "Public Releases", labelId: "Template Publik", labelZh: "公开发布版本", value: "Live Notion Templates", valueId: "Template Notion Publik", valueZh: "全套 Notion 公开模板" }
       ],
       liveUrl: "https://jem-angkasa.notion.site/Universe-V3-Template-19b1add6b60c80cfa828ff0237bed248?source=copy_link",
       demoLinks: [
@@ -3465,10 +3465,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "多资产 Google Sheets 量化模型体系：搭建覆盖加密资产、外汇现货与仓位对冲测算的机构级全自动化表格模型体系。",
       ],
       metrics: [
-        { label: "Backtested Sample", labelId: "Sampel Backtest", labelZh: "回测样本量", value: "2,350+ Trades" },
-        { label: "Profit Factor", labelId: "Faktor Profit", labelZh: "策略盈亏比", value: "2.32 PF" },
-        { label: "Alpha Performance", labelId: "Kinerja Alpha", labelZh: "超额收益表现", value: "Positive Multi-Month Alpha" },
-        { label: "Asset Scope", labelId: "Cakupan Instrumen", labelZh: "覆盖资产类别", value: "Metals, FX & Crypto" },
+        { label: "Backtested Sample", labelId: "Sampel Backtest", labelZh: "回测样本量", value: "2,350+ Trades", valueId: "2.350+ Transaksi", valueZh: "2,350+ 笔回测交易" },
+        { label: "Profit Factor", labelId: "Faktor Profit", labelZh: "策略盈亏比", value: "2.32 PF Benchmark", valueId: "Benchmark PF 2.32", valueZh: "2.32 盈亏比 (PF)" },
+        { label: "Alpha Performance", labelId: "Kinerja Alpha", labelZh: "超额收益表现", value: "Positive Multi-Month Alpha", valueId: "Alpha Positif Multi-Bulan", valueZh: "持续多月稳健超额收益 (Alpha)" },
+        { label: "Asset Scope", labelId: "Cakupan Instrumen", labelZh: "覆盖资产类别", value: "Metals, FX & Crypto", valueId: "Logam Mulia, FX & Kripto", valueZh: "贵金属 · 外汇 · 加密资产" }
       ],
       images: [
         "/assets/projects/trading/equity-curve-alpha.gif",
@@ -3516,9 +3516,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "高满意度用户口碑：凭借测算报告的严谨深度与准确度，获得用户的高度好评与积极反馈。"
       ],
       metrics: [
-        { label: "Launch Date", labelId: "Waktu Peluncuran", labelZh: "上线时间", value: "November 2021" },
-        { label: "Core Focus", labelId: "Fokus Analisis", labelZh: "核心测算体系", value: "Numerology & Zodiac" },
-        { label: "Architecture", labelId: "Arsitektur", labelZh: "技术架构", value: "Laravel, PHP & MySQL" }
+        { label: "Launch Date", labelId: "Waktu Peluncuran", labelZh: "上线时间", value: "November 2021", valueId: "November 2021", valueZh: "2021年11月" },
+        { label: "Core Focus", labelId: "Fokus Analisis", labelZh: "核心测算体系", value: "Numerology & Zodiac Synthesis", valueId: "Sintesis Numerologi & Zodiak", valueZh: "生命密码与十二星座融合分析" },
+        { label: "Architecture", labelId: "Arsitektur", labelZh: "技术架构", value: "Laravel, PHP & MySQL", valueId: "Laravel, PHP & MySQL", valueZh: "Laravel, PHP 与 MySQL 架构" }
       ],
       images: [
         "/assets/projects/about-me/hasilst.jpg",
@@ -3602,13 +3602,11 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "助力专业人士与创业者清晰洞察自身天然能量优势，实现人岗协同与高杠杆商业变现。"
       ],
       metrics: [
-        { label: "Methodology", labelId: "Metodologi", labelZh: "核心理论模型", value: "Wealth Dynamics" },
-        { label: "Book Reference", labelId: "Referensi Buku", labelZh: "参考学术著作", value: "'Tajir Melintir' (Mardigu WP)" },
-        { label: "Diagnostic Output", labelId: "Format Diagnostik", labelZh: "测评诊断维度", value: "2 Dominant + 2 Growth" }
+        { label: "Methodology", labelId: "Metodologi", labelZh: "核心理论模型", value: "Wealth Dynamics Framework", valueId: "Model Wealth Dynamics", valueZh: "财富动力学 (Wealth Dynamics)" },
+        { label: "Book Reference", labelId: "Referensi Buku", labelZh: "参考学术著作", value: "'Tajir Melintir' (Mardigu WP)", valueId: "'Tajir Melintir' (Mardigu WP)", valueZh: "《Tajir Melintir》(Mardigu WP)" },
+        { label: "Diagnostic Output", labelId: "Format Diagnostik", labelZh: "测评诊断维度", value: "2 Dominant + 2 Growth Profiles", valueId: "2 Dominan + 2 Pengembangan", valueZh: "2项主导特质 + 2项成长空间" }
       ],
-      images: [
-        "/assets/projects/quant/8-profile-sukses-preview.png"
-      ],
+      images: [],
       blueprintFlow: [
         {
           step: "Biographical & Questionnaire Capture",
@@ -3677,10 +3675,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "现代生态的算法原点：作为底层原始算法蓝图，为后续的 8 Profile Sukses 引擎、About Me Web 平台及 CocokGa V4.0 奠定了核心计算模型。"
       ],
       metrics: [
-        { label: "Compute Speedup", labelId: "Peningkatan Kecepatan", value: "100x (< 1s vs 45m)" },
-        { label: "Analytical Modules", labelId: "Modul Analitik", value: "8+ Dimensions" },
-        { label: "Core Methodology", labelId: "Metodologi Utama", value: "Power of Numbers" },
-        { label: "Algorithm Architecture", labelId: "Arsitektur Algoritma", value: "Pyramid Inverted Triangle" }
+        { label: "Compute Speedup", labelId: "Peningkatan Kecepatan", labelZh: "计算加速倍数", value: "100x (< 1s vs 45m)", valueId: "100x (< 1d vs 45m)", valueZh: "100倍加速 (< 1秒 vs 45分)" },
+        { label: "Analytical Modules", labelId: "Modul Analitik", labelZh: "分析维度模块", value: "8+ Life Dimensions", valueId: "8+ Dimensi Kehidupan", valueZh: "8+ 核心命运维度" },
+        { label: "Core Methodology", labelId: "Metodologi Utama", labelZh: "核心理论依据", value: "Power of Numbers Method", valueId: "Metodologi Power of Numbers", valueZh: "Power of Numbers 数字学体系" },
+        { label: "Algorithm Architecture", labelId: "Arsitektur Algoritma", labelZh: "算法底层模型", value: "Pyramid Inverted Triangle", valueId: "Piramida Segitiga Terbalik", valueZh: "倒金字塔数字拓扑模型" }
       ],
       images: [
         "/assets/projects/quant/garis-kehidupan-preview.png",
@@ -3760,10 +3758,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "人类潜能测评启蒙原点：14 岁沉浸式研习潜意识心理学与创伤修复，奠定了日后开创 Screening SDM Indonesia、Garis Kehidupan 与 The Secret of Life 的核心认知模型。"
       ],
       metrics: [
-        { label: "Core Focus", labelId: "Fokus Utama", labelZh: "核心领域", value: "Subconscious Mind & Healing" },
-        { label: "Design Deliverables", labelId: "Output Desain", labelZh: "视觉产出", value: "Book, CD, Slides & Video" },
-        { label: "Asset Quality", labelId: "Resolusi Visual", labelZh: "资产标准", value: "High-Res DSLR (4MB+)" },
-        { label: "Origin Milestone", labelId: "Tonggak Sejarah", labelZh: "历史里程碑", value: "1st Psychology Project" }
+        { label: "Core Focus", labelId: "Fokus Utama", labelZh: "核心领域", value: "Subconscious Mind & Healing", valueId: "Bawah Sadar & Pemulihan", valueZh: "潜意识与深度疗愈" },
+        { label: "Design Deliverables", labelId: "Output Desain", labelZh: "视觉产出", value: "Book, CD, Slides & Video", valueId: "Buku, CD, Slide & Video", valueZh: "精装书 · CD光盘 · 课件 · 视频" },
+        { label: "Asset Quality", labelId: "Resolusi Visual", labelZh: "资产标准", value: "High-Res DSLR (4MB+)", valueId: "DSLR High-Res (4MB+)", valueZh: "4MB+ 单反高清摄影母片" },
+        { label: "Origin Milestone", labelId: "Tonggak Sejarah", labelZh: "历史里程碑", value: "1st Psychology Project", valueId: "Proyek Psikologi Pertama", valueZh: "首个心理学与疗愈落地项目" }
       ],
       images: [
         "/assets/projects/design/Cover_Buku_Inner_Healing_II.jpg",
@@ -3847,10 +3845,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "排版设计 40+ 款热带果品 A4 三折页商业宣传册及 90+ 款品类大宗批发阶梯报价单。"
       ],
       metrics: [
-        { label: "Thermal Tolerance", labelId: "Toleransi Suhu", labelZh: "耐温防裂标准", value: "Tahan Beku -25°C" },
-        { label: "Video Resolution", labelId: "Resolusi Video", labelZh: "宣传片画质", value: "1080p Full HD" },
-        { label: "SKU Catalog Scale", labelId: "Katalog Produk", labelZh: "全系产品覆盖", value: "90+ Tropical SKUs" },
-        { label: "Storage Standard", labelId: "Standar Suhu", labelZh: "冷链温控标准", value: "-18°C Cold Chain" }
+        { label: "Thermal Tolerance", labelId: "Toleransi Suhu", labelZh: "耐温防裂标准", value: "-25°C Freeze Proof", valueId: "Tahan Beku -25°C", valueZh: "-25°C 耐深低温防裂" },
+        { label: "Video Resolution", labelId: "Resolusi Video", labelZh: "宣传片画质", value: "1080p Full HD", valueId: "1080p Full HD", valueZh: "1080p 全高清画质" },
+        { label: "SKU Catalog Scale", labelId: "Katalog Produk", labelZh: "全系产品覆盖", value: "90+ Tropical Fruit SKUs", valueId: "90+ SKU Buah Tropis", valueZh: "90+ 款热带冷冻果品" },
+        { label: "Storage Standard", labelId: "Standar Suhu", labelZh: "冷链温控标准", value: "-18°C Cold Chain Standard", valueId: "Standar Rantai Dingin -18°C", valueZh: "-18°C 恒温冷链标准" }
       ],
       liveUrl: "https://youtu.be/nMpwpF5OEdM",
       demoLinks: [
@@ -3926,9 +3924,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "全案输出 Instagram 高转化社媒营销矩阵图文与新品上市促销菜单。"
       ],
       metrics: [
-        { label: "Brand Concept", labelId: "Konsep Merek", labelZh: "品牌定位", value: "Artisanal Fruit Box" },
-        { label: "Packaging Formats", labelId: "Format Kemasan", labelZh: "包装交付标准", value: "Bottle Stickers & Box" },
-        { label: "Visual Identity", labelId: "Identitas Visual", labelZh: "视觉资产", value: "FrutCubes Mascot" }
+        { label: "Brand Concept", labelId: "Konsep Merek", labelZh: "品牌定位", value: "Artisanal Fresh Fruit Box", valueId: "Kotak Buah Segar Eksklusif", valueZh: "手作轻奢定制鲜果礼盒" },
+        { label: "Packaging Formats", labelId: "Format Kemasan", labelZh: "包装交付标准", value: "Bottle Stickers & Gift Box", valueId: "Stiker Botol & Kotak Hadiah", valueZh: "定制瓶贴与手提礼盒" },
+        { label: "Visual Identity", labelId: "Identitas Visual", labelZh: "视觉资产", value: "FrutCubes 3D Mascot", valueId: "Maskot 3D FrutCubes", valueZh: "FrutCubes 3D 吉祥物" }
       ],
       images: ["/assets/projects/branding/frut-tre-logo.jpg", "/assets/projects/branding/frut-tre-poster.jpg"]
     },
@@ -3970,9 +3968,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "设计动效花字与关键信息图表，直观呈现专业课程体系与就业核心竞争力。"
       ],
       metrics: [
-        { label: "Resolution", labelId: "Resolusi Video", labelZh: "视频分辨率", value: "1080p Full HD" },
-        { label: "Audio Mix", labelId: "Kualitas Audio", labelZh: "音质标准", value: "Normalized Dialogue" },
-        { label: "Target Audience", labelId: "Audiens Target", labelZh: "传播受众", value: "Prospective Students" }
+        { label: "Resolution", labelId: "Resolusi Video", labelZh: "视频分辨率", value: "1080p Full HD", valueId: "1080p Full HD", valueZh: "1080p 全高清" },
+        { label: "Audio Mix", labelId: "Kualitas Audio", labelZh: "音质标准", value: "Normalized Dialogue Mix", valueId: "Dialog Audio Ternormalisasi", valueZh: "人声动态均衡降噪混音" },
+        { label: "Target Audience", labelId: "Audiens Target", labelZh: "传播受众", value: "Prospective Students", valueId: "Calon Mahasiswa Baru", valueZh: "应届准大学生群体" }
       ],
       liveUrl: "https://youtu.be/jC_SPGsdmkk",
       demoLinks: [
@@ -4017,9 +4015,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "完成专业级解说人声降噪与混音，确保在各类移动端播放时音质清晰响亮。"
       ],
       metrics: [
-        { label: "Resolution", labelId: "Resolusi Video", labelZh: "画质标准", value: "1080p Full HD" },
-        { label: "Core Medium", labelId: "Media Utama", labelZh: "宣传形式", value: "Educational PSA" },
-        { label: "Visual Style", labelId: "Gaya Visual", labelZh: "视觉风格", value: "Motion Infographics" }
+        { label: "Resolution", labelId: "Resolusi Video", labelZh: "画质标准", value: "1080p Full HD", valueId: "1080p Full HD", valueZh: "1080p 全高清" },
+        { label: "Core Medium", labelId: "Media Utama", labelZh: "宣传形式", value: "Educational Health PSA", valueId: "PSA Edukasi Kesehatan", valueZh: "公益健康科普宣教短片" },
+        { label: "Visual Style", labelId: "Gaya Visual", labelZh: "视觉风格", value: "Motion Infographics", valueId: "Infografis Animasi", valueZh: "动态信息图表 (Motion)" }
       ],
       liveUrl: "https://www.instagram.com/p/CAPuauUJmjr/",
       demoLinks: [
@@ -4064,9 +4062,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "规范输出 300 DPI CMYK 印刷级源文件，确保大幅面印刷色彩准确无色差。",
       ],
       metrics: [
-        { label: "Print Format", labelId: "Format Cetak", labelZh: "海报规格", value: "A3 / A2 Offset Print" },
-        { label: "Resolution", labelId: "Resolusi Gambar", labelZh: "画质精度", value: "300 DPI High-Res" },
-        { label: "Color Profile", labelId: "Profil Warna", labelZh: "色彩模式", value: "CMYK Certified" }
+        { label: "Print Format", labelId: "Format Cetak", labelZh: "海报规格", value: "A3 / A2 Offset Print", valueId: "Cetak Offset A3 / A2", valueZh: "A3 / A2 胶印工业标准" },
+        { label: "Resolution", labelId: "Resolusi Gambar", labelZh: "画质精度", value: "300 DPI High-Res Vector", valueId: "Vektor High-Res 300 DPI", valueZh: "300 DPI 矢量级超清" },
+        { label: "Color Profile", labelId: "Profil Warna", labelZh: "色彩模式", value: "CMYK Certified Master", valueId: "Master Warna CMYK", valueZh: "CMYK 印刷级工业校色" }
       ],
       images: [
         "/assets/projects/design/istts-corona-poster.jpg"
@@ -4110,9 +4108,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "凭借极高工艺精细度与叙事趣味性，荣获多媒体动画课程全班最高分评定。",
       ],
       metrics: [
-        { label: "Frame Count", labelId: "Total Frame", labelZh: "定格拍摄帧数", value: "500+ Frames Captured" },
-        { label: "Animation Style", labelId: "Gaya Animasi", labelZh: "动画艺术风格", value: "Hand-Crafted Paper" },
-        { label: "Audio Design", labelId: "Tata Suara", labelZh: "音效制作", value: "Custom Foley Effects" }
+        { label: "Frame Count", labelId: "Total Frame", labelZh: "定格拍摄帧数", value: "500+ Frames Captured", valueId: "500+ Frame Difoto", valueZh: "500+ 逐格精细拍摄" },
+        { label: "Animation Style", labelId: "Gaya Animasi", labelZh: "动画艺术风格", value: "Hand-Crafted Paper Cutout", valueId: "Seni Gunting Kertas Tangan", valueZh: "纯手工剪纸定格艺术" },
+        { label: "Audio Design", labelId: "Tata Suara", labelZh: "音效制作", value: "Custom Foley Sound Effects", valueId: "Efek Suara Foley Kustom", valueZh: "定制 Foley 拟音实录" }
       ],
       liveUrl: "https://www.youtube.com/watch?v=Fi48Fw_UZC0",
       demoLinks: [
@@ -4157,9 +4155,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "精细混合校园环境白噪音与轻快配乐，营造身临其境的空间沉浸感。"
       ],
       metrics: [
-        { label: "Resolution", labelId: "Resolusi Video", labelZh: "视频画质", value: "1080p 60 FPS" },
-        { label: "Color Space", labelId: "Grading Warna", labelZh: "色彩调校", value: "Filmic Warm Grade" },
-        { label: "Pacing", labelId: "Ritme Editing", labelZh: "剪辑节奏", value: "Dynamic Narrative" }
+        { label: "Resolution", labelId: "Resolusi Video", labelZh: "视频画质", value: "1080p 60 FPS Cinematic", valueId: "1080p 60 FPS Sinematik", valueZh: "1080p 60帧电影感画质" },
+        { label: "Color Space", labelId: "Grading Warna", labelZh: "色彩调校", value: "Filmic Warm Grade", valueId: "Grading Sinematik Hangat", valueZh: "电影感暖色调专业校色" },
+        { label: "Pacing", labelId: "Ritme Editing", labelZh: "剪辑节奏", value: "Dynamic Narrative Rhythm", valueId: "Ritme Narasi Dinamis", valueZh: "动感节奏叙事剪辑" }
       ],
       liveUrl: "https://www.youtube.com/watch?v=xz0GI1EuGIc",
       demoLinks: [
@@ -4204,9 +4202,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "作品凭借极简纯粹的高级质感，在校内平面设计年展中斩获优秀作品嘉奖。"
       ],
       metrics: [
-        { label: "Design School", labelId: "Aliran Desain", labelZh: "设计流派", value: "Swiss Typographic Style" },
-        { label: "Layout Grid", labelId: "Sistem Grid", labelZh: "网格规范", value: "Modular Grid System" },
-        { label: "Resolution", labelId: "Resolusi Karya", labelZh: "输出分辨率", value: "Vector 300 DPI" }
+        { label: "Design School", labelId: "Aliran Desain", labelZh: "设计流派", value: "Swiss Typographic Style", valueId: "Gaya Tipografi Swiss", valueZh: "瑞士国际主义平面风格" },
+        { label: "Layout Grid", labelId: "Sistem Grid", labelZh: "网格规范", value: "Modular Grid System", valueId: "Sistem Grid Modular", valueZh: "严谨模块化网格系统" },
+        { label: "Resolution", labelId: "Resolusi Karya", labelZh: "输出分辨率", value: "Vector 300 DPI Output", valueId: "Output Vektor 300 DPI", valueZh: "300 DPI 矢量高精输出" }
       ],
       images: [
         "/assets/projects/design/istts-quote-poster.jpg"
@@ -4250,9 +4248,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "高保真完整模拟从入座扫描、自选加购、备注定制到最终后厨出票的全流程交互。"
       ],
       metrics: [
-        { label: "Usability Score", labelId: "Skor Kemudahan", labelZh: "易用性评估", value: "95% Task Completion" },
-        { label: "Fidelity", labelId: "Tingkat Presisi", labelZh: "原型精度", value: "High-Fidelity Interactive" },
-        { label: "Design System", labelId: "Sistem Desain", labelZh: "视觉设计规范", value: "Japanese Modern Slate" }
+        { label: "Usability Score", labelId: "Skor Kemudahan", labelZh: "易用性评估", value: "95% Task Completion Rate", valueId: "95% Penyelesaian Tugas", valueZh: "95% 订餐任务顺利达成" },
+        { label: "Fidelity", labelId: "Tingkat Presisi", labelZh: "原型精度", value: "High-Fidelity Interactive", valueId: "Interaktif High-Fidelity", valueZh: "高保真可交互动态原型" },
+        { label: "Design System", labelId: "Sistem Desain", labelZh: "视觉设计规范", value: "Japanese Modern Slate", valueId: "Slate Modern Jepang", valueZh: "日式现代极简黑灰风" }
       ],
       images: [
         "/assets/projects/software/Home_Page.png",
@@ -4306,10 +4304,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "设计色彩亮丽的全彩外卖折页与线下促销单页，强化天然新鲜的视觉吸引力。"
       ],
       metrics: [
-        { label: "Timeline", labelId: "Periode Proyek", labelZh: "项目时间", value: "Late 2016" },
-        { label: "Platform Onboarding", labelId: "Kanal Digital", labelZh: "外卖渠道入驻", value: "GoFood & GrabFood 2016" },
-        { label: "Packaging Form", labelId: "Bentuk Kemasan", labelZh: "包装形式", value: "PET Bottle Wrap Sticker" },
-        { label: "Financial Modeling", labelId: "Model Finansial", labelZh: "财务模型", value: "Excel Yield & COGS" }
+        { label: "Timeline", labelId: "Periode Proyek", labelZh: "项目时间", value: "Late 2016", valueId: "Akhir 2016", valueZh: "2016年末" },
+        { label: "Platform Onboarding", labelId: "Kanal Digital", labelZh: "外卖渠道入驻", value: "GoFood & GrabFood 2016", valueId: "GoFood & GrabFood 2016", valueZh: "GoFood 与 GrabFood 2016" },
+        { label: "Packaging Form", labelId: "Bentuk Kemasan", labelZh: "包装形式", value: "PET Bottle Wrap Sticker", valueId: "Stiker Wrap Botol PET", valueZh: "PET 瓶环绕式防水贴标" },
+        { label: "Financial Modeling", labelId: "Model Finansial", labelZh: "财务模型", value: "Excel Yield & COGS Model", valueId: "Model Yield & COGS Excel", valueZh: "Excel 成本与毛利精算模型" }
       ],
       images: [
         "/assets/projects/design/premium-juice.jpg",
@@ -4377,10 +4375,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "展现出早期在软件编程、平面艺术设计与影视导演等领域的跨学科综合领悟力与执行力。"
       ],
       metrics: [
-        { label: "Timeline", labelId: "Periode Proyek", labelZh: "项目时间", value: "2015 – 2016" },
-        { label: "Origin Milestone", labelId: "Tonggak Sejarah", labelZh: "技术里程碑", value: "1st Web on GitHub (2015)" },
-        { label: "Creative Disciplines", labelId: "Disiplin Kreatif", labelZh: "跨界创作维度", value: "Web, Design, Video, Logo" },
-        { label: "Institution", labelId: "Institusi", labelZh: "就读院校", value: "Xin Zhong School" }
+        { label: "Timeline", labelId: "Periode Proyek", labelZh: "项目时间", value: "2015 – 2016", valueId: "2015 – 2016", valueZh: "2015 – 2016" },
+        { label: "Origin Milestone", labelId: "Tonggak Sejarah", labelZh: "技术里程碑", value: "1st Web on GitHub (2015)", valueId: "Web Pertama di GitHub (2015)", valueZh: "2015年首个 GitHub 网页" },
+        { label: "Creative Disciplines", labelId: "Disiplin Kreatif", labelZh: "跨界创作维度", value: "Web, Design, Video, Logo", valueId: "Web, Desain, Video, Logo", valueZh: "网页 · 平面 · 视频 · 标识" },
+        { label: "Institution", labelId: "Institusi", labelZh: "就读院校", value: "Xin Zhong School", valueId: "Xin Zhong School", valueZh: "新中三语学校 (Xin Zhong)" }
       ],
       images: [
         "/assets/projects/design/Poster_Sekolah_Februari_2016_(1).jpg",
@@ -4448,10 +4446,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "展现出卓越的空间工程施工图绘制能力，将平面美学与线下餐饮实体空间无缝打通。"
       ],
       metrics: [
-        { label: "Timeline", labelId: "Periode Proyek", labelZh: "项目时间", value: "2015" },
-        { label: "Cart Dimensions", labelId: "Dimensi Gerobak", labelZh: "餐车工程规格", value: "140 x 180 cm Blueprint" },
-        { label: "Banner File Size", labelId: "Resolusi Banner", labelZh: "海报输出大小", value: "4.8MB High-Res" },
-        { label: "Brand Deliverables", labelId: "Output Desain", labelZh: "设计产出", value: "Mascot, Cart, Menu, Banner" }
+        { label: "Timeline", labelId: "Periode Proyek", labelZh: "项目时间", value: "2015", valueId: "2015", valueZh: "2015年" },
+        { label: "Cart Dimensions", labelId: "Dimensi Gerobak", labelZh: "餐车工程规格", value: "140 x 180 cm Blueprint", valueId: "Cetak Biru 140 x 180 cm", valueZh: "140 x 180 cm 结构工程蓝图" },
+        { label: "Banner File Size", labelId: "Resolusi Banner", labelZh: "海报输出大小", value: "4.8MB High-Res Print", valueId: "Cetak High-Res 4.8MB", valueZh: "4.8MB 超清印刷母件" },
+        { label: "Brand Deliverables", labelId: "Output Desain", labelZh: "设计产出", value: "Mascot, Cart, Menu & Banner", valueId: "Maskot, Gerobak, Menu & Banner", valueZh: "吉祥物 · 餐车 · 菜单 · 展架" }
       ],
       images: [
         "/assets/projects/branding/djoeragan-sego-logo.png",
@@ -4522,10 +4520,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "展现出横跨现炸高温热食与耐低温急冻生鲜食品的双重工业包装设计研发能力。"
       ],
       metrics: [
-        { label: "Timeline", labelId: "Periode Proyek", labelZh: "项目时间", value: "Dec 2012 & May 2013" },
-        { label: "Hot Food Box", labelId: "Kemasan Panas", labelZh: "热食包装标准", value: "100% Glue-Free Lock" },
-        { label: "Cold Vacuum Bag", labelId: "Kemasan Beku", labelZh: "冷冻包装标准", value: "Food-Grade Nylon Vacuum" },
-        { label: "Mediums", labelId: "Media Utama", labelZh: "设计产出", value: "Folding Box & Vacuum Pack" }
+        { label: "Timeline", labelId: "Periode Proyek", labelZh: "项目时间", value: "Dec 2012 & May 2013", valueId: "Des 2012 & Mei 2013", valueZh: "2012年12月与2013年5月" },
+        { label: "Hot Food Box", labelId: "Kemasan Panas", labelZh: "热食包装标准", value: "100% Glue-Free Lock", valueId: "Kancing 100% Bebas Lem", valueZh: "100% 免胶卡扣结构" },
+        { label: "Cold Vacuum Bag", labelId: "Kemasan Beku", labelZh: "冷冻包装标准", value: "Food-Grade Nylon Vacuum", valueId: "Nylon Vakum Food-Grade", valueZh: "食品级尼龙真空锁鲜" },
+        { label: "Mediums", labelId: "Media Utama", labelZh: "设计产出", value: "Folding Box & Vacuum Pack", valueId: "Kotak Lipat & Kantong Vakum", valueZh: "折叠纸盒与真空锁鲜袋" }
       ],
       images: [
         "/assets/projects/design/big-chicken-box.jpg",
@@ -4588,10 +4586,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "在 Excel 中建立生鲜厨房原料先进先出 (FIFO) 进销存台账，大幅降低食材损耗率。"
       ],
       metrics: [
-        { label: "Timeline", labelId: "Periode Proyek", labelZh: "项目时间", value: "June 2012" },
-        { label: "Menu Resolution", labelId: "Resolusi Menu", labelZh: "画板分辨率", value: "5000px+ Vector Master" },
-        { label: "Menu Items", labelId: "Jumlah Menu", labelZh: "收录菜品体量", value: "50+ Authentic Dishes" },
-        { label: "Inventory Logic", labelId: "Sistem Stok", labelZh: "进销存模型", value: "FIFO Rotation Excel" }
+        { label: "Timeline", labelId: "Periode Proyek", labelZh: "项目时间", value: "June 2012", valueId: "Juni 2012", valueZh: "2012年6月" },
+        { label: "Menu Resolution", labelId: "Resolusi Menu", labelZh: "画板分辨率", value: "5000px+ Vector Master", valueId: "Master Vektor 5000px+", valueZh: "5000px+ 矢量母版" },
+        { label: "Menu Items", labelId: "Jumlah Menu", labelZh: "收录菜品体量", value: "50+ Authentic Dishes", valueId: "50+ Hidangan Otentik", valueZh: "50+ 款经典中餐菜品" },
+        { label: "Inventory Logic", labelId: "Sistem Stok", labelZh: "进销存模型", value: "FIFO Rotation Excel", valueId: "Rotasi Stok FIFO Excel", valueZh: "FIFO 先进先出库存模型" }
       ],
       images: [
         "/assets/projects/design/lc-chinese-food-menu.jpg"
@@ -4658,10 +4656,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "快消品包装设计启蒙里程碑：在少年时期深入探索货架美学、食品摄影质感表达与食欲诱导型营销文案技巧。"
       ],
       metrics: [
-        { label: "Timeline", labelId: "Periode Proyek", labelZh: "项目周期", value: "Dec 2012" },
-        { label: "Poster Resolution", labelId: "Resolusi Poster", labelZh: "海报输出画质", value: "3508 x 2480 px (300 DPI)" },
-        { label: "Packaging Type", labelId: "Jenis Kemasan", labelZh: "包装形态", value: "Glass Jar & Tamper Seal" },
-        { label: "Core Mediums", labelId: "Media Utama", labelZh: "设计产出", value: "Jar Label & A3 Poster" }
+        { label: "Timeline", labelId: "Periode Proyek", labelZh: "项目周期", value: "Dec 2012", valueId: "Desember 2012", valueZh: "2012年12月" },
+        { label: "Poster Resolution", labelId: "Resolusi Poster", labelZh: "海报输出画质", value: "3508 x 2480 px (300 DPI)", valueId: "3508 x 2480 px (300 DPI)", valueZh: "3508 x 2480 px (300 DPI)" },
+        { label: "Packaging Type", labelId: "Jenis Kemasan", labelZh: "包装形态", value: "Glass Jar & Tamper Seal", valueId: "Toples Kaca & Segel Pengaman", valueZh: "玻璃密封罐与防伪封口贴" },
+        { label: "Core Mediums", labelId: "Media Utama", labelZh: "设计产出", value: "Jar Label & A3 Poster", valueId: "Label Toples & Poster A3", valueZh: "瓶贴与 A3 营销海报" }
       ],
       images: [
         "/assets/projects/design/sambelku-poster.jpg"

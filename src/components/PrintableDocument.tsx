@@ -947,7 +947,7 @@ export function PrintableDocument({ exportOptions }: PrintableDocumentProps) {
     )}
 
       {/* ========================================================================= */}
-      {/* SLIDE 09: MASTER PROJECT ARCHIVE LEDGER — PART 1 (AI, WEB & QUANT)        */}
+      {/* SLIDE 09: MASTER PROJECT ARCHIVE LEDGER — PART 1 (AI, WEB & DATA)         */}
       {/* ========================================================================= */}
       {exportOptions.includeFeatured && (
         <section className="print-landscape-page bg-[#09090b] border-2 border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
@@ -1059,7 +1059,7 @@ export function PrintableDocument({ exportOptions }: PrintableDocumentProps) {
     )}
 
       {/* ========================================================================= */}
-      {/* SLIDE 11: PROFESSIONAL EXPERIENCE HISTORY & CORPORATE RECORD             */}
+      {/* SLIDE 11: PROFESSIONAL CAREER & VENTURE CHRONOLOGY                        */}
       {/* ========================================================================= */}
       {exportOptions.includeExperience && (
         <section className="print-landscape-page bg-[#09090b] border-2 border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
@@ -1068,58 +1068,58 @@ export function PrintableDocument({ exportOptions }: PrintableDocumentProps) {
             <div className="flex items-center gap-3">
               <span className="font-serif-editorial text-2xl text-[#d4af37]">/ 11</span>
               <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-                PROFESSIONAL EXPERIENCE & ENGINEERING CHRONOLOGY
+                PROFESSIONAL CAREER & VENTURE CHRONOLOGY
               </span>
             </div>
             <span className="font-mono text-xs text-zinc-400">
-              5+ YEARS FACTUAL CORPORATE RECORD (2020 – 2026)
+              6 VERIFIED INDUSTRY & VENTURE ROLES (2014 – 2026)
             </span>
           </div>
 
-          {/* 4 Experience Roles Grid 2x2 with ALL Bullet Points */}
-          <div className="grid grid-cols-2 gap-4 my-auto py-2">
+          {/* 6 Experience Roles Grid 3x2 */}
+          <div className="grid grid-cols-3 gap-3 my-auto py-1">
             {experiencesData.map((exp) => (
               <div
                 key={exp.id}
-                className="p-3.5 rounded-2xl bg-[#111114] border border-white/10 space-y-1.5 flex flex-col justify-between"
+                className="p-3 rounded-xl bg-[#111114] border border-white/10 space-y-1 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between pb-1 border-b border-white/5">
-                    <span className="font-mono text-[9.5px] text-[#d4af37] uppercase tracking-wider font-bold">
+                    <span className="font-mono text-[8.5px] text-[#d4af37] uppercase tracking-wider font-bold truncate max-w-[130px]">
                       {exp.type}
                     </span>
-                    <span className="px-2 py-0.5 rounded bg-white/5 font-mono text-[8.5px] text-zinc-300">
+                    <span className="px-1.5 py-0.5 rounded bg-white/5 font-mono text-[7.5px] text-zinc-300">
                       {exp.period}
                     </span>
                   </div>
 
-                  <h4 className="font-serif-editorial text-base text-white font-medium pt-1">
+                  <h4 className="font-serif-editorial text-sm text-white font-medium pt-1 leading-snug">
                     {exp.role}
                   </h4>
 
-                  <div className="text-xs font-mono text-[#ebdca4] flex items-center gap-2 pt-0.5">
-                    <span>{exp.company}</span>
+                  <div className="text-[10px] font-mono text-[#ebdca4] flex items-center gap-1.5 pt-0.5">
+                    <span className="truncate">{exp.company}</span>
                     <span className="text-zinc-600">·</span>
-                    <span className="text-zinc-400">{exp.location}</span>
+                    <span className="text-zinc-400 shrink-0">{exp.location}</span>
                   </div>
 
-                  <p className="text-xs text-zinc-300 font-light leading-snug pt-1">
+                  <p className="text-[9px] text-zinc-300 font-light leading-snug pt-1 line-clamp-2">
                     {exp.description}
                   </p>
                 </div>
 
-                <div className="space-y-1 pt-1.5 border-t border-white/5">
-                  {exp.bullets.map((b, idx) => (
-                    <div key={idx} className="flex items-start gap-1.5 text-[9.5px] text-zinc-300 font-light leading-tight">
-                      <CheckCircle2 className="w-3 h-3 text-[#d4af37] shrink-0 mt-0.5" />
-                      <span>{b}</span>
+                <div className="space-y-1 pt-1 border-t border-white/5">
+                  {exp.bullets.slice(0, 2).map((b, idx) => (
+                    <div key={idx} className="flex items-start gap-1 text-[8.5px] text-zinc-300 font-light leading-tight">
+                      <CheckCircle2 className="w-2.5 h-2.5 text-[#d4af37] shrink-0 mt-0.5" />
+                      <span className="line-clamp-2">{b}</span>
                     </div>
                   ))}
                 </div>
 
                 <div className="flex flex-wrap gap-1 pt-1">
-                  {exp.tags.map((tag) => (
-                    <span key={tag} className="px-1.5 py-0.2 rounded bg-white/5 text-[8.5px] font-mono text-zinc-400">
+                  {exp.tags.slice(0, 3).map((tag) => (
+                    <span key={tag} className="px-1.5 py-0.2 rounded bg-white/5 text-[7.5px] font-mono text-zinc-400">
                       {tag}
                     </span>
                   ))}
@@ -1131,7 +1131,7 @@ export function PrintableDocument({ exportOptions }: PrintableDocumentProps) {
           {/* Footer */}
           <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
             <span>MASTER PORTFOLIO DECK · PAGE 11 / 15</span>
-            <span>JEM ANGKASA WIJAYA, S.KOM. · CORPORATE EXPERIENCE HISTORY</span>
+            <span>JEM ANGKASA WIJAYA, S.KOM. · PROFESSIONAL CAREER HISTORY</span>
           </div>
         </section>
       )}
@@ -1299,13 +1299,23 @@ export function PrintableDocument({ exportOptions }: PrintableDocumentProps) {
                 ))}
               </div>
 
-              <div className="pt-2 border-t border-white/10 space-y-1">
-                <span className="text-xs font-mono text-zinc-400 font-bold block uppercase">
-                  VERIFIED INDUSTRY CERTIFICATIONS:
-                </span>
-                <p className="text-xs font-mono text-zinc-300 leading-tight">
-                  IBM Granite AI (2024), Dicoding React Web (2022), SOLID Principles (2021), AWS Cloud (2021), RevoU Product Management (2022).
-                </p>
+              <div className="pt-2 border-t border-white/10 space-y-1 text-[8.5px] font-mono">
+                <div>
+                  <span className="text-zinc-400 font-bold uppercase block text-[8px]">
+                    CAMPUS LEADERSHIP & VOLUNTEERING (iSTTS):
+                  </span>
+                  <p className="text-zinc-300 leading-tight">
+                    Vice Chairman PRENSSIB · Python Tutor HIMA SIB · Chairman Kunjungan Industri · PR Coordinator IGL · Kartini iSTTS.
+                  </p>
+                </div>
+                <div className="pt-1">
+                  <span className="text-zinc-400 font-bold uppercase block text-[8px]">
+                    VERIFIED INDUSTRY CERTIFICATIONS:
+                  </span>
+                  <p className="text-zinc-300 leading-tight">
+                    IBM Granite AI (2024), Dicoding React Web (2022), SOLID Principles (2021), AWS Cloud (2021), RevoU PM (2022).
+                  </p>
+                </div>
               </div>
             </div>
 

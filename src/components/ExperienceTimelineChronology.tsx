@@ -30,15 +30,25 @@ export function ExperienceTimelineChronology() {
       id: "RANTAI DINGIN & KEMASAN INDUSTRI",
       zh: "冷链物流与工业包装制造",
     },
+    "sailly-advanced-group": {
+      en: "VOLUNTEER CRYPTO MENTORSHIP",
+      id: "MENTORSHIP TRADING VOLUNTEER",
+      zh: "志愿加密量化交易导师",
+    },
     enevti: {
       en: "WEB3 COMMUNITY & AGILE SCRUM",
       id: "KOMUNITAS WEB3 & AGILE SCRUM",
       zh: "WEB3 社区运营与敏捷开发",
     },
     qlp: {
-      en: "DATABASE NORMALIZATION & FILTERS",
-      id: "NORMALISASI DATABASE & FILTER",
-      zh: "数据库范式化与多维检索",
+      en: "VOLUNTEER BACKEND & 3NF DB",
+      id: "VOLUNTEER BACKEND & DATABASE",
+      zh: "志愿后端与数据库范式化",
+    },
+    "the-fresh": {
+      en: "FARM-TO-DOOR E-COMMERCE & LOGISTICS",
+      id: "E-COMMERCE PERTANIAN & LOGISTIK",
+      zh: "生鲜电商直采与末端配送",
     },
     "screening-sdm": {
       en: "C# .NET AUTOMATION & PSYCHOMETRICS",
