@@ -1,26 +1,660 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #09090b;
+    --foreground: #f4f4f5;
+    --card: #121215;
+    --card-border: #222228;
+    --gold: #d4af37;
+    --gold-light: #ebdca4;
+    --gold-dim: #7a631c;
+    --crimson: #dc2626;
+    --crimson-light: #f87171;
+    --crimson-dim: #5c1414;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
 }
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Editorial Serif & Display Styles */
+.font-serif-editorial {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+}
+
+/* Hairline borders and subtle grid lines */
+.border-hairline {
+  border-width: 1px;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.border-hairline-gold {
+  border-width: 1px;
+  border-color: rgba(212, 175, 55, 0.25);
+}
+
+.border-hairline-crimson {
+  border-width: 1px;
+  border-color: rgba(220, 38, 38, 0.3);
+}
+
+/* Luxury Gold & Crimson Gradients (Subtle, No Neon Slop) */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #f5eed1 0%, #d4af37 60%, #b89628 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-crimson-gradient {
+  background: linear-gradient(135deg, #fca5a5 0%, #dc2626 60%, #991b1b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* Custom Minimal Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
+}
+
+/* Print Specific Rules for Luxury Landscape Portfolio Presentation Deck (297mm x 210mm) */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html,
+  body {
+    width: 297mm !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #09090b !important;
+    color: #f4f4f5 !important;
+    font-size: 10pt;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Hide screen-only interactive UI */
+  .no-print,
+  .print-hidden {
+    display: none !important;
+  }
+
+  /* Show print container exclusively */
+  .printable-document-container {
+    display: block !important;
+    width: 297mm !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    background-color: #09090b !important;
+    color: #f4f4f5 !important;
+  }
+
+  /* Discrete Landscape Slide Page (Exactly 297mm x 210mm) */
+  .print-landscape-page {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    width: 297mm !important;
+    height: 210mm !important;
+    min-height: 210mm !important;
+    max-height: 210mm !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    position: relative !important;
+    background-color: #09090b !important;
+    color: #f4f4f5 !important;
+    padding: 10mm 12mm !important;
+  }
+
+  .print-landscape-page:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  .print-avoid-break {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}
+
+/* Infinite Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 65s linear infinite;
+}
+
+.animate-marquee-fast {
+  display: flex;
+  width: max-content;
+  animation: marquee 34s linear infinite;
+}
+
+.animate-marquee-slow {
+  display: flex;
+  width: max-content;
+  animation: marquee 115s linear infinite;
+}
+
+.animate-marquee:hover,
+.animate-marquee-fast:hover,
+.animate-marquee-slow:hover {
+  animation-play-state: paused;
+}
+
+.animate-marquee-reverse {
+  display: flex;
+  width: max-content;
+  animation: marquee-reverse 70s linear infinite;
+}
+
+.animate-marquee-reverse-fast {
+  display: flex;
+  width: max-content;
+  animation: marquee-reverse 36s linear infinite;
+}
+
+.animate-marquee-reverse-slow {
+  display: flex;
+  width: max-content;
+  animation: marquee-reverse 120s linear infinite;
+}
+
+.animate-marquee-reverse:hover,
+.animate-marquee-reverse-fast:hover,
+.animate-marquee-reverse-slow:hover {
+  animation-play-state: paused;
+}
+
+/* Subtle Astronomical Twinkle Animation for Micro-Stars */
+@keyframes twinkleStar {
+  0% {
+    opacity: 0.25;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0.35;
+    transform: scale(0.9);
+  }
+}
+
+/* Space Museum Celestial Animations */
+@keyframes shootingStar {
+  0% {
+    transform: translate3d(-100px, -60px, 0) rotate(35deg);
+    opacity: 0;
+    width: 0;
+  }
+  15% {
+    opacity: 1;
+    width: 140px;
+  }
+  85% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate3d(400px, 280px, 0) rotate(35deg);
+    opacity: 0;
+    width: 0;
+  }
+}
+
+@keyframes asteroidFloat {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(12px, -18px, 0) rotate(180deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(360deg);
+  }
+}
+
+@keyframes auroraWave {
+  0% {
+    transform: scaleY(1) translateY(0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scaleY(1.25) translateY(-20px);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scaleY(0.95) translateY(10px);
+    opacity: 0.35;
+  }
+}
+
+@keyframes solarPulse {
+  0% {
+    transform: scale(0.97);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.97);
+    opacity: 0.75;
+  }
+}
+
+@keyframes breathingGlow {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.55;
+    filter: blur(100px);
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.95;
+    filter: blur(125px);
+  }
+  100% {
+    transform: scale(0.92);
+    opacity: 0.55;
+    filter: blur(100px);
+  }
+}
+
+@keyframes solarProminence {
+  0% {
+    transform: translateY(0) scaleY(1) rotate(0deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-35px) scaleY(1.4) rotate(4deg);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(0) scaleY(1) rotate(0deg);
+    opacity: 0.6;
+  }
+}
+
+@keyframes solarFlamesFull {
+  0% {
+    transform: scaleY(1) translateY(0);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scaleY(1.22) translateY(-18px);
+    filter: brightness(1.4);
+  }
+  100% {
+    transform: scaleY(1) translateY(0);
+    filter: brightness(1);
+  }
+}
+
+@keyframes solarFlameTongue {
+  0% {
+    transform: scaleY(0.92) skewX(-2deg) translateY(0);
+    opacity: 0.75;
+    filter: brightness(1);
+  }
+  30% {
+    transform: scaleY(1.28) skewX(3deg) translateY(-22px);
+    opacity: 1;
+    filter: brightness(1.45);
+  }
+  65% {
+    transform: scaleY(1.1) skewX(-1.5deg) translateY(-10px);
+    opacity: 0.85;
+    filter: brightness(1.2);
+  }
+  100% {
+    transform: scaleY(0.92) skewX(-2deg) translateY(0);
+    opacity: 0.75;
+    filter: brightness(1);
+  }
+}
+
+@keyframes solarProminenceLoop {
+  0% {
+    transform: scaleY(0.95) scaleX(0.98) translateY(0) rotate(0deg);
+    opacity: 0.65;
+  }
+  50% {
+    transform: scaleY(1.25) scaleX(1.05) translateY(-28px) rotate(3deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.95) scaleX(0.98) translateY(0) rotate(0deg);
+    opacity: 0.65;
+  }
+}
+
+@keyframes solarPlasmaBoil {
+  0% {
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.06) rotate(1deg);
+    filter: brightness(1.25);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1);
+  }
+}
+
+@keyframes auroraPillarsWave {
+  0% {
+    transform: scaleY(0.88) skewX(-3deg) translateY(0);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scaleY(1.4) skewX(4deg) translateY(-24px);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.88) skewX(-3deg) translateY(0);
+    opacity: 0.75;
+  }
+}
+
+@keyframes auroraCurtainBillow {
+  0% {
+    transform: scaleY(0.92) translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scaleY(1.3) translateY(-18px);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scaleY(0.92) translateY(0);
+    opacity: 0.7;
+  }
+}
+
+@keyframes auroraWaveFluid {
+  0% {
+    transform: scaleY(0.92) skewY(-1.5deg) translateY(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scaleY(1.18) skewY(2deg) translateY(-14px);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.92) skewY(-1.5deg) translateY(0);
+    opacity: 0.8;
+  }
+}
+
+@keyframes auroraEruption {
+  0% {
+    transform: scaleY(0.9) translateY(0) skewX(-2deg);
+    opacity: 0.75;
+    filter: brightness(1);
+  }
+  50% {
+    transform: scaleY(1.35) translateY(-32px) skewX(3deg);
+    opacity: 1;
+    filter: brightness(1.35);
+  }
+  100% {
+    transform: scaleY(0.9) translateY(0) skewX(-2deg);
+    opacity: 0.75;
+    filter: brightness(1);
+  }
+}
+
+@keyframes solarCoronaBreathe {
+  0% {
+    transform: scale(0.98);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scale(0.98);
+    opacity: 0.7;
+  }
+}
+
+@keyframes auroraSinuousFlow {
+  0% {
+    transform: scaleY(0.96) translateY(0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scaleY(1.12) translateY(-8px);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.96) translateY(0);
+    opacity: 0.85;
+  }
+}
+
+@keyframes beaconPulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(2.25);
+    opacity: 0;
+  }
+}
+
+@keyframes cloudDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(25px, -15px, 0) scale(1.04);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes floatingPlanet {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-16px) rotate(2deg);
+  }
+  66% {
+    transform: translateY(12px) rotate(-1.5deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+@keyframes floatingPlanetAlt {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(14px) rotate(-2deg);
+  }
+  66% {
+    transform: translateY(-15px) rotate(1.5deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+/* 4 Distinct Non-Synchronous Organic Cloud Breathing Animations for Skills */
+@keyframes cloudBreatheOrange {
+  0% {
+    transform: scale(0.92) translate3d(0, 0, 0);
+    opacity: 0.70;
+  }
+  30% {
+    transform: scale(1.28) translate3d(24px, -14px, 0);
+    opacity: 1.0;
+  }
+  70% {
+    transform: scale(0.98) translate3d(-18px, 16px, 0);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(0.92) translate3d(0, 0, 0);
+    opacity: 0.70;
+  }
+}
+
+@keyframes cloudBreatheBlue {
+  0% {
+    transform: scale(0.95) translate3d(0, 0, 0);
+    opacity: 0.75;
+  }
+  40% {
+    transform: scale(0.90) translate3d(-24px, 18px, 0);
+    opacity: 0.65;
+  }
+  75% {
+    transform: scale(1.32) translate3d(22px, -22px, 0);
+    opacity: 1.0;
+  }
+  100% {
+    transform: scale(0.95) translate3d(0, 0, 0);
+    opacity: 0.75;
+  }
+}
+
+@keyframes cloudBreathePurple {
+  0% {
+    transform: scale(0.94) translate3d(0, 0, 0);
+    opacity: 0.75;
+  }
+  35% {
+    transform: scale(1.30) translate3d(20px, 22px, 0);
+    opacity: 1.0;
+  }
+  65% {
+    transform: scale(0.92) translate3d(-16px, -16px, 0);
+    opacity: 0.70;
+  }
+  100% {
+    transform: scale(0.94) translate3d(0, 0, 0);
+    opacity: 0.75;
+  }
+}
+
+@keyframes cloudBreatheGreen {
+  0% {
+    transform: scale(0.92) translate3d(0, 0, 0);
+    opacity: 0.70;
+  }
+  45% {
+    transform: scale(1.34) translate3d(-22px, -18px, 0);
+    opacity: 1.0;
+  }
+  80% {
+    transform: scale(0.90) translate3d(24px, 16px, 0);
+    opacity: 0.65;
+  }
+  100% {
+    transform: scale(0.92) translate3d(0, 0, 0);
+    opacity: 0.70;
+  }
+}
+
+/* GPU Hardware Acceleration for buttery-smooth 60-120fps scrolling */
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Custom Torch / Flashlight Cursor System for Desktop */
+@media (pointer: fine) {
+  html, body, a, button, [role="button"], .cursor-pointer, select, summary {
+    cursor: none !important;
+  }
+
+  /* Seamless text editing experience for form controls */
+  input:not([type="button"]):not([type="submit"]),
+  textarea,
+  [contenteditable="true"] {
+    cursor: text !important;
+  }
+}
+
+/* Cinematic Depth of Field & Optical Lens Vignette */
+.cinematic-vignette {
+  background: radial-gradient(ellipse 80% 70% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.7) 100%);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+
+

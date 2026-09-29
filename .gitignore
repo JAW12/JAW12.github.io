@@ -39,3 +39,22 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# design references & docs
+/public/references/
+references/
+*.docx
+*.xlsx
+*.doc
+*.csv
+public/assets/projects/**/*.html
+public/assets/projects/**/*.docx
+public/assets/projects/**/*.xlsx
+
+# IDE & OS
+.vscode/
+.idea/
+Thumbs.db
+*.swp
+*.swo
+
