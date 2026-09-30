@@ -132,7 +132,7 @@ export const awardsData: AwardItem[] = [
     subjectZh: "算法时间复杂度、核心数据结构与逻辑优化",
     issuer: "Laboratorium Komputer iSTTS",
     year: "2018",
-    image: "/assets/certificates/award-algo-2018.jpg",
+    image: "/assets/certificates/award-algo-2018.webp",
     description: "Awarded for highest score and exemplary code cleanliness in C# algorithmic programming practicum.",
     descriptionId: "Dianugerahi sebagai praktikan dengan nilai tertinggi dan kedisiplinan kode terbersih dalam praktikum pemrograman C#.",
     descriptionZh: "在C#算法与数据结构实训项目中荣获全级最高分及最优代码整洁规范表彰。",
@@ -146,7 +146,7 @@ export const awardsData: AwardItem[] = [
     subjectZh: "HTML5语义化、CSS3布局、JavaScript DOM操纵与网络协议",
     issuer: "Laboratorium Komputer iSTTS",
     year: "2018",
-    image: "/assets/certificates/award-web-2018.jpg",
+    image: "/assets/certificates/award-web-2018.webp",
     description: "Ranked #1 across student cohorts in semantic markup, DOM manipulation, and responsive web implementation.",
     descriptionId: "Peringkat 1 lintas angkatan mahasiswa dalam markup semantik, manipulasi DOM, dan implementasi web responsif.",
     descriptionZh: "在跨年级学员评比中位列第一，获评语义化标记、DOM操纵及响应式界面实现首奖。",
@@ -160,7 +160,7 @@ export const awardsData: AwardItem[] = [
     subjectZh: "C#、MySQL关系数据库、Socket网络通信与多层分布式体系",
     issuer: "Laboratorium Komputer iSTTS",
     year: "2019",
-    image: "/assets/certificates/award-client-server-2019.jpg",
+    image: "/assets/certificates/award-client-server-2019.webp",
     description: "Honored for architectural excellence in building concurrent multi-user enterprise desktop systems with MySQL backend.",
     descriptionId: "Diberikan atas keunggulan arsitektural dalam membangun sistem desktop korporat multi-pengguna konkuren dengan backend MySQL.",
     descriptionZh: "表彰在构建高并发多用户企业级桌面系统与MySQL高可用数据库后端方面的架构卓越性。",
@@ -174,7 +174,7 @@ export const awardsData: AwardItem[] = [
     subjectZh: "面向对象封装性、多态继承、设计模式与高内聚低耦合架构",
     issuer: "Laboratorium Komputer iSTTS",
     year: "2019",
-    image: "/assets/certificates/award-pbo-2019.jpg",
+    image: "/assets/certificates/award-pbo-2019.webp",
     description: "Recognized as top performer in rigorous Java object-oriented principles, design patterns, and unit reliability.",
     descriptionId: "Diakui sebagai peraih nilai tertinggi dalam penerapan prinsip OOP Java yang ketat, pola desain terstruktur, dan keandalan kode.",
     descriptionZh: "在严格的Java面向对象设计原则、经典设计模式实践与单元测试可靠性中评选为首位。",
@@ -200,7 +200,7 @@ export const certificationsData: CertificationItem[] = [
     year: "2022",
     category: "web",
     credentialUrl: "https://www.dicoding.com/certificates/N9ZO7O8O0ZG5",
-    image: "/assets/certificates/cert-dicoding-react-2022.jpg",
+    image: "/assets/certificates/cert-dicoding-react-2022.webp",
   },
   {
     title: "Intro to Product Management",
@@ -209,7 +209,7 @@ export const certificationsData: CertificationItem[] = [
     issuer: "RevoU",
     year: "2022",
     category: "methodology",
-    image: "/assets/certificates/cert-revou-pm-2022.jpg",
+    image: "/assets/certificates/cert-revou-pm-2022.webp",
   },
   {
     title: "Google Developer Group (GDG) DevFest 2022",
@@ -218,7 +218,7 @@ export const certificationsData: CertificationItem[] = [
     issuer: "Google Developers & GDG Surabaya",
     year: "2022",
     category: "web",
-    image: "/assets/certificates/cert-gdg-2022.jpg",
+    image: "/assets/certificates/cert-gdg-2022.webp",
   },
   {
     title: "Volunteer Back-End Engineer",
@@ -227,7 +227,7 @@ export const certificationsData: CertificationItem[] = [
     issuer: "Quarter Life Projects",
     year: "2022",
     category: "web",
-    image: "/assets/certificates/cert-quarterlife-2022.jpg",
+    image: "/assets/certificates/cert-quarterlife-2022.webp",
   },
   // 2021
   {
@@ -238,7 +238,7 @@ export const certificationsData: CertificationItem[] = [
     year: "2021",
     category: "cloud",
     credentialUrl: "https://www.dicoding.com/certificates/RVZK19W0QPD5",
-    image: "/assets/certificates/cert-dicoding-aws-2021.jpg",
+    image: "/assets/certificates/cert-dicoding-aws-2021.webp",
   },
   {
     title: "SOLID Programming & Software Design Principles",
@@ -248,7 +248,7 @@ export const certificationsData: CertificationItem[] = [
     year: "2021",
     category: "methodology",
     credentialUrl: "https://www.dicoding.com/certificates/07Z6L600JPQR",
-    image: "/assets/certificates/cert-dicoding-solid-2021.jpg",
+    image: "/assets/certificates/cert-dicoding-solid-2021.webp",
   },
   {
     title: "Building Back-End Applications for Beginners",
@@ -258,7 +258,7 @@ export const certificationsData: CertificationItem[] = [
     year: "2021",
     category: "web",
     credentialUrl: "https://www.dicoding.com/certificates/JLX116506X72",
-    image: "/assets/certificates/cert-dicoding-backend-2021.jpg",
+    image: "/assets/certificates/cert-dicoding-backend-2021.webp",
   },
   {
     title: "Building Front-End Web Applications for Beginners",
@@ -268,7 +268,7 @@ export const certificationsData: CertificationItem[] = [
     year: "2021",
     category: "web",
     credentialUrl: "https://www.dicoding.com/certificates/N9ZOEJO6YXG5",
-    image: "/assets/certificates/cert-dicoding-frontend-2021.jpg",
+    image: "/assets/certificates/cert-dicoding-frontend-2021.webp",
   },
   {
     title: "JavaScript Core Programming Fundamentals",
@@ -278,7 +278,7 @@ export const certificationsData: CertificationItem[] = [
     year: "2021",
     category: "web",
     credentialUrl: "https://www.dicoding.com/certificates/RVZK4Q05EPD5",
-    image: "/assets/certificates/cert-dicoding-js-2021.jpg",
+    image: "/assets/certificates/cert-dicoding-js-2021.webp",
   },
   {
     title: "Web Engineering & Modern Semantic Standards",
@@ -288,7 +288,7 @@ export const certificationsData: CertificationItem[] = [
     year: "2021",
     category: "web",
     credentialUrl: "https://www.dicoding.com/certificates/L4PQ33K9VPO1",
-    image: "/assets/certificates/cert-dicoding-web-2021.jpg",
+    image: "/assets/certificates/cert-dicoding-web-2021.webp",
   },
   {
     title: "Baparekraf Developer Day 2021",
@@ -297,7 +297,7 @@ export const certificationsData: CertificationItem[] = [
     issuer: "Kemenparekraf RI & Dicoding",
     year: "2021",
     category: "methodology",
-    image: "/assets/certificates/cert-baparekraf-2021.jpg",
+    image: "/assets/certificates/cert-baparekraf-2021.webp",
   },
   // 2020
   {
@@ -308,7 +308,7 @@ export const certificationsData: CertificationItem[] = [
     year: "2020",
     category: "web",
     credentialUrl: "https://www.dicoding.com/certificates/1OP8D6R72PQK",
-    image: "/assets/certificates/cert-dicoding-android-2020.jpg",
+    image: "/assets/certificates/cert-dicoding-android-2020.webp",
   },
   {
     title: "Shopee Code League 2020",
@@ -317,7 +317,7 @@ export const certificationsData: CertificationItem[] = [
     issuer: "Shopee",
     year: "2020",
     category: "methodology",
-    image: "/assets/certificates/cert-shopee-2020.jpg",
+    image: "/assets/certificates/cert-shopee-2020.webp",
   },
   // 2019
   {
@@ -327,6 +327,6 @@ export const certificationsData: CertificationItem[] = [
     issuer: "Tech in Asia",
     year: "2019",
     category: "methodology",
-    image: "/assets/certificates/cert-techinasia-2019.jpg",
+    image: "/assets/certificates/cert-techinasia-2019.webp",
   },
 ];

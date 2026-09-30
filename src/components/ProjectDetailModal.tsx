@@ -50,13 +50,13 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
 
   const images = validImages.length > 0
     ? validImages
-    : ["/assets/projects/secret-of-life/white_desk.png"];
+    : ["/assets/projects/secret-of-life/white_desk.webp"];
 
   const safeIndex =
     activeImageIndex >= 0 && activeImageIndex < images.length
       ? activeImageIndex
       : 0;
-  const currentImageSrc = images[safeIndex] || "/assets/projects/secret-of-life/white_desk.png";
+  const currentImageSrc = images[safeIndex] || "/assets/projects/secret-of-life/white_desk.webp";
 
   return createPortal(
     <>
@@ -118,6 +118,11 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
                         loop
                         muted
                         playsInline
+                        preload="none"
+                        poster={
+                          project.videoPoster?.[currentImageSrc] ??
+                          project.images?.find((img) => !img.match(/\.(mp4|webm|mov)$/i))
+                        }
                         className="w-full h-full object-cover"
                       />
                     ) : (
@@ -127,7 +132,7 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 850px"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        priority
+                        loading="lazy"
                         quality={75}
                       />
                     )}

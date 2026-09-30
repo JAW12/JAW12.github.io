@@ -61,7 +61,7 @@ export function ProjectLightboxViewer({
   const safeImages =
     validImages.length > 0
       ? validImages
-      : ["/assets/projects/secret-of-life/white_desk.png"];
+      : ["/assets/projects/secret-of-life/white_desk.webp"];
   const safeCurrentIndex =
     currentIndex >= 0 && currentIndex < safeImages.length ? currentIndex : 0;
 

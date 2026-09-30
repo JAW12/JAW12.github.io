@@ -53,6 +53,8 @@ export interface ProjectItem {
   demoLinks?: DemoLink[];
   images?: string[];
   audioTracks?: AudioTrackItem[];
+  /** Map video filename → poster image path (WebP) for <video poster="..."> */
+  videoPoster?: Record<string, string>;
 }
 
 export const flagshipProjects: ProjectItem[] = [
@@ -106,35 +108,35 @@ export const flagshipProjects: ProjectItem[] = [
       "Configured Hermes agent runtime to orchestrate multi-pass LLM prompt chaining for coherent, deterministic 150+ page manuscripts.",
       "Streamlined Canva visual typesetting templates and integrated Google Flow quote graphics for gold-foil luxury hardcover production.",
       "Integrated Hermes command center and Obsidian vault compilation workflows for reliable knowledge provenance tracking.",
-      "Reduced end-to-end book manuscript and layout compilation time from weeks of manual writing to 1 business day.",
+      "Reduced end-to-end book manuscript and layout compilation time from weeks of manual writing to 1 week.",
     ],
     highlightsId: [
       "Membangun skrip Python untuk membersihkan, memvalidasi, dan menstrukturkan data mentah profil menjadi parameter bab siap olah.",
       "Mengonfigurasi runtime agen Hermes untuk mengorkestrasikan alur prompt AI bertingkat guna menghasilkan naskah buku 150+ halaman yang kohesif dan deterministik.",
       "Menyusun templat layout visual di Canva dan memadukan grafis quote Google Flow untuk buku hardcover mewah beraksen foil emas.",
       "Mengintegrasikan command center Hermes dan alur kompilasi vault Obsidian untuk pelacakan asal-usul pengetahuan yang andal.",
-      "Memangkas siklus penyusunan naskah buku dari hitungan minggu pengerjaan manual menjadi hanya 1 hari kerja.",
+      "Memangkas siklus penyusunan naskah buku dari hitungan bulan pengerjaan manual menjadi hanya 1 minggu.",
     ],
     highlightsZh: [
       "构建 Python 数据预处理脚本，将原始零散个人档案清洗并结构化为章节级解析参数。",
       "配置 Hermes 智能体运行时编排多轮次 LLM 提示词链，确保 150+ 页长篇手稿逻辑严谨、章节连贯。",
       "打通 Canva 视觉排版模板与 Google Flow 艺术金句生成，交付极具奢华感的烫金精装实体书。",
       "深度集成 Hermes 指挥中枢与 Obsidian 知识库编译流，实现高可靠的知识溯源与状态锁定。",
-      "将整本 150+ 页个性化定制书籍的起草与排版周期从数周人工撰写缩短至 1 个工作日。",
+      "将整本 150+ 页个性化定制书籍的起草与排版周期从数月人工撰写缩短至 1 周。",
     ],
     metrics: [
       { label: "Book Output Volume", labelId: "Volume Halaman", labelZh: "书籍页数产出", value: "150+ Pages", valueId: "150+ Halaman", valueZh: "150+ 页" },
-      { label: "Production Turnaround", labelId: "Waktu Kompilasi", labelZh: "生产编译周期", value: "1 Business Day", valueId: "1 Hari Kerja", valueZh: "1 个工作日" },
+      { label: "Production Turnaround", labelId: "Waktu Kompilasi", labelZh: "生产编译周期", value: "1 Week", valueId: "1 Minggu", valueZh: "1 周" },
       { label: "Physical Finish", labelId: "Finishing Fisik", labelZh: "装帧工艺标准", value: "Gold Foil Hardcover", valueId: "Hardcover Foil Emas", valueZh: "烫金精装" }
     ],
     images: [
-      "/assets/projects/secret-of-life/white_desk.png",
-      "/assets/projects/secret-of-life/marble.png",
-      "/assets/projects/secret-of-life/black_innovative_1.png",
-      "/assets/projects/secret-of-life/close_up.png",
-      "/assets/projects/hermes/hermes_command_center.png",
-      "/assets/projects/hermes/hermes_system_center.png",
-      "/assets/projects/hermes/hermes_general.png",
+      "/assets/projects/secret-of-life/white_desk.webp",
+      "/assets/projects/secret-of-life/marble.webp",
+      "/assets/projects/secret-of-life/black_innovative_1.webp",
+      "/assets/projects/secret-of-life/close_up.webp",
+      "/assets/projects/hermes/hermes_command_center.webp",
+      "/assets/projects/hermes/hermes_system_center.webp",
+      "/assets/projects/hermes/hermes_general.webp",
     ],
     blueprintFlow: [
       {
@@ -286,9 +288,9 @@ export const flagshipProjects: ProjectItem[] = [
     ],
     liveUrl: "https://cocokga.my.id",
     images: [
-      "/assets/projects/cocokga/cocokga_bg_affinity.jpg",
-      "/assets/projects/cocokga/cocokga_bg_arcade.jpg",
-      "/assets/projects/cocokga/logo_cocokga.png",
+      "/assets/projects/cocokga/cocokga_bg_affinity.webp",
+      "/assets/projects/cocokga/cocokga_bg_arcade.webp",
+      "/assets/projects/cocokga/logo_cocokga.webp",
     ],
   },
   {
@@ -361,9 +363,9 @@ export const flagshipProjects: ProjectItem[] = [
       { label: "B2B Product Showcase", labelId: "Showcase Produk B2B", labelZh: "B2B 订购展示门户", url: "https://www.nangkapremium.id" },
     ],
     images: [
-      "/assets/projects/nangka-premium/pack_satu_1.png",
-      "/assets/projects/nangka-premium/pack_banyak_1.png",
-      "/assets/projects/nangka-premium/about.png",
+      "/assets/projects/nangka-premium/pack_satu_1.webp",
+      "/assets/projects/nangka-premium/pack_banyak_1.webp",
+      "/assets/projects/nangka-premium/about.webp",
     ],
     blueprintFlow: [
       {
@@ -469,11 +471,11 @@ export const flagshipProjects: ProjectItem[] = [
       { label: "Analytics Scope", labelId: "Cakupan Analitik", labelZh: "核心分析维度", value: "DCA · PnL · RR", valueId: "DCA · PnL · RR", valueZh: "DCA · 盈亏 · 风险收益比" }
     ],
     images: [
-      "/assets/projects/catatcrypto/catatcrypto_dashboard.png",
-      "/assets/projects/catatcrypto/catatcrypto_wallet.png",
-      "/assets/projects/catatcrypto/catatcrypto_market.png",
-      "/assets/projects/catatcrypto/catatcrypto_indicators.png",
-      "/assets/projects/catatcrypto/catatcrypto_poster.png",
+      "/assets/projects/catatcrypto/catatcrypto_dashboard.webp",
+      "/assets/projects/catatcrypto/catatcrypto_wallet.webp",
+      "/assets/projects/catatcrypto/catatcrypto_market.webp",
+      "/assets/projects/catatcrypto/catatcrypto_indicators.webp",
+      "/assets/projects/catatcrypto/catatcrypto_poster.webp",
     ],
     blueprintFlow: [
       {
@@ -580,10 +582,10 @@ export const flagshipProjects: ProjectItem[] = [
       { label: "Packaging Security", labelId: "Standar Kemasan", labelZh: "包装工艺标准", value: "100% Glue-Free Lock", valueId: "Kancing 100% Bebas Lem", valueZh: "100% 免胶卡扣结构" }
     ],
     images: [
-      "/assets/projects/branding/janok-packaging.png",
-      "/assets/projects/branding/janok-brosur.png",
-      "/assets/projects/branding/janok-menu.jpg",
-      "/assets/projects/branding/janok-logo.png",
+      "/assets/projects/branding/janok-packaging.webp",
+      "/assets/projects/branding/janok-brosur.webp",
+      "/assets/projects/branding/janok-menu.webp",
+      "/assets/projects/branding/janok-logo.webp",
     ],
     blueprintFlow: [
       {
@@ -1383,9 +1385,15 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
       images: [
         "/assets/projects/ai-video/BASKORO_ABIMANYU_EDITED.mp4",
         "/assets/projects/ai-video/Birthday Gift.mp4",
-        "/assets/projects/secret-of-life/white_desk.png",
-        "/assets/projects/cocokga/cocokga_bg_affinity.jpg",
+        "/assets/projects/secret-of-life/white_desk.webp",
+        "/assets/projects/cocokga/cocokga_bg_affinity.webp",
       ],
+      videoPoster: {
+        "/assets/projects/ai-video/BASKORO_ABIMANYU_EDITED.mp4":
+          "/assets/projects/ai-video/BASKORO_ABIMANYU_EDITED-poster.webp",
+        "/assets/projects/ai-video/Birthday Gift.mp4":
+          "/assets/projects/ai-video/Birthday Gift-poster.webp",
+      },
       demoLinks: [
         { label: "TikTok @thesecretoflife.id", labelId: "TikTok @thesecretoflife.id", url: "https://www.tiktok.com/@thesecretoflife.id" },
         { label: "Instagram @thesecretoflife.id", labelId: "Instagram @thesecretoflife.id", url: "https://www.instagram.com/thesecretoflife.id" },
@@ -1462,9 +1470,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         },
       ],
       images: [
-        "/assets/projects/ai-automation/invoice-batch.png",
-        "/assets/projects/ai-automation/rag.png",
-        "/assets/projects/ai-automation/whatsapp-chatbot.png",
+        "/assets/projects/ai-automation/invoice-batch.webp",
+        "/assets/projects/ai-automation/rag.webp",
+        "/assets/projects/ai-automation/whatsapp-chatbot.webp",
       ],
     },
     {
@@ -1510,9 +1518,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Vault Structure", labelId: "Struktur Vault", labelZh: "知识库图谱", value: "Bi-Directional Graph", valueId: "Grafik Dua Arah", valueZh: "双向网状知识图谱" }
       ],
       images: [
-        "/assets/projects/ai-automation/ai-sparring.png",
-        "/assets/projects/ai-automation/obsidian-graph.png",
-        "/assets/projects/ai-automation/obsidian-note.png",
+        "/assets/projects/ai-automation/ai-sparring.webp",
+        "/assets/projects/ai-automation/obsidian-graph.webp",
+        "/assets/projects/ai-automation/obsidian-note.webp",
       ],
     },
     {
@@ -1558,16 +1566,16 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Content Output", labelId: "Output Konten", labelZh: "内容输出形式", value: "Daily Devotional Drafts", valueId: "Draf Renungan Harian", valueZh: "每日灵修图文草稿" }
       ],
       images: [
-        "/assets/projects/ai-automation/satu-ayat/1.png",
-        "/assets/projects/ai-automation/satu-ayat/2.png",
-        "/assets/projects/ai-automation/satu-ayat/3.png",
-        "/assets/projects/ai-automation/satu-ayat/4.png",
-        "/assets/projects/ai-automation/satu-ayat/5.png",
-        "/assets/projects/ai-automation/satu-ayat/6.png",
-        "/assets/projects/ai-automation/satu-ayat/7.png",
-        "/assets/projects/ai-automation/satu-ayat/8.png",
-        "/assets/projects/ai-automation/satu-ayat/9.png",
-        "/assets/projects/ai-automation/satu-ayat/10.png",
+        "/assets/projects/ai-automation/satu-ayat/1.webp",
+        "/assets/projects/ai-automation/satu-ayat/2.webp",
+        "/assets/projects/ai-automation/satu-ayat/3.webp",
+        "/assets/projects/ai-automation/satu-ayat/4.webp",
+        "/assets/projects/ai-automation/satu-ayat/5.webp",
+        "/assets/projects/ai-automation/satu-ayat/6.webp",
+        "/assets/projects/ai-automation/satu-ayat/7.webp",
+        "/assets/projects/ai-automation/satu-ayat/8.webp",
+        "/assets/projects/ai-automation/satu-ayat/9.webp",
+        "/assets/projects/ai-automation/satu-ayat/10.webp",
       ],
       liveUrl: "https://www.instagram.com/satuayatdarituhan/",
       demoLinks: [
@@ -1662,7 +1670,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         },
       ],
       images: [
-        "/assets/projects/ai-automation/whatsapp-chatbot.png",
+        "/assets/projects/ai-automation/whatsapp-chatbot.webp",
       ],
     },
     {
@@ -1708,8 +1716,8 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Bypass Rate", labelId: "Keberhasilan Bypass", labelZh: "防爬突破率", value: "> 98% Anti-Bot Pass", valueId: "> 98% Lolos Anti-Bot", valueZh: "> 98% 防爬穿透率" }
       ],
       images: [
-        "/assets/projects/scraping/sma-surabaya.png",
-        "/assets/projects/scraping/kol-surabaya.png",
+        "/assets/projects/scraping/sma-surabaya.webp",
+        "/assets/projects/scraping/kol-surabaya.webp",
       ],
     },
   ],
@@ -1747,7 +1755,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Permutation Depth", labelId: "Kedalaman Cabang", labelZh: "博弈搜索深度", value: "9-Grid Minimax Exhaustive", valueId: "Minimax 9-Grid Lengkap", valueZh: "九宫格 Minimax 全状态遍历" }
       ],
       images: [
-        "/assets/projects/software/Untitled 41.png"
+        "/assets/projects/software/Untitled 41.webp"
       ],
       githubUrl: "https://github.com/JAW12/HTML-CSS-JS-Website-Tic-Tac-Toe-April-2022"
     },
@@ -1864,14 +1872,13 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Architecture", labelId: "Standar Arsitektur", labelZh: "工程架构标准", value: "SOLID & Clean Architecture", valueId: "SOLID & Clean Architecture", valueZh: "SOLID 与整洁架构" }
       ],
       images: [
-        "/assets/projects/dicoding/dicoding_react_notes.png",
-        "/assets/projects/dicoding/dicoding_bookshelf.png",
-        "/assets/projects/dicoding/dicoding_biodata_html.png",
-        "/assets/projects/dicoding/dicoding_biodata_profile.jpg",
-        "/assets/projects/dicoding/dicoding_android_food_1.jpg",
-        "/assets/projects/dicoding/dicoding_android_food_2.jpg",
-        "/assets/projects/dicoding/dicoding_android_food_3.jpg",
-        "/assets/projects/dicoding/dicoding_android_food_4.jpg"
+        "/assets/projects/dicoding/dicoding_react_notes.webp",
+        "/assets/projects/dicoding/dicoding_bookshelf.webp",
+        "/assets/projects/dicoding/dicoding_biodata_html.webp",
+        "/assets/projects/dicoding/dicoding_android_food_1.webp",
+        "/assets/projects/dicoding/dicoding_android_food_2.webp",
+        "/assets/projects/dicoding/dicoding_android_food_3.webp",
+        "/assets/projects/dicoding/dicoding_android_food_4.webp"
       ],
       demoLinks: [
         { label: "React Notes App GitHub", labelId: "GitHub Notes App React", url: "https://github.com/JAW12/React-JS-Website-Notes-Taking-Belajar-Membuat-Aplikasi-Web-dengan-React-Juni-2022" },
@@ -1983,11 +1990,11 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "State Management", labelId: "Manajemen Status", labelZh: "状态同步机制", value: "Multi-Station Sync", valueId: "Sinkronisasi Multi-Stasiun", valueZh: "多工作站实时状态同步" }
       ],
       images: [
-        "/assets/projects/software/Untitled 19.png",
-        "/assets/projects/software/Untitled 20.png",
-        "/assets/projects/software/Untitled 21.png",
-        "/assets/projects/software/Untitled 22.png",
-        "/assets/projects/software/Untitled 23.png",
+        "/assets/projects/software/Untitled 19.webp",
+        "/assets/projects/software/Untitled 20.webp",
+        "/assets/projects/software/Untitled 21.webp",
+        "/assets/projects/software/Untitled 22.webp",
+        "/assets/projects/software/Untitled 23.webp",
       ],
       githubUrl: "https://github.com/JAW12/PROBIS_SqueeCapsule",
       blueprintFlow: [
@@ -2061,11 +2068,11 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Data Architecture", labelId: "Basis Data", labelZh: "底层数据模型", value: "Relational MySQL 3NF", valueId: "MySQL Relasional 3NF", valueZh: "MySQL 3NF 规范化模型" }
       ],
       images: [
-        "/assets/projects/software/Untitled 3.png",
-        "/assets/projects/software/Untitled 4.png",
-        "/assets/projects/software/Untitled 5.png",
-        "/assets/projects/software/Untitled 6.png",
-        "/assets/projects/software/Untitled 7.png",
+        "/assets/projects/software/Untitled 3.webp",
+        "/assets/projects/software/Untitled 4.webp",
+        "/assets/projects/software/Untitled 5.webp",
+        "/assets/projects/software/Untitled 6.webp",
+        "/assets/projects/software/Untitled 7.webp",
       ],
       githubUrl: "https://github.com/JAW12/APLIN",
       blueprintFlow: [
@@ -2138,9 +2145,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Architecture", labelId: "Arsitektur Render", labelZh: "渲染引擎标准", value: "Native DOM & CSS Engine", valueId: "Engine DOM & CSS Native", valueZh: "原生 DOM 与 CSS 渲染引擎" }
       ],
       images: [
-        "/assets/projects/software/Untitled 42.png",
-        "/assets/projects/software/Untitled 43.png",
-        "/assets/projects/software/Untitled 44.png",
+        "/assets/projects/software/Untitled 42.webp",
+        "/assets/projects/software/Untitled 43.webp",
+        "/assets/projects/software/Untitled 44.webp",
       ],
       githubUrl: "https://github.com/JAW12/HTML-CSS-JS-jQuery-Website-Harvest-Moon-Plant-Simulation-Maret-2020",
       blueprintFlow: [
@@ -2202,10 +2209,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Architecture", labelId: "Platform Sistem", labelZh: "系统技术架构", value: "C# .NET Windows Forms", valueId: "C# .NET Windows Forms", valueZh: "C# .NET Windows Forms 原生架构" }
       ],
       images: [
-        "/assets/projects/software/Untitled 37.png",
-        "/assets/projects/software/Untitled 38.png",
-        "/assets/projects/software/Untitled 39.png",
-        "/assets/projects/software/Untitled 40.png"
+        "/assets/projects/software/Untitled 37.webp",
+        "/assets/projects/software/Untitled 38.webp",
+        "/assets/projects/software/Untitled 39.webp",
+        "/assets/projects/software/Untitled 40.webp"
       ],
       githubUrl: "https://github.com/JAW12/C-Desktop-Application-Basic-Supermarket-POS-April-2019"
     },
@@ -2253,7 +2260,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
       ],
       liveUrl: "https://youtu.be/ILx1zyAd-C4",
       images: [
-        "/assets/projects/unity-game/unity_bg_menu.jpg"
+        "/assets/projects/unity-game/unity_bg_menu.webp"
       ],
       blueprintFlow: [
         {
@@ -2385,8 +2392,8 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Certificate Engine", labelId: "Modul Sertifikat", labelZh: "证书颁发引擎", value: "Automated PDF Generation", valueId: "Generasi PDF Otomatis", valueZh: "PDF 结业证书自动化生成" }
       ],
       images: [
-        "/assets/projects/squeecourse/squeecourse_logo.png",
-        "/assets/projects/squeecourse/squeecourse_banner.jpg"
+        "/assets/projects/squeecourse/squeecourse_logo.webp",
+        "/assets/projects/squeecourse/squeecourse_banner.webp"
       ],
       githubUrl: "https://github.com/JAW12/FAI_SqueeCourse",
     },
@@ -2422,10 +2429,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Inquiry Speed", labelId: "Konversi Prospek", labelZh: "意向直达漏斗", value: "Direct WhatsApp Funnel", valueId: "Funnel WhatsApp Langsung", valueZh: "WhatsApp 意向直达获客漏斗" }
       ],
       images: [
-        "/assets/projects/software/Untitled 33.png",
-        "/assets/projects/software/Untitled 34.png",
-        "/assets/projects/software/Untitled 35.png",
-        "/assets/projects/software/Untitled 36.png"
+        "/assets/projects/software/Untitled 33.webp",
+        "/assets/projects/software/Untitled 34.webp",
+        "/assets/projects/software/Untitled 35.webp",
+        "/assets/projects/software/Untitled 36.webp"
       ],
       githubUrl: "https://github.com/JAW12/PHP-Website-Basic-Car-Store-CRUD-April-2020"
     },
@@ -2472,12 +2479,12 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Academic Grade", labelId: "Evaluasi Akademik", labelZh: "学术评审评级", value: "Grade A Honors", valueId: "Nilai A Sempurna", valueZh: "最高满分 A 评定" }
       ],
       images: [
-        "/assets/projects/software/Untitled 24.png",
-        "/assets/projects/software/Untitled 25.png",
-        "/assets/projects/software/Untitled 26.png",
-        "/assets/projects/software/Untitled 27.png",
-        "/assets/projects/software/Untitled 28.png",
-        "/assets/projects/software/Untitled 29.png",
+        "/assets/projects/software/Untitled 24.webp",
+        "/assets/projects/software/Untitled 25.webp",
+        "/assets/projects/software/Untitled 26.webp",
+        "/assets/projects/software/Untitled 27.webp",
+        "/assets/projects/software/Untitled 28.webp",
+        "/assets/projects/software/Untitled 29.webp",
       ],
       githubUrl: "https://github.com/JAW12/C-Desktop-Application-Supermarket-POS-Mei-2019",
       blueprintFlow: [
@@ -2550,14 +2557,14 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Data Integrity", labelId: "Integritas Data", labelZh: "数据一致性保障", value: "100% ACID Transactional", valueId: "100% Transaksional ACID", valueZh: "100% ACID 事务一致性" }
       ],
       images: [
-        "/assets/projects/software/Untitled 8.png",
-        "/assets/projects/software/Untitled 9.png",
-        "/assets/projects/software/Untitled 10.png",
-        "/assets/projects/software/Untitled 11.png",
-        "/assets/projects/software/Untitled 12.png",
-        "/assets/projects/software/Untitled 13.png",
-        "/assets/projects/software/Untitled 14.png",
-        "/assets/projects/software/Untitled 15.png",
+        "/assets/projects/software/Untitled 8.webp",
+        "/assets/projects/software/Untitled 9.webp",
+        "/assets/projects/software/Untitled 10.webp",
+        "/assets/projects/software/Untitled 11.webp",
+        "/assets/projects/software/Untitled 12.webp",
+        "/assets/projects/software/Untitled 13.webp",
+        "/assets/projects/software/Untitled 14.webp",
+        "/assets/projects/software/Untitled 15.webp",
       ],
       githubUrl: "https://github.com/JAW12/ACS",
       blueprintFlow: [
@@ -2633,9 +2640,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Power-Up Variety", labelId: "Variasi Power-Up", labelZh: "能量道具矩阵", value: "5 Distinct Power-Ups", valueId: "5 Variasi Power-Up", valueZh: "5 种战术功能道具" }
       ],
       images: [
-        "/assets/projects/software/Untitled 30.png",
-        "/assets/projects/software/Untitled 31.png",
-        "/assets/projects/software/Untitled 32.png"
+        "/assets/projects/software/Untitled 30.webp",
+        "/assets/projects/software/Untitled 31.webp",
+        "/assets/projects/software/Untitled 32.webp"
       ],
       githubUrl: "https://github.com/JAW12/PBO",
       blueprintFlow: [
@@ -2711,9 +2718,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Visualization", labelId: "Visualisasi", labelZh: "可视化图表", value: "Interactive Tooltip Bar Charts", valueId: "Grafik Batang Interaktif", valueZh: "交互式悬浮柱状图表" }
       ],
       images: [
-        "/assets/projects/software/Untitled 16.png",
-        "/assets/projects/software/Untitled 17.png",
-        "/assets/projects/software/Untitled 18.png",
+        "/assets/projects/software/Untitled 16.webp",
+        "/assets/projects/software/Untitled 17.webp",
+        "/assets/projects/software/Untitled 18.webp",
       ],
       githubUrl: "https://github.com/JAW12/C-Desktop-Application-Basic-Pizza-Store-POS-Maret-2019",
       blueprintFlow: [
@@ -2786,7 +2793,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Billing Precision", labelId: "Format Nota", labelZh: "账单明细规格", value: "Itemized Thermal Slip", valueId: "Struk Rinci Item", valueZh: "标准化逐项小票明细" }
       ],
       images: [
-        "/assets/projects/software/Untitled 2.png",
+        "/assets/projects/software/Untitled 2.webp",
       ],
       githubUrl: "https://github.com/JAW12/C-Desktop-Application-Pizza-Maker-Receipt-Generator-Maret-2019",
       blueprintFlow: [
@@ -2859,11 +2866,11 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Evaluation Methods", labelId: "Metode Profiling", labelZh: "融合测评模型", value: "4 Integrated Frameworks", valueId: "4 Kerangka Kerja Terintegrasi", valueZh: "4 大经典心理与命理测评体系" }
       ],
       images: [
-        "/assets/projects/software/Untitled.png",
-        "/assets/projects/software/Untitled 1.png",
-        "/assets/projects/software/Report_Screening_November_2016_Page_1.jpg",
-        "/assets/projects/software/Report_Screening_November_2016_Page_2.jpg",
-        "/assets/projects/software/Report_Screening_November_2016_Page_3.jpg"
+        "/assets/projects/software/Untitled.webp",
+        "/assets/projects/software/Untitled 1.webp",
+        "/assets/projects/software/Report_Screening_November_2016_Page_1.webp",
+        "/assets/projects/software/Report_Screening_November_2016_Page_2.webp",
+        "/assets/projects/software/Report_Screening_November_2016_Page_3.webp"
       ],
       blueprintFlow: [
         {
@@ -3006,7 +3013,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Product Video Showcase", labelId: "Video Produk Pilihan", url: "https://youtu.be/rWxuPuyaEYo" },
         { label: "YouTube Channel", labelId: "Kanal YouTube", url: "https://www.youtube.com/@gudangbuahbeku1506/videos" }
       ],
-      images: ["/assets/projects/branding/gbb-logo.png", "/assets/projects/branding/gbb-banner.jpg"],
+      images: ["/assets/projects/branding/gbb-logo.webp", "/assets/projects/branding/gbb-banner.webp"],
       blueprintFlow: [
         {
           step: "Stock & Invoicing Operations",
@@ -3066,7 +3073,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Communication", labelId: "Standar Komunikasi", labelZh: "对接交付标准", value: "Standardized Strategic Briefs", valueId: "Brief Strategis Terstandarisasi", valueZh: "标准化战略宣发指南" }
       ],
       images: [
-        "/assets/projects/enevti/Enevti.png"
+        "/assets/projects/enevti/Enevti.webp"
       ]
     },
     {
@@ -3120,9 +3127,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "YouTube Official (@thefresh5198)", labelId: "YouTube Resmi (@thefresh5198)", url: "https://www.youtube.com/@thefresh5198" }
       ],
       images: [
-        "/assets/projects/branding/the-fresh-logo.jpg",
-        "/assets/projects/branding/the-fresh-poster.jpg",
-        "/assets/projects/branding/the-fresh-mockup.jpg"
+        "/assets/projects/branding/the-fresh-logo.webp",
+        "/assets/projects/branding/the-fresh-poster.webp",
+        "/assets/projects/branding/the-fresh-mockup.webp"
       ],
       blueprintFlow: [
         {
@@ -3198,7 +3205,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Domain", labelId: "Bidang Praktik", labelZh: "核心法律领域", value: "Commercial Agreements & IP", valueId: "Perjanjian Komersial & HKI", valueZh: "商业合同与知识产权" }
       ],
       images: [
-        "/assets/projects/design/law-protection-card.png"
+        "/assets/projects/design/law-protection-card.webp"
       ],
       blueprintFlow: [
         {
@@ -3313,19 +3320,19 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         }
       ],
       images: [
-        "/assets/projects/software/notion-templates-hub.png",
-        "/assets/projects/software/notion-trading-journal-trades.png",
-        "/assets/projects/software/notion-trading-journal-strategies.png",
-        "/assets/projects/software/notion-trading-journal-trade-detail.png",
-        "/assets/projects/software/notion-universe-v3-header.png",
-        "/assets/projects/software/notion-universe-v3-bigpicture.png",
-        "/assets/projects/software/notion-universe-v3-knowing-myself-1.png",
-        "/assets/projects/software/notion-universe-v3-knowing-myself-2.png",
-        "/assets/projects/software/notion-universe-v3-manifestations.png",
-        "/assets/projects/software/notion-universe-v3-finance-tracker.png",
-        "/assets/projects/software/notion-universe-v3-index-expanded.png",
-        "/assets/projects/software/notion-universe-v3-index.png",
-        "/assets/projects/software/notion-universe-v1-vision.png"
+        "/assets/projects/software/notion-templates-hub.webp",
+        "/assets/projects/software/notion-trading-journal-trades.webp",
+        "/assets/projects/software/notion-trading-journal-strategies.webp",
+        "/assets/projects/software/notion-trading-journal-trade-detail.webp",
+        "/assets/projects/software/notion-universe-v3-header.webp",
+        "/assets/projects/software/notion-universe-v3-bigpicture.webp",
+        "/assets/projects/software/notion-universe-v3-knowing-myself-1.webp",
+        "/assets/projects/software/notion-universe-v3-knowing-myself-2.webp",
+        "/assets/projects/software/notion-universe-v3-manifestations.webp",
+        "/assets/projects/software/notion-universe-v3-finance-tracker.webp",
+        "/assets/projects/software/notion-universe-v3-index-expanded.webp",
+        "/assets/projects/software/notion-universe-v3-index.webp",
+        "/assets/projects/software/notion-universe-v1-vision.webp"
       ]
     },
     {
@@ -3428,18 +3435,16 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Architecture", labelId: "Arsitektur", labelZh: "技术架构", value: "Laravel, PHP & MySQL", valueId: "Laravel, PHP & MySQL", valueZh: "Laravel, PHP 与 MySQL 架构" }
       ],
       images: [
-        "/assets/projects/about-me/hasilst.jpg",
-        "/assets/projects/about-me/hasilpb1.jpg",
-        "/assets/projects/about-me/hasilpb2.jpg",
-        "/assets/projects/about-me/hasilpt.jpg",
-        "/assets/projects/about-me/hasilarah.jpg",
-        "/assets/projects/about-me/hasilhub.jpg",
-        "/assets/projects/about-me/hasilps.jpg",
-        "/assets/projects/about-me/profesibisnis.jpg",
-        "/assets/projects/about-me/programstudi.jpg",
-        "/assets/projects/about-me/sifattersembunyi.jpg",
-        "/assets/projects/about-me/tahun.jpg",
-        "/assets/projects/about-me/hubungan.jpg"
+        "/assets/projects/about-me/hasilpb1.webp",
+        "/assets/projects/about-me/hasilpb2.webp",
+        "/assets/projects/about-me/hasilpt.webp",
+        "/assets/projects/about-me/hasilarah.webp",
+        "/assets/projects/about-me/hasilps.webp",
+        "/assets/projects/about-me/profesibisnis.webp",
+        "/assets/projects/about-me/programstudi.webp",
+        "/assets/projects/about-me/sifattersembunyi.webp",
+        "/assets/projects/about-me/tahun.webp",
+        "/assets/projects/about-me/hubungan.webp"
       ],
       blueprintFlow: [
         {
@@ -3588,14 +3593,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Algorithm Architecture", labelId: "Arsitektur Algoritma", labelZh: "算法底层模型", value: "Pyramid Inverted Triangle", valueId: "Piramida Segitiga Terbalik", valueZh: "倒金字塔数字拓扑模型" }
       ],
       images: [
-        "/assets/projects/quant/garis-kehidupan-preview.png",
-        "/assets/projects/quant/hasilst.jpg",
-        "/assets/projects/quant/hasilpb1.jpg",
-        "/assets/projects/quant/hasilpb2.jpg",
-        "/assets/projects/quant/hasilpt.jpg",
-        "/assets/projects/quant/hasilarah.jpg",
-        "/assets/projects/quant/hasilhub.jpg",
-        "/assets/projects/quant/hasilps.jpg"
+        "/assets/projects/quant/garis-kehidupan-preview.webp"
       ],
       blueprintFlow: [
         {
@@ -3671,12 +3669,12 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Origin Milestone", labelId: "Tonggak Sejarah", labelZh: "历史里程碑", value: "1st Psychology Project", valueId: "Proyek Psikologi Pertama", valueZh: "首个心理学与疗愈落地项目" }
       ],
       images: [
-        "/assets/projects/design/Cover_Buku_Inner_Healing_II.jpg",
-        "/assets/projects/design/Kartu_Nama_Inner_Healing_Juni_2014.jpg",
-        "/assets/projects/design/Hadi_Arwana_Inner_Healing.jpg",
-        "/assets/projects/design/_MG_8950.jpg",
-        "/assets/projects/design/_MG_8966.jpg",
-        "/assets/projects/design/Logo_Inner_Healing_Indonesia.png"
+        "/assets/projects/design/Cover_Buku_Inner_Healing_II.webp",
+        "/assets/projects/design/Kartu_Nama_Inner_Healing_Juni_2014.webp",
+        "/assets/projects/design/Hadi_Arwana_Inner_Healing.webp",
+        "/assets/projects/design/_MG_8950.webp",
+        "/assets/projects/design/_MG_8966.webp",
+        "/assets/projects/design/Logo_Inner_Healing_Indonesia.webp"
       ],
       blueprintFlow: [
         {
@@ -3764,10 +3762,10 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Product Video Showcase", labelId: "Video Produk Pilihan", url: "https://youtu.be/rWxuPuyaEYo" }
       ],
       images: [
-        "/assets/projects/branding/kbt-packaging.jpg",
-        "/assets/projects/branding/kbt-brosur.jpg",
-        "/assets/projects/branding/gbb-logo.png",
-        "/assets/projects/branding/gbb-banner.jpg"
+        "/assets/projects/branding/kbt-packaging.webp",
+        "/assets/projects/branding/kbt-brosur.webp",
+        "/assets/projects/branding/gbb-logo.webp",
+        "/assets/projects/branding/gbb-banner.webp"
       ],
       blueprintFlow: [
         {
@@ -3835,7 +3833,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Packaging Formats", labelId: "Format Kemasan", labelZh: "包装交付标准", value: "Bottle Stickers & Gift Box", valueId: "Stiker Botol & Kotak Hadiah", valueZh: "定制瓶贴与手提礼盒" },
         { label: "Visual Identity", labelId: "Identitas Visual", labelZh: "视觉资产", value: "FrutCubes 3D Mascot", valueId: "Maskot 3D FrutCubes", valueZh: "FrutCubes 3D 吉祥物" }
       ],
-      images: ["/assets/projects/branding/frut-tre-logo.jpg", "/assets/projects/branding/frut-tre-poster.jpg"]
+      images: ["/assets/projects/branding/frut-tre-logo.webp", "/assets/projects/branding/frut-tre-poster.webp"]
     },
     {
       id: "istts-sib-testimonial-video",
@@ -3974,7 +3972,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Color Profile", labelId: "Profil Warna", labelZh: "色彩模式", value: "CMYK Certified Master", valueId: "Master Warna CMYK", valueZh: "CMYK 印刷级工业校色" }
       ],
       images: [
-        "/assets/projects/design/istts-corona-poster.jpg"
+        "/assets/projects/design/istts-corona-poster.webp"
       ]
     },
     {
@@ -4114,7 +4112,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Resolution", labelId: "Resolusi Karya", labelZh: "输出分辨率", value: "Vector 300 DPI Output", valueId: "Output Vektor 300 DPI", valueZh: "300 DPI 矢量高精输出" }
       ],
       images: [
-        "/assets/projects/design/istts-quote-poster.jpg"
+        "/assets/projects/design/istts-quote-poster.webp"
       ]
     },
     {
@@ -4160,14 +4158,14 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Design System", labelId: "Sistem Desain", labelZh: "视觉设计规范", value: "Japanese Modern Slate", valueId: "Slate Modern Jepang", valueZh: "日式现代极简黑灰风" }
       ],
       images: [
-        "/assets/projects/software/Home_Page.png",
-        "/assets/projects/software/Splash_Screen.png",
-        "/assets/projects/software/Login_Page.png",
-        "/assets/projects/software/Menu.png",
-        "/assets/projects/software/Menu_Per_Kategori.png",
-        "/assets/projects/software/Cart.png",
-        "/assets/projects/software/Status_Pesan.png",
-        "/assets/projects/software/Kategori_Booking.png"
+        "/assets/projects/software/Home_Page.webp",
+        "/assets/projects/software/Splash_Screen.webp",
+        "/assets/projects/software/Login_Page.webp",
+        "/assets/projects/software/Menu.webp",
+        "/assets/projects/software/Menu_Per_Kategori.webp",
+        "/assets/projects/software/Cart.webp",
+        "/assets/projects/software/Status_Pesan.webp",
+        "/assets/projects/software/Kategori_Booking.webp"
       ]
     },
     {
@@ -4217,8 +4215,8 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Financial Modeling", labelId: "Model Finansial", labelZh: "财务模型", value: "Excel Yield & COGS Model", valueId: "Model Yield & COGS Excel", valueZh: "Excel 成本与毛利精算模型" }
       ],
       images: [
-        "/assets/projects/design/premium-juice.jpg",
-        "/assets/projects/design/premium-juice-sticker.jpg"
+        "/assets/projects/design/premium-juice.webp",
+        "/assets/projects/design/premium-juice-sticker.webp"
       ],
       blueprintFlow: [
         {
@@ -4288,8 +4286,8 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Institution", labelId: "Institusi", labelZh: "就读院校", value: "Xin Zhong School", valueId: "Xin Zhong School", valueZh: "新中三语学校 (Xin Zhong)" }
       ],
       images: [
-        "/assets/projects/design/Poster_Sekolah_Februari_2016_(1).jpg",
-        "/assets/projects/design/Logo_10B_April_2016.jpg"
+        "/assets/projects/design/Poster_Sekolah_Februari_2016_(1).webp",
+        "/assets/projects/design/Logo_10B_April_2016.webp"
       ],
       blueprintFlow: [
         {
@@ -4359,11 +4357,11 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Brand Deliverables", labelId: "Output Desain", labelZh: "设计产出", value: "Mascot, Cart, Menu & Banner", valueId: "Maskot, Gerobak, Menu & Banner", valueZh: "吉祥物 · 餐车 · 菜单 · 展架" }
       ],
       images: [
-        "/assets/projects/branding/djoeragan-sego-logo.png",
-        "/assets/projects/branding/djoeragan-sego-gerobak-1.jpg",
-        "/assets/projects/branding/djoeragan-sego-gerobak-2.jpg",
-        "/assets/projects/branding/djoeragan-sego-brosur.jpg",
-        "/assets/projects/branding/djoeragan-sego-banner.jpg"
+        "/assets/projects/branding/djoeragan-sego-logo.webp",
+        "/assets/projects/branding/djoeragan-sego-gerobak-1.webp",
+        "/assets/projects/branding/djoeragan-sego-gerobak-2.webp",
+        "/assets/projects/branding/djoeragan-sego-brosur.webp",
+        "/assets/projects/branding/djoeragan-sego-banner.webp"
       ],
       blueprintFlow: [
         {
@@ -4433,8 +4431,8 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Mediums", labelId: "Media Utama", labelZh: "设计产出", value: "Folding Box & Vacuum Pack", valueId: "Kotak Lipat & Kantong Vakum", valueZh: "折叠纸盒与真空锁鲜袋" }
       ],
       images: [
-        "/assets/projects/design/big-chicken-box.jpg",
-        "/assets/projects/design/big-chicken-frozen.png"
+        "/assets/projects/design/big-chicken-box.webp",
+        "/assets/projects/design/big-chicken-frozen.webp"
       ],
       blueprintFlow: [
         {
@@ -4498,7 +4496,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Inventory Logic", labelId: "Sistem Stok", labelZh: "进销存模型", value: "FIFO Rotation Excel", valueId: "Rotasi Stok FIFO Excel", valueZh: "FIFO 先进先出库存模型" }
       ],
       images: [
-        "/assets/projects/design/lc-chinese-food-menu.jpg"
+        "/assets/projects/design/lc-chinese-food-menu.webp"
       ],
       blueprintFlow: [
         {
@@ -4568,7 +4566,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Core Mediums", labelId: "Media Utama", labelZh: "设计产出", value: "Jar Label & A3 Poster", valueId: "Label Toples & Poster A3", valueZh: "瓶贴与 A3 营销海报" }
       ],
       images: [
-        "/assets/projects/design/sambelku-poster.jpg"
+        "/assets/projects/design/sambelku-poster.webp"
       ],
       blueprintFlow: [
         {

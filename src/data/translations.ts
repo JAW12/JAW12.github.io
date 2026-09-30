@@ -366,7 +366,7 @@ export const translations: Record<Language, TranslationContent> = {
         {
           value: "150+ Pages",
           label: "Autonomous AI Publishing Engine",
-          sub: "Turnaround Weeks ➔ 1 Day",
+          sub: "Turnaround Weeks ➔ 1 Week",
         },
         {
           value: "90+ SKUs",
@@ -392,9 +392,9 @@ export const translations: Record<Language, TranslationContent> = {
         {
           title: "AI Workflows & Autonomous Pipelines",
           description:
-            "Designing document synthesis pipelines and autonomous AI workflows (structured prompt engineering, air-gapped data handling, Python compilation) that compress turnaround from weeks to 1 day.",
+            "Designing document synthesis pipelines and autonomous AI workflows (structured prompt engineering, air-gapped data handling, Python compilation) that compress turnaround from weeks to 1 week.",
           metric: "150+ Pages",
-          metricLabel: "Weeks ➔ 1 Day Turnaround",
+          metricLabel: "Weeks ➔ 1 Week Turnaround",
           metricSub: "Print-Ready Synthesis Engine (The Secret of Life)",
           tags: ["LLM Prompt Orchestration", "Python Pipelines", "Document Synthesis", "Offset Standard"],
         },
@@ -437,7 +437,7 @@ export const translations: Record<Language, TranslationContent> = {
           metric: "150+ Pages",
           metricLabel: "Print-Ready Pipeline (The Secret of Life)",
           description:
-            "Engineered structured AI prompt synthesis workflows and a Python compilation engine converting raw profile data into 150+ page offset-standard print books, shrinking cycle time from weeks to 1 day.",
+            "Engineered structured AI prompt synthesis workflows and a Python compilation engine converting raw profile data into 150+ page offset-standard print books, shrinking cycle time from weeks to 1 week.",
         },
         {
           tag: "B2B Commercial Operations",
@@ -713,7 +713,7 @@ export const translations: Record<Language, TranslationContent> = {
         {
           value: "150+ Hal",
           label: "Pipeline Otomasi AI Siap Cetak",
-          sub: "Turnaround Berminggu-minggu ➔ 1 Hari",
+          sub: "Turnaround Berminggu-minggu ➔ 1 Minggu",
         },
         {
           value: "90+ SKU",
@@ -740,9 +740,9 @@ export const translations: Record<Language, TranslationContent> = {
         {
           title: "AI Workflows & Autonomous Pipelines",
           description:
-            "Merancang pipeline kompilasi dokumen dan alur kerja otomasi berbantuan AI (LLM prompt engineering terstruktur, penataan data terisolasi, kompilasi Python) yang memangkas waktu kerja dari berminggu-minggu menjadi 1 hari.",
+            "Merancang pipeline kompilasi dokumen dan alur kerja otomasi berbantuan AI (LLM prompt engineering terstruktur, penataan data terisolasi, kompilasi Python) yang memangkas waktu kerja dari berminggu-minggu menjadi 1 minggu.",
           metric: "150+ Halaman",
-          metricLabel: "Minggu ➔ 1 Hari Turnaround",
+          metricLabel: "Minggu ➔ 1 Minggu Turnaround",
           metricSub: "Pipeline Sintesis Siap Cetak (The Secret of Life)",
           tags: ["LLM Prompt Orchestration", "Python Pipelines", "Document Synthesis", "Offset Standard"],
         },
@@ -786,7 +786,7 @@ export const translations: Record<Language, TranslationContent> = {
           metric: "150+ Halaman",
           metricLabel: "Otomasi Siap Cetak (The Secret of Life)",
           description:
-            "Merancang alur kerja sintesis prompt AI dan engine kompilasi Python yang mengonversi data profil menjadi 150+ halaman buku berstandar cetak offset, memangkas proses dari berminggu-minggu menjadi 1 hari.",
+            "Merancang alur kerja sintesis prompt AI dan engine kompilasi Python yang mengonversi data profil menjadi 150+ halaman buku berstandar cetak offset, memangkas proses dari berminggu-minggu menjadi 1 minggu.",
         },
         {
           tag: "Operasional Bisnis B2B",
@@ -1064,7 +1064,7 @@ export const translations: Record<Language, TranslationContent> = {
         {
           value: "150+ 页",
           label: "AI自动化出版排版流水线",
-          sub: "将数周工作量缩减至单日交付",
+          sub: "将数周工作量缩减至 1 周交付",
         },
         {
           value: "90+ 款SKU",
@@ -1091,9 +1091,9 @@ export const translations: Record<Language, TranslationContent> = {
         {
           title: "AI自动化工作流与智能数据管线",
           description:
-            "设计基于大语言模型的文档自动化编排流水线（结构化Prompt工程、离线本地数据处理、Python脚本批量生成），将长文档与图表生成时间从数周缩减至仅需单日。",
+            "设计基于大语言模型的文档自动化编排流水线（结构化Prompt工程、离线本地数据处理、Python脚本批量生成），将长文档与图表生成时间从数周缩减至 1 周。",
           metric: "150+ 页",
-          metricLabel: "数周 ➔ 1天 交付周期",
+          metricLabel: "数周 ➔ 1周 交付周期",
           metricSub: "高精度胶印生产标准排版管线 (The Secret of Life)",
           tags: ["LLM提示词编排", "Python自动化管线", "结构化文档合成", "胶印印刷级标准"],
         },

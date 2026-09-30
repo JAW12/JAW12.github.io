@@ -286,9 +286,14 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
     design: [3, 3, 3, 3, 3],
   };
 
+  // IDs proyek audio-only atau tanpa visual asset yang tidak layak muncul di print showcase
+  const PRINT_EXCLUDED_IDS = ["suno-ai-music-production"];
+
   const chunkProjects = (catKey: string, projects: ProjectItem[]) => {
     const flagshipIds = flagshipProjects.map((f) => f.id);
-    const nonFlagshipProjects = projects.filter((p) => !flagshipIds.includes(p.id));
+    const nonFlagshipProjects = projects.filter(
+      (p) => !flagshipIds.includes(p.id) && !PRINT_EXCLUDED_IDS.includes(p.id)
+    );
     const sizes = categoryChunkConfigs[catKey] || [3];
     const chunks: ProjectItem[][] = [];
     let curIdx = 0;
@@ -757,7 +762,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               <div className="relative aspect-[4/5] w-full rounded-xl overflow-hidden bg-zinc-950 border border-zinc-800">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/assets/avatar/profile-quarter.png"
+                  src="/assets/avatar/profile-quarter.webp"
                   alt="Jem Angkasa Wijaya, S.Kom."
                   className="w-full h-full object-cover object-top filter contrast-[1.03]"
                 />
@@ -1218,7 +1223,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={p.images?.[0] || "/assets/projects/secret-of-life/white_desk.png"}
+                      src={p.images?.[0] || "/assets/projects/secret-of-life/white_desk.webp"}
                       alt="The Secret of Life Cover"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -1232,7 +1237,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={p.images?.[4] || p.images?.[1] || "/assets/projects/hermes/hermes_command_center.png"}
+                      src={p.images?.[4] || p.images?.[1] || "/assets/projects/hermes/hermes_command_center.webp"}
                       alt="Hermes Orchestrator CLI"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -1358,7 +1363,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={p.images?.[0] || "/assets/projects/cocokga/result.png"}
+                      src={p.images?.[0] || "/assets/projects/cocokga/cocokga_bg_affinity.webp"}
                       alt="CocokGa Analysis Breakdown"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -1372,7 +1377,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={p.images?.[1] || "/assets/projects/cocokga/hero.png"}
+                      src={p.images?.[1] || "/assets/projects/cocokga/cocokga_bg_arcade.webp"}
                       alt="Arcade Mode Scoring Engine"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -1498,7 +1503,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={p.images?.[0] || "/assets/projects/nangka-premium/single_front.png"}
+                      src={p.images?.[0] || "/assets/projects/nangka-premium/pack_satu_1.webp"}
                       alt="Nangka Packaging Render"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -1512,7 +1517,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={p.images?.[1] || "/assets/projects/nangka-premium/nangka_hero.png"}
+                      src={p.images?.[1] || "/assets/projects/nangka-premium/pack_banyak_1.webp"}
                       alt="PT. Karya Buah Tropis Showcase"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -1637,7 +1642,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={p.images?.[0] || "/assets/projects/catatcrypto/dashboard.png"}
+                      src={p.images?.[0] || "/assets/projects/catatcrypto/catatcrypto_dashboard.webp"}
                       alt="CatatCrypto Dashboard"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -1651,7 +1656,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={p.images?.[1] || "/assets/projects/catatcrypto/ta.png"}
+                      src={p.images?.[1] || "/assets/projects/catatcrypto/catatcrypto_indicators.webp"}
                       alt="Technical Analytics Suite"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -1776,7 +1781,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={p.images?.[0] || "/assets/projects/branding/janok_packaging.png"}
+                      src={p.images?.[0] || "/assets/projects/branding/janok-packaging.webp"}
                       alt="Packaging Box Dieline"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -1790,7 +1795,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={p.images?.[1] || "/assets/projects/branding/janok_brochure.png"}
+                      src={p.images?.[1] || "/assets/projects/branding/janok-brosur.webp"}
                       alt="Franchise Brochure"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -2308,49 +2313,70 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               <span className="text-[9px] font-mono text-zinc-400">INSTITUT SAINS DAN TEKNOLOGI TERPADU SURABAYA · COMPUTER SCIENCE LABS</span>
             </div>
             <div className="grid grid-cols-4 gap-3">
-              {awardsData.map((award, idx) => (
-                <div key={idx} className="rounded-xl overflow-hidden bg-zinc-900/90 border border-amber-400/30 flex flex-col justify-between shadow-md group">
-                  {/* Certificate Image Thumbnail */}
-                  <div className="relative h-[115px] w-full bg-zinc-950 overflow-hidden border-b border-zinc-800">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={award.image || "/assets/certificates/award-algo-2018.jpg"}
-                      alt={getAwardTitle(award)}
-                      className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-zinc-950/85 backdrop-blur-sm text-amber-400 font-mono text-[8.5px] font-bold border border-amber-400/30">
-                      {award.year}
+              {(() => {
+                const awardRotationMap: Record<string, string> = {
+                  "award-algo-2018.webp":         "rotate(90deg)",
+                  "award-web-2018.webp":           "rotate(-90deg)",
+                  "award-client-server-2019.webp": "rotate(-90deg)",
+                  "award-pbo-2019.webp":           "rotate(-90deg)",
+                };
+                const getAwardRotation = (imgPath: string) => {
+                  const filename = imgPath.split("/").pop() || "";
+                  return awardRotationMap[filename] ?? "rotate(90deg)";
+                };
+                return awardsData.map((award, idx) => (
+                  <div key={idx} className="rounded-xl overflow-hidden bg-zinc-900/90 border border-amber-400/30 flex flex-col justify-between shadow-md group">
+                    {/* Certificate Image — landscape di-scan portrait, rotate per-file */}
+                    <div className="relative h-[115px] w-full overflow-hidden bg-zinc-900 border-b border-zinc-800">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={award.image || "/assets/certificates/award-algo-2018.webp"}
+                        alt={getAwardTitle(award)}
+                        style={{
+                          position: "absolute",
+                          height: "280px",
+                          width: "auto",
+                          maxWidth: "none",
+                          top: "50%",
+                          left: "50%",
+                          transform: `translate(-50%, -50%) ${getAwardRotation(award.image || "")}`,
+                        }}
+                        className="group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-zinc-950/85 backdrop-blur-sm text-amber-400 font-mono text-[8.5px] font-bold border border-amber-400/30">
+                        {award.year}
+                      </div>
+                    </div>
+
+                    {/* Award Details */}
+                    <div className="p-2.5 flex-1 flex flex-col justify-between space-y-1">
+                      <div>
+                        <div className="text-[10px] font-bold text-white leading-snug">
+                          {getAwardTitle(award)}
+                        </div>
+                        <div className="text-[8.5px] text-amber-300/90 font-mono mt-0.5">
+                          {language === "zh" && award.subjectZh ? award.subjectZh : language === "id" && award.subjectId ? award.subjectId : award.subject}
+                        </div>
+                      </div>
+
+                      <div className="pt-1 border-t border-zinc-800/60 flex items-center justify-between">
+                        <span className="text-[7.5px] font-mono text-zinc-400 uppercase tracking-wider">iSTTS LAB</span>
+                        {award.image && (
+                          <a
+                            href={award.image.startsWith("http") ? award.image : `https://jaw12.github.io${award.image.startsWith("/") ? "" : "/"}${award.image}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[8px] font-mono text-amber-400 hover:text-amber-300 underline font-semibold flex items-center gap-0.5"
+                          >
+                            <span>{language === "zh" ? "官方证书" : language === "id" ? "Sertifikat" : "Certificate"}</span>
+                            <span>↗</span>
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
-
-                  {/* Award Details */}
-                  <div className="p-2.5 flex-1 flex flex-col justify-between space-y-1">
-                    <div>
-                      <div className="text-[10px] font-bold text-white leading-snug">
-                        {getAwardTitle(award)}
-                      </div>
-                      <div className="text-[8.5px] text-amber-300/90 font-mono mt-0.5">
-                        {language === "zh" && award.subjectZh ? award.subjectZh : language === "id" && award.subjectId ? award.subjectId : award.subject}
-                      </div>
-                    </div>
-
-                    <div className="pt-1 border-t border-zinc-800/60 flex items-center justify-between">
-                      <span className="text-[7.5px] font-mono text-zinc-400 uppercase tracking-wider">iSTTS LAB</span>
-                      {award.image && (
-                        <a
-                          href={award.image.startsWith("http") ? award.image : `https://jaw12.github.io${award.image.startsWith("/") ? "" : "/"}${award.image}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[8px] font-mono text-amber-400 hover:text-amber-300 underline font-semibold flex items-center gap-0.5"
-                        >
-                          <span>{language === "zh" ? "官方证书" : language === "id" ? "Sertifikat" : "Certificate"}</span>
-                          <span>↗</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
+                ));
+              })()}
             </div>
           </div>
         </div>

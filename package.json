@@ -6,7 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "assets:webp": "node scripts/convert-webp.js",
+    "assets:update-refs": "node scripts/update-refs-to-webp.js",
+    "assets:cleanup-originals": "node scripts/delete-original-images.js",
+    "assets:optimize": "node scripts/convert-webp.js && node scripts/update-refs-to-webp.js && node scripts/delete-original-images.js",
+    "assets:watermark": "node scripts/watermark-webp.js",
+    "video:compress": "bash scripts/compress-videos.sh",
+    "video:posters": "bash scripts/extract-video-posters.sh"
   },
   "dependencies": {
     "clsx": "^2.1.1",

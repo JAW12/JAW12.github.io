@@ -78,7 +78,7 @@ export function ProjectAudioVitrine({ project, className = "" }: ProjectAudioVit
       <audio
         ref={audioRef}
         src={activeTrack?.url}
-        preload="metadata"
+        preload="none"
         onTimeUpdate={() => {
           if (audioRef.current) {
             setCurrentTime(audioRef.current.currentTime);

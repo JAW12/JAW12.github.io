@@ -5,30 +5,62 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
 import { AboutSection } from "@/components/AboutSection";
-import { ExperienceSection } from "@/components/ExperienceSection";
-import { FeaturedProjectsSection } from "@/components/FeaturedProjectsSection";
-import { SkillsSection } from "@/components/SkillsSection";
-import { CredentialsSection } from "@/components/CredentialsSection";
-import { ContactSection } from "@/components/ContactSection";
-import { Footer } from "@/components/Footer";
 import dynamic from "next/dynamic";
 import { PdfExportOptions } from "@/components/PdfExportModal";
+import { PageTransitionProvider } from "@/components/PageTransitionCurtain";
+
+// ─── Eager: above-the-fold critical UI ───────────────────────────────────────
+import { CosmicAtmosphere } from "@/components/CosmicAtmosphere";
+import { MouseSpotlight } from "@/components/MouseSpotlight";
+import { SectionTickerTape } from "@/components/SectionTickerTape";
+
+// ─── Lazy: below-the-fold heavy sections — code-split, loaded on demand ──────
+// Each becomes its own JS chunk, browser only parses when section enters viewport area
+
+const FeaturedProjectsSection = dynamic(
+  () => import("@/components/FeaturedProjectsSection").then((m) => m.FeaturedProjectsSection),
+  { ssr: false }
+);
+
+const ExperienceSection = dynamic(
+  () => import("@/components/ExperienceSection").then((m) => m.ExperienceSection),
+  { ssr: false }
+);
+
+const SkillsSection = dynamic(
+  () => import("@/components/SkillsSection").then((m) => m.SkillsSection),
+  { ssr: false }
+);
+
+const CredentialsSection = dynamic(
+  () => import("@/components/CredentialsSection").then((m) => m.CredentialsSection),
+  { ssr: false }
+);
+
+const ContactSection = dynamic(
+  () => import("@/components/ContactSection").then((m) => m.ContactSection),
+  { ssr: false }
+);
+
+const Footer = dynamic(
+  () => import("@/components/Footer").then((m) => m.Footer),
+  { ssr: false }
+);
+
+const FloatingScrollProgress = dynamic(
+  () => import("@/components/FloatingScrollProgress").then((m) => m.FloatingScrollProgress),
+  { ssr: false }
+);
 
 const RecruiterCheatSheetModal = dynamic(
-  () => import("@/components/RecruiterCheatSheetModal").then((mod) => mod.RecruiterCheatSheetModal),
+  () => import("@/components/RecruiterCheatSheetModal").then((m) => m.RecruiterCheatSheetModal),
   { ssr: false }
 );
 
 const PrintableDocument = dynamic(
-  () => import("@/components/PrintableDocument").then((mod) => mod.PrintableDocument),
+  () => import("@/components/PrintableDocument").then((m) => m.PrintableDocument),
   { ssr: false }
 );
-
-import { SectionTickerTape } from "@/components/SectionTickerTape";
-import { PageTransitionProvider } from "@/components/PageTransitionCurtain";
-import { FloatingScrollProgress } from "@/components/FloatingScrollProgress";
-import { MouseSpotlight } from "@/components/MouseSpotlight";
-import { CosmicAtmosphere } from "@/components/CosmicAtmosphere";
 
 export default function Home() {
   const [isCheatSheetOpen, setIsCheatSheetOpen] = useState(false);

@@ -139,7 +139,11 @@ function ProjectMediaVitrine({ project }: { project: ProjectItem }) {
               loop
               muted
               playsInline
-              preload="metadata"
+              preload="none"
+              poster={
+                project.videoPoster?.[currentImg] ??
+                validImgs.find((img) => !img.match(/\.(mp4|webm|mov)$/i))
+              }
               className="object-cover w-full h-full group-hover/img:scale-105 transition-transform duration-700"
             />
           ) : (
@@ -301,6 +305,11 @@ function ProjectMediaVitrine({ project }: { project: ProjectItem }) {
                   controls
                   autoPlay
                   playsInline
+                  preload="none"
+                  poster={
+                    project.videoPoster?.[validImgs[activeIdx]] ??
+                    validImgs.find((img) => !img.match(/\.(mp4|webm|mov)$/i))
+                  }
                   className="max-h-full max-w-full rounded-lg"
                 />
               ) : (

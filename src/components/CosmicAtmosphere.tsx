@@ -108,9 +108,21 @@ export function CosmicAtmosphere() {
 
     initParticles();
 
-    // 60fps render loop with smart mobile throttling
-    const render = () => {
+    // Throttle to 30fps — particle drift is subtle, imperceptible at 30fps vs 60fps
+    // Halves GPU work on integrated graphics / mobile
+    const FRAME_INTERVAL = 1000 / 30;
+    let lastFrameTime = 0;
+
+    const render = (timestamp: number) => {
       if (!isRunning) return;
+
+      // Skip frame if not enough time has passed (30fps cap)
+      if (timestamp - lastFrameTime < FRAME_INTERVAL) {
+        animId = requestAnimationFrame(render);
+        return;
+      }
+      lastFrameTime = timestamp;
+
       ctx.clearRect(0, 0, width, height);
 
       const isFinePointer = window.matchMedia("(pointer: fine)").matches;

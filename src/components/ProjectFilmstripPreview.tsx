@@ -33,7 +33,7 @@ export function ProjectFilmstripPreview({
             (img) => typeof img === "string" && img.trim().length > 0
           );
           const thumbnail =
-            validImg || "/assets/projects/secret-of-life/white_desk.png";
+            validImg || "/assets/projects/secret-of-life/white_desk.webp";
 
           return (
             <button

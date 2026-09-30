@@ -185,7 +185,7 @@ export function HeroSection({ onOpenCheatSheet }: HeroSectionProps) {
                 <div className="relative rounded-2xl bg-[#0c0c10]/80 backdrop-blur-2xl border border-white/10 group-hover:border-[#d4af37]/40 overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.6)] p-2.5 transition-colors duration-500">
                   <div className="relative aspect-[4/5] w-full rounded-xl overflow-hidden bg-gradient-to-b from-[#18181b] to-[#09090b]">
                     <Image
-                      src="/assets/avatar/profile-quarter.png"
+                      src="/assets/avatar/profile-quarter.webp"
                       alt="Jem Angkasa Wijaya, S.Kom."
                       fill
                       priority

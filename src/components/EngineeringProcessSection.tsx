@@ -22,7 +22,7 @@ export function EngineeringProcessSection() {
       desc: "Mathematical optimization, pure data structures, and deterministic logic. Zero AI slop, zero unchecked hallucinatory libraries.",
       descId: "Optimasi matematis, struktur data murni, dan logika deterministik. Tanpa 'AI slop', tanpa dependensi halusinatif tanpa audit.",
       descZh: "数学优化、纯粹数据结构与确定性业务逻辑。拒绝AI幻觉代码，拒绝未经审计的冗余依赖库。",
-      image: "/assets/projects/secret-of-life/white_desk.png",
+      image: "/assets/projects/secret-of-life/white_desk.webp",
       tag: "DISCIPLINE 01",
     },
     {
@@ -36,7 +36,7 @@ export function EngineeringProcessSection() {
       desc: "Sub-millimeter factory dielines, tensile barrier tolerance for blast-freeze cold-chain logistics, and multi-thousand retail proofing.",
       descId: "Dieline pabrik berakurasi sub-milimeter, toleransi ketahanan pembekuan -25°C, dan uji coba batch ritel puluhan ribu unit.",
       descZh: "亚毫米级精密印刷模切刀线，耐受-25°C急冻冷链的高分子复合膜，经受万套量产验证。",
-      image: "/assets/projects/branding/kbt-packaging.jpg",
+      image: "/assets/projects/branding/kbt-packaging.webp",
       tag: "DISCIPLINE 02",
     },
     {
@@ -50,7 +50,7 @@ export function EngineeringProcessSection() {
       desc: "Air-gapped document intelligence pipelines, deterministic cosine vector retrieval, and zero-egress healthcare document reconciliation.",
       descId: "Pipeline intelijen dokumen air-gapped, temu-kembali vektor kosinus deterministik, dan rekonsiliasi data medis tanpa kebocoran.",
       descZh: "隔离网络环境文档智能管线，高精度余弦相似度检索，保障敏感医疗与企业数据绝不外泄。",
-      image: "/assets/projects/branding/kbt-brosur.jpg",
+      image: "/assets/projects/branding/kbt-brosur.webp",
       tag: "DISCIPLINE 03",
     },
     {
@@ -64,7 +64,7 @@ export function EngineeringProcessSection() {
       desc: "High-concurrency multi-tenant backends, strict RBAC permissions, transactional ledger consistency, and zero-downtime deployment.",
       descId: "Backend multi-tenant konkurensi tinggi, izin RBAC ketat, konsistensi buku besar transaksional, dan cutover tanpa henti.",
       descZh: "高并发多租户后台设计，严格RBAC权限体系，事务一致性财务记账，无缝平滑切包升级。",
-      image: "/assets/projects/secret-of-life/marble.png",
+      image: "/assets/projects/secret-of-life/marble.webp",
       tag: "DISCIPLINE 04",
     },
   ];

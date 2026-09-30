@@ -658,11 +658,11 @@ body {
   }
 }
 
-/* GPU Hardware Acceleration for buttery-smooth 60-120fps scrolling */
+/* GPU Hardware Acceleration — use contain instead of permanent will-change */
 .gpu-layer {
   transform: translateZ(0);
   backface-visibility: hidden;
-  will-change: transform;
+  contain: layout style;
 }
 
 /* Custom Torch / Flashlight Cursor System for Desktop */
@@ -686,5 +686,24 @@ body {
   backface-visibility: hidden;
 }
 
+/* ── Reduced Motion: Stop all animations for users who prefer it ─────────────
+   Respects OS-level accessibility setting — helps seizure safety & battery   */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 
-
+  .animate-marquee,
+  .animate-marquee-fast,
+  .animate-marquee-slow,
+  .animate-marquee-reverse,
+  .animate-marquee-reverse-fast,
+  .animate-marquee-reverse-slow {
+    animation: none !important;
+  }
+}
