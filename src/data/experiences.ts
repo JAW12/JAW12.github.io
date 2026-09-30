@@ -20,6 +20,8 @@ export interface ExperienceItem {
   bulletsId: string[];
   bulletsZh?: string[];
   tags: string[];
+  tagsId?: string[];
+  tagsZh?: string[];
 }
 
 export type LeadershipExperienceItem = ExperienceItem;
@@ -71,6 +73,8 @@ export const experiencesData: ExperienceItem[] = [
       "统筹协调供应商采购、客户订单与库房执行团队，确保日常高履约率与零发货延误。",
     ],
     tags: ["B2B Operations", "Inventory Ledgers", "Packaging Design", "Laravel", "SOP", "Cold Chain"],
+    tagsId: ["Operasional B2B", "Buku Besar Inventaris", "Desain Kemasan", "Laravel", "SOP", "Rantai Dingin"],
+    tagsZh: ["B2B 商业运营", "库存出入账本", "工业包装设计", "Laravel", "SOP 规程", "冷链物流"],
   },
   {
     id: "sailly-advanced-group",
@@ -109,6 +113,8 @@ export const experiencesData: ExperienceItem[] = [
       "定期输出宏观技术面综合研判报告与量化指标透视，助力社区成员在极端波动行情中保持严明交易纪律。",
     ],
     tags: ["Crypto Trading", "Volunteer Mentorship", "Technical Analysis", "Risk Management", "Market Research"],
+    tagsId: ["Trading Kripto", "Mentorship Relawan", "Analisis Teknikal", "Manajemen Risiko", "Riset Pasar"],
+    tagsZh: ["加密资产交易", "志愿导师辅导", "技术面分析", "风险管理模型", "市场行情研判"],
   },
   {
     id: "enevti",
@@ -150,6 +156,8 @@ export const experiencesData: ExperienceItem[] = [
       "深度支持社区官方 AMA 直播答疑活动，清晰向潜在伙伴及创作者推介平台核心技术特性。",
     ],
     tags: ["Web3 Ecosystem", "Agile / Scrum", "Notion", "Partner Onboarding", "Community Operations"],
+    tagsId: ["Ekosistem Web3", "Agile / Scrum", "Notion", "Onboarding Mitra", "Operasional Komunitas"],
+    tagsZh: ["Web3 初创生态", "敏捷 Scrum", "Notion", "合作伙伴入驻", "社区运营"],
   },
   {
     id: "qlp",
@@ -188,6 +196,8 @@ export const experiencesData: ExperienceItem[] = [
       "与产品经理及技术团队紧密协作，对后端服务进行详尽单元测试与性能调优，提升20%的活跃用户交互率。",
     ],
     tags: ["Volunteer", "PHP", "Laravel", "MySQL", "Database Normalization", "API Endpoints"],
+    tagsId: ["Relawan", "PHP", "Laravel", "MySQL", "Normalisasi Database", "Endpoint API"],
+    tagsZh: ["志愿工程", "PHP", "Laravel", "MySQL", "数据库范式化", "API 接口"],
   },
   {
     id: "the-fresh",
@@ -226,6 +236,8 @@ export const experiencesData: ExperienceItem[] = [
       "与本地农户建立一手货源直采机制，优化末端同城配送履约流程。",
     ],
     tags: ["Entrepreneurship", "E-Grocery", "Brand Strategy", "Direct-to-Consumer", "Supply Chain"],
+    tagsId: ["Kewirausahaan", "E-Grocery", "Strategi Merek", "Direct-to-Consumer", "Rantai Pasok"],
+    tagsZh: ["自主创业", "生鲜电商", "品牌战略", "DTC 直供消费", "农产供应链"],
   },
   {
     id: "screening-sdm",
@@ -264,6 +276,8 @@ export const experiencesData: ExperienceItem[] = [
       "深入调研资深测评顾问的业务诉求，不断迭代数据录入界面与核验逻辑，保障报告数据的高保真度与可审计性。",
     ],
     tags: ["C#", ".NET", "Windows Forms", "MySQL", "Psychometrics", "Desktop Software"],
+    tagsId: ["C#", ".NET", "Windows Forms", "MySQL", "Psikometri", "Software Desktop"],
+    tagsZh: ["C#", ".NET", "Windows Forms", "MySQL", "心理测量学", "桌面应用系统"],
   },
 ];
 
@@ -308,6 +322,8 @@ export const leadershipExperiencesData: ExperienceItem[] = [
       "统筹协调迎新日程排期、线上破冰互动与跨组协作任务，保障远程迎新活动的圆满交付。",
     ],
     tags: ["Leadership", "Web Portal", "Event Management", "HTML/CSS/JS", "iSTTS"],
+    tagsId: ["Kepemimpinan", "Portal Web", "Manajemen Acara", "HTML/CSS/JS", "iSTTS"],
+    tagsZh: ["组织领导力", "迎新网站门户", "会展统筹管理", "HTML/CSS/JS", "iSTTS"],
   },
   {
     id: "hima-sib-tutor",
@@ -346,6 +362,8 @@ export const leadershipExperiencesData: ExperienceItem[] = [
       "与系所专业课教授保持紧密协同，对齐课后辅导大纲与学期考核测评标准。",
     ],
     tags: ["Python", "Algorithms", "Tutoring", "HIMA SIB", "iSTTS", "Teaching"],
+    tagsId: ["Python", "Algoritma", "Bimbingan Belajar", "HIMA SIB", "iSTTS", "Pengajaran"],
+    tagsZh: ["Python", "核心算法", "学术辅导", "HIMA SIB", "iSTTS", "编程教学"],
   },
   {
     id: "kunjungan-industri-sib",
@@ -384,6 +402,8 @@ export const leadershipExperiencesData: ExperienceItem[] = [
       "全流程把控安全应急预案、多日行程节点流转，并主持编写研学学术成果总结报告。",
     ],
     tags: ["Corporate Relations", "Apple Developer Academy", "Logistics", "Project Leadership", "Public Relations"],
+    tagsId: ["Hubungan Korporat", "Apple Developer Academy", "Logistik", "Kepemimpinan Proyek", "Humas"],
+    tagsZh: ["校企合作", "苹果开发者学院", "考察后勤物流", "项目领导力", "公共关系"],
   },
   {
     id: "igl",
@@ -425,6 +445,8 @@ export const leadershipExperiencesData: ExperienceItem[] = [
       "统筹协调为期一周的校园集市商业运营，圆满保障5个餐饮与赞助展位的高效运转与物资调度。",
     ],
     tags: ["Sponsorship Acquisition", "Fundraising", "Coca-Cola", "Media Relations", "Event Management", "HIMA SIB"],
+    tagsId: ["Akuisisi Sponsor", "Penggalangan Dana", "Coca-Cola", "Hubungan Media", "Manajemen Acara", "HIMA SIB"],
+    tagsZh: ["商务赞助招商", "资金筹措", "可口可乐", "媒体矩阵宣发", "赛事统筹", "HIMA SIB"],
   },
   {
     id: "kartini-istts",
@@ -463,6 +485,8 @@ export const leadershipExperiencesData: ExperienceItem[] = [
       "全程把控文化节展期间9个商业集市与餐饮展位的后勤运转与物资对接。",
     ],
     tags: ["Fundraising", "Sponsorship Acquisition", "Siloam Hospital", "Emina", "Public Relations", "iSTTS"],
+    tagsId: ["Penggalangan Dana", "Akuisisi Sponsor", "Siloam Hospitals", "Emina", "Hubungan Masyarakat", "iSTTS"],
+    tagsZh: ["资金筹集", "商业赞助洽谈", "希洛姆医院", "Emina 美妆", "外联公关", "iSTTS"],
   },
   {
     id: "donor-darah-istts",
@@ -501,6 +525,8 @@ export const leadershipExperiencesData: ExperienceItem[] = [
       "严格落实体检登记动线、献血安全规程与采血后营养补给保障。",
     ],
     tags: ["PMI Surabaya", "Community Service", "Social Logistics", "Public Relations", "iSTTS Dies Natalis"],
+    tagsId: ["PMI Surabaya", "Bakti Sosial", "Logistik Sosial", "Hubungan Masyarakat", "Dies Natalis iSTTS"],
+    tagsZh: ["印尼红十字会 (PMI)", "社会公益服务", "公益医疗后勤", "外联宣导", "iSTTS 校庆"],
   },
   {
     id: "ifj-istts",
@@ -536,5 +562,7 @@ export const leadershipExperiencesData: ExperienceItem[] = [
       "统筹现场礼仪接待团队、音响视频设备调试与物资调度，保障各项环节顺畅运行。",
     ],
     tags: ["Event Operations", "Service Management", "Ushering", "Community", "iSTTS"],
+    tagsId: ["Operasional Acara", "Manajemen Pelayanan", "Ushering", "Komunitas", "iSTTS"],
+    tagsZh: ["现场会务运营", "现场服务统筹", "礼仪引导接待", "社团集会", "iSTTS"],
   },
 ];

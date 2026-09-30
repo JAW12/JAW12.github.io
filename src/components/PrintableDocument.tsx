@@ -3,32 +3,26 @@
 import React from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { PdfExportOptions } from "./PdfExportModal";
-import { flagshipProjects, allArchiveProjects, creativeMediaProjects } from "@/data/projects";
-import { experiencesData } from "@/data/experiences";
-import { skillsData } from "@/data/skills";
-import { educationData, awardsData, certificationsData } from "@/data/credentials";
 import {
-  ShieldCheck,
-  Award,
-  Building2,
-  MapPin,
-  CheckCircle2,
-  Terminal,
-  Sparkles,
-  Layers,
-  Globe,
-  Mail,
-  Phone,
-  Calendar,
+  flagshipProjects,
+  comprehensiveCategoryProjects,
+  ProjectItem,
+} from "@/data/projects";
+import { experiencesData, leadershipExperiencesData, ExperienceItem } from "@/data/experiences";
+import { educationData, awardsData, certificationsData, EducationItem, AwardItem, CertificationItem } from "@/data/credentials";
+import { translateTech } from "@/data/techDictionary";
+import {
   ExternalLink,
+  Mail,
+  Award,
+  Globe,
+  Phone,
+  Layout,
+  Server,
   Cpu,
-  Code2,
   Package,
-  Database,
-  TrendingUp,
-  MessageSquare,
-  Clock,
-  ArrowUpRight,
+  CheckCircle2,
+  Share2,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 
@@ -36,1641 +30,2617 @@ interface PrintableDocumentProps {
   exportOptions: PdfExportOptions;
 }
 
-export function PrintableDocument({ exportOptions }: PrintableDocumentProps) {
-  const { language } = useLanguage();
-  const track = exportOptions.track || "all";
+export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDocumentProps) {
+  const { language, t } = useLanguage();
 
-  return (
-    <div className="hidden print:block printable-document-container font-sans text-zinc-100 bg-[#09090b]">
-      
-      {/* ========================================================================= */}
-      {/* SLIDE 01: EXECUTIVE TITLE COVER SPREAD                                    */}
-      {/* ========================================================================= */}
-      {exportOptions.includeHero && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-[#d4af37]/50 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-          {/* Ambient Decorative Corners */}
-          <div className="absolute top-3 left-4 text-[#d4af37] font-mono text-xs select-none">┌── PORTFOLIO DECK ──</div>
-          <div className="absolute top-3 right-4 text-[#d4af37] font-mono text-xs select-none">── MASTER ARCHITECTURE ──┐</div>
-          <div className="absolute bottom-3 left-4 text-[#d4af37] font-mono text-xs select-none">└── VERIFIED EMPIRICAL ──</div>
-          <div className="absolute bottom-3 right-4 text-[#d4af37] font-mono text-xs select-none">── 2026 EDITION ──┘</div>
+  // Localization helpers for projects
+  const getTitle = (p: ProjectItem) =>
+    language === "zh" && p.titleZh ? p.titleZh : language === "id" && p.titleId ? p.titleId : p.title;
+  const getRole = (p: ProjectItem) =>
+    language === "zh" && p.roleZh ? p.roleZh : language === "id" && p.roleId ? p.roleId : p.role;
+  const getTagline = (p: ProjectItem) =>
+    language === "zh" && p.taglineZh ? p.taglineZh : language === "id" && p.taglineId ? p.taglineId : p.tagline;
+  const getDescription = (p: ProjectItem) =>
+    language === "zh" && p.descriptionZh ? p.descriptionZh : language === "id" && p.descriptionId ? p.descriptionId : p.description;
+  const getHighlights = (p: ProjectItem) =>
+    language === "zh" && p.highlightsZh ? p.highlightsZh : language === "id" && p.highlightsId ? p.highlightsId : p.highlights;
 
-          {/* Top Header Bar */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3 pt-2">
-            <div className="flex items-center gap-3">
-              <span className="font-serif-editorial text-2xl text-[#ebdca4] tracking-widest font-normal">
-                JAW<span className="text-[#dc2626]">.</span>
+  const getTechStack = (p: ProjectItem) => {
+    const list =
+      language === "zh" && p.techStackZh
+        ? p.techStackZh
+        : language === "id" && p.techStackId
+        ? p.techStackId
+        : p.techStack;
+    return (list || []).map((tech) => translateTech(tech, language));
+  };
+
+  const getClient = (p: ProjectItem) =>
+    language === "zh" && p.clientZh ? p.clientZh : p.client || "";
+
+  // Localization helpers for experiences & leadership
+  const getExpRole = (e: ExperienceItem) =>
+    language === "zh" && e.roleZh ? e.roleZh : language === "id" && e.roleId ? e.roleId : e.role;
+  const getExpCompany = (e: ExperienceItem) =>
+    language === "zh" && e.companyZh ? e.companyZh : language === "id" && e.companyId ? e.companyId : e.company;
+  const getExpPeriod = (e: ExperienceItem) =>
+    language === "zh" && e.periodZh ? e.periodZh : language === "id" && e.periodId ? e.periodId : e.period;
+  const getExpDescription = (e: ExperienceItem) =>
+    language === "zh" && e.descriptionZh ? e.descriptionZh : language === "id" && e.descriptionId ? e.descriptionId : e.description;
+  const getExpBullets = (e: ExperienceItem) =>
+    language === "zh" && e.bulletsZh ? e.bulletsZh : language === "id" && e.bulletsId ? e.bulletsId : e.bullets;
+  const getExpTags = (e: ExperienceItem) =>
+    language === "zh" && e.tagsZh ? e.tagsZh : language === "id" && e.tagsId ? e.tagsId : e.tags || [];
+
+  // Localization helpers for education & credentials
+  const getEduDegree = (e: EducationItem) =>
+    language === "zh" && e.degreeZh ? e.degreeZh : language === "id" && e.degreeId ? e.degreeId : e.degree;
+  const getEduInstitution = (e: EducationItem) =>
+    language === "zh" && e.institutionZh ? e.institutionZh : language === "id" && e.institutionId ? e.institutionId : e.institution;
+  const getEduDescription = (e: EducationItem) =>
+    language === "zh" && e.descriptionZh ? e.descriptionZh : language === "id" && e.descriptionId ? e.descriptionId : e.description;
+  const getEduHighlights = (e: EducationItem) =>
+    language === "zh" && e.highlightsZh ? e.highlightsZh : language === "id" && e.highlightsId ? e.highlightsId : e.highlights || [];
+
+  const getAwardTitle = (a: AwardItem) =>
+    language === "zh" && a.titleZh ? a.titleZh : language === "id" && a.titleId ? a.titleId : a.title;
+  const getAwardDescription = (a: AwardItem) =>
+    language === "zh" && a.descriptionZh ? a.descriptionZh : language === "id" && a.descriptionId ? a.descriptionId : a.description;
+
+  const getCertTitle = (c: CertificationItem) =>
+    language === "zh" && c.titleZh ? c.titleZh : language === "id" && c.titleId ? c.titleId : c.title;
+
+  const projectAssetCaptions: Record<string, { en: string; id: string; zh: string }[]> = {
+    "secret-of-life": [
+      {
+        en: "Offset Print Gold-Foil Hardcover — Executive White Desk Edition",
+        id: "Sampul Hardcover Foil Emas Standar Cetak Offset — Edisi Meja Eksekutif",
+        zh: "符合胶印标准的烫金精装书封面 — 典雅白色展示台实拍",
+      },
+      {
+        en: "Hermes CLI Deterministic Orchestrator Command Center & Agent State Monitor",
+        id: "Pusat Komando Orkestrator Deterministik Hermes & Monitor State Agen",
+        zh: "Hermes CLI 确定性智能体编排指挥中枢与状态监控看板",
+      },
+    ],
+    "cocokga": [
+      {
+        en: "Multi-Dimensional Compatibility Analysis & Affinity Breakdown",
+        id: "Rincian Analisis Kompatibilitas Multi-Dimensi & Indeks Afinitas Pasangan",
+        zh: "多维契合度深度分析报告与亲和度指数看板",
+      },
+      {
+        en: "Arcade Mode Scoring Engine — Instant Client Compute (<15ms)",
+        id: "Engine Penilaian Mode Arcade — Komputasi Klien Instan (<15ms)",
+        zh: "街机模式即时评分引擎 — 纯前端本地瞬时计算 (<15ms)",
+      },
+    ],
+    "nangka-premium": [
+      {
+        en: "Export-Grade Vacuum-Sealed Jackfruit Single Packaging Render",
+        id: "Render Kemasan Vakum Nilon Food-Grade Nangka Standar Ekspor",
+        zh: "出口级食品级尼龙单袋真空速冻菠萝蜜包装三维渲染",
+      },
+      {
+        en: "Official PT. Karya Buah Tropis Corporate Digital B2B Showcase",
+        id: "Portal Digital Showcase B2B Resmi PT. Karya Buah Tropis",
+        zh: "PT. Karya Buah Tropis 官方企业级 B2B 数字化展示门户",
+      },
+    ],
+    "catatcrypto": [
+      {
+        en: "Master Portfolio Dashboard — Real-Time Valuation & Holdings",
+        id: "Dashboard Portofolio Utama — Valuasi & Kepemilikan Aset Real-Time",
+        zh: "主资产投资组合大盘 — 实时资产估值与持仓分布看板",
+      },
+      {
+        en: "Technical Indicators & Quantitative Risk Suite — Drawdown Models",
+        id: "Indikator Teknikal & Suite Risiko Kuantitatif — Model Drawdown & PnL",
+        zh: "量化风险与技术指标体系 — 最大回撤模型与盈亏分析套件",
+      },
+    ],
+    "jan-ok": [
+      {
+        en: "Greaseproof Food-Grade Die-Cut Takeaway Packaging (Glue-Free Lock)",
+        id: "Kemasan Takeaway Food-Grade Tahan Minyak (Kunci Lipat Tanpa Lem)",
+        zh: "食品级防油免胶卡扣快餐包装盒打样结构图",
+      },
+      {
+        en: "Official 26-Branch Franchise Partnership & ROI Brochure",
+        id: "Brosur Resmi Kemitraan Waralaba 26 Gerai & Proyeksi Balik Modal (BEP)",
+        zh: "官方26家连锁分店加盟合作手册与 95 天回本模型折页",
+      },
+    ],
+  };
+
+  const getAssetCaption = (flagshipId: string, index: number) => {
+    const list = projectAssetCaptions[flagshipId];
+    if (!list || !list[index]) return "";
+    return language === "zh" ? list[index].zh : language === "id" ? list[index].id : list[index].en;
+  };
+
+  const localizedCategoryNames: Record<string, { en: string; id: string; zh: string; subtitleEn: string; subtitleId: string; subtitleZh: string }> = {
+    ai: {
+      en: "AI & Automation",
+      id: "AI & Otomasi",
+      zh: "AI 与自动化工程",
+      subtitleEn: "Generative AI pipelines, deterministic LLM orchestrators, and automated content workflows",
+      subtitleId: "Pipeline AI generatif, orkestrator deterministik LLM, dan alur kerja konten otomatis",
+      subtitleZh: "生成式 AI 流水线、确定性大模型编排引擎与端到端自动化内容生产系统",
+    },
+    software: {
+      en: "Software Development",
+      id: "Pengembangan Perangkat Lunak",
+      zh: "全栈软件与系统工程",
+      subtitleEn: "Production Next.js frontends, Laravel transactional backends, desktop C#/.NET ERPs, and database systems",
+      subtitleId: "Frontend Next.js production, backend transaksional Laravel, ERP desktop C#/.NET, dan sistem basis data",
+      subtitleZh: "生产级 Next.js 前端、Laravel 核心事务后端、C#/.NET 桌面 ERP 与高可靠数据库系统",
+    },
+    business: {
+      en: "Business Operations",
+      id: "Operasional Bisnis",
+      zh: "商业运营与供应链",
+      subtitleEn: "Cold-chain logistics SOPs, B2B wholesale portals, packaging compliance, and corporate systems",
+      subtitleId: "SOP logistik rantai dingin, portal B2B grosir, kepatuhan kemasan, dan sistem korporat",
+      subtitleZh: "-25°C 低温冷链物流 SOP、B2B 大宗批发门户、工业包装合规与企业级运营体系",
+    },
+    data: {
+      en: "Market Research & Data Analysis",
+      id: "Riset Pasar & Analisis Data",
+      zh: "市场调研与数据分析",
+      subtitleEn: "Quantitative trading journals, statistical modeling, algorithmic backtesting, and market intelligence suites",
+      subtitleId: "Jurnal trading kuantitatif, pemodelan statistik, backtesting algoritmik, dan analisis riset pasar",
+      subtitleZh: "量化交易日志、多周期统计建模、算法策略回测与多源商业情报研判套件",
+    },
+    design: {
+      en: "Multimedia Brand Design",
+      id: "Desain Merek & Multimedia",
+      zh: "多媒体品牌与包装设计",
+      subtitleEn: "Franchise brand identities, industrial food packaging dielines, corporate video production, and UI prototypes",
+      subtitleId: "Identitas merek waralaba, dieline kemasan makanan industri, produksi video korporat, dan prototipe UI",
+      subtitleZh: "连锁餐饮品牌全案设计、食品级工业包装刀模工程、企业级宣传片制作与 UI 交互原型",
+    },
+  };
+
+  const getCategoryTitle = (catKey: string) => {
+    const item = localizedCategoryNames[catKey];
+    if (!item) return catKey.toUpperCase();
+    return language === "zh" ? item.zh : language === "id" ? item.id : item.en;
+  };
+
+  const getCategorySubtitle = (catKey: string) => {
+    const item = localizedCategoryNames[catKey];
+    if (!item) return "";
+    return language === "zh" ? item.subtitleZh : language === "id" ? item.subtitleId : item.subtitleEn;
+  };
+
+  // Smart Chunking configuration for Showcase slides:
+  const categoryChunkConfigs: Record<string, number[]> = {
+    ai: [4, 3],
+    software: [6, 6, 7],
+    business: [6],
+    data: [4, 3],
+    design: [6, 5, 5],
+  };
+
+  const chunkProjects = (catKey: string, projects: ProjectItem[]) => {
+    const sizes = categoryChunkConfigs[catKey] || [6];
+    const chunks: ProjectItem[][] = [];
+    let curIdx = 0;
+    for (const size of sizes) {
+      if (curIdx < projects.length) {
+        chunks.push(projects.slice(curIdx, curIdx + size));
+        curIdx += size;
+      }
+    }
+    if (curIdx < projects.length) {
+      chunks.push(projects.slice(curIdx));
+    }
+    return chunks;
+  };
+
+  const aiChunks = chunkProjects("ai", comprehensiveCategoryProjects.ai);
+  const softwareChunks = chunkProjects("software", comprehensiveCategoryProjects.software);
+  const businessChunks = chunkProjects("business", comprehensiveCategoryProjects.business);
+  const dataChunks = chunkProjects("data", comprehensiveCategoryProjects.data);
+  const designChunks = chunkProjects("design", comprehensiveCategoryProjects.design);
+
+  // Exact page counter mapping:
+  let currentSlideCounter = 0;
+  const nextSlideNumber = () => {
+    currentSlideCounter += 1;
+    return currentSlideCounter;
+  };
+
+  const slideHero = nextSlideNumber();
+  const slideAbout = nextSlideNumber();
+  const slideIndex = nextSlideNumber();
+
+  const slideAiFlagship = nextSlideNumber();
+  const slideAiShowcase: number[] = aiChunks.map(() => nextSlideNumber());
+
+  const slideSoftwareFlagship = nextSlideNumber();
+  const slideSoftwareShowcase: number[] = softwareChunks.map(() => nextSlideNumber());
+
+  const slideBusinessFlagship = nextSlideNumber();
+  const slideBusinessShowcase: number[] = businessChunks.map(() => nextSlideNumber());
+
+  const slideDataFlagship = nextSlideNumber();
+  const slideDataShowcase: number[] = dataChunks.map(() => nextSlideNumber());
+
+  const slideDesignFlagship = nextSlideNumber();
+  const slideDesignShowcase: number[] = designChunks.map(() => nextSlideNumber());
+
+  const slideExp1 = nextSlideNumber();
+  const slideExp2 = nextSlideNumber();
+  const slideSkills = nextSlideNumber();
+  const slideCred1 = nextSlideNumber();
+  const slideCred2 = nextSlideNumber();
+  const slideCred3 = nextSlideNumber();
+  const slideContact = nextSlideNumber();
+
+  const totalSlideCount = currentSlideCounter;
+
+  // Header Component (Tightened for A4 Landscape)
+  const HeaderBar = ({
+    sectionTitle,
+    categoryBadge,
+    currentPage,
+  }: {
+    sectionTitle: string;
+    categoryBadge?: string;
+    currentPage: number;
+  }) => (
+    <div className="flex items-center justify-between pb-1.5 border-b border-zinc-800/80 mb-2 shrink-0">
+      <div className="flex items-center space-x-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+        <span className="text-[11px] font-mono tracking-widest text-zinc-300 uppercase font-semibold">
+          JEM ANGKASA WIJAYA
+        </span>
+        <span className="text-zinc-600 font-mono text-[10px]">/</span>
+        <span className="text-[11px] font-mono text-zinc-400 tracking-wide">{sectionTitle}</span>
+        {categoryBadge && (
+          <span className="text-[9px] font-mono px-2 py-0.2 rounded-full bg-amber-400/10 text-amber-400 border border-amber-400/30 uppercase tracking-widest font-semibold ml-1">
+            {categoryBadge}
+          </span>
+        )}
+      </div>
+      <div className="flex items-center space-x-2 font-mono text-[10px]">
+        <span className="text-zinc-500 uppercase tracking-widest">PORTFOLIO DOSSIER</span>
+        <span className="px-2 py-0.5 rounded bg-zinc-800/90 text-amber-400 font-bold border border-amber-400/20">
+          PAGE {String(currentPage).padStart(2, "0")} / {String(totalSlideCount).padStart(2, "0")}
+        </span>
+      </div>
+    </div>
+  );
+
+  // Footer Component: Verified Clickable Contact Strip (Without redundant Slide XX of 26)
+  const FooterBar = () => (
+    <div className="pt-1.5 border-t border-zinc-800/80 flex items-center justify-between text-[10px] font-mono text-zinc-400 mt-1.5 shrink-0">
+      <div className="flex items-center space-x-1.5 text-zinc-300">
+        <span className="font-semibold text-amber-400">JEM ANGKASA WIJAYA, S.KOM.</span>
+        <span className="text-zinc-600">·</span>
+        <span className="text-zinc-400">Surabaya, Indonesia</span>
+      </div>
+
+      <div className="flex items-center space-x-3 text-[9.5px]">
+        <a
+          href="mailto:jemangkasa.work@gmail.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center space-x-1 text-zinc-300 hover:text-amber-300 transition-colors"
+        >
+          <Mail className="w-3 h-3 text-amber-400" />
+          <span>jemangkasa.work@gmail.com</span>
+        </a>
+        <span className="text-zinc-700">|</span>
+        <a
+          href="https://wa.me/6281273567384"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center space-x-1 text-zinc-300 hover:text-emerald-300 transition-colors"
+        >
+          <Phone className="w-3 h-3 text-emerald-400" />
+          <span>+6281273567384</span>
+        </a>
+        <span className="text-zinc-700">|</span>
+        <a
+          href="https://linkedin.com/in/jem-angkasa-wijaya"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center space-x-1 text-zinc-300 hover:text-sky-300 transition-colors"
+        >
+          <LinkedinIcon className="w-3 h-3 text-sky-400" />
+          <span>/in/jem-angkasa-wijaya</span>
+        </a>
+        <span className="text-zinc-700">|</span>
+        <a
+          href="https://github.com/JAW12"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center space-x-1 text-zinc-300 hover:text-white transition-colors"
+        >
+          <GithubIcon className="w-3 h-3 text-zinc-300" />
+          <span>github.com/JAW12</span>
+        </a>
+        <span className="text-zinc-700">|</span>
+        <a
+          href="https://JAW12.github.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center space-x-1 text-zinc-300 hover:text-amber-300 transition-colors"
+        >
+          <Globe className="w-3 h-3 text-amber-400" />
+          <span>JAW12.github.io</span>
+        </a>
+      </div>
+    </div>
+  );
+
+  // Strict A4 Landscape Container (297mm x 210mm) with Space-like Ambient Backdrop
+  const SlideWrapper = ({
+    children,
+    sectionTitle,
+    categoryBadge,
+    currentPage,
+  }: {
+    children: React.ReactNode;
+    sectionTitle: string;
+    categoryBadge?: string;
+    currentPage: number;
+  }) => (
+    <div
+      className="print-landscape-page bg-[#08090d] text-zinc-100 flex flex-col justify-between relative overflow-hidden font-sans border-b border-zinc-800 print:border-b-0"
+      style={{
+        width: "297mm",
+        height: "210mm",
+        minHeight: "210mm",
+        maxHeight: "210mm",
+        padding: "6mm 10mm",
+        boxSizing: "border-box",
+        pageBreakAfter: "always",
+        breakAfter: "page",
+        pageBreakInside: "avoid",
+        breakInside: "avoid",
+        overflow: "hidden",
+      }}
+    >
+      {/* Space-like Cosmic Ambient Glows */}
+      <div className="absolute top-0 right-0 w-[550px] h-[350px] bg-[radial-gradient(ellipse_at_top_right,rgba(212,175,55,0.06)_0%,transparent_70%)] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[450px] h-[300px] bg-[radial-gradient(ellipse_at_bottom_left,rgba(56,189,248,0.04)_0%,transparent_70%)] pointer-events-none"></div>
+
+      <div className="relative z-10 flex flex-col h-full justify-between overflow-hidden">
+        <HeaderBar sectionTitle={sectionTitle} categoryBadge={categoryBadge} currentPage={currentPage} />
+        <div className="flex-1 flex flex-col justify-center overflow-hidden min-h-0">{children}</div>
+        <FooterBar />
+      </div>
+    </div>
+  );
+
+  // Universal Balanced Showcase Card Component with Taller 4:3 Image Ratio & Rich Deliverables
+  const ShowcaseCard = ({
+    proj,
+    accentColor = "amber",
+    isDense = false,
+  }: {
+    proj: ProjectItem;
+    accentColor?: "purple" | "emerald" | "amber" | "rose" | "cyan";
+    isDense?: boolean;
+  }) => {
+    // Filter out video files (.mp4/.mov) and placeholder paths to get valid static preview image
+    const imageList = (proj.images || []).filter(
+      (img) => !img.endsWith(".mp4") && !img.endsWith(".mov") && !img.includes("placeholder")
+    );
+    const firstImage = imageList[0];
+    const hasImage = Boolean(firstImage);
+    const demoHref = proj.liveUrl || proj.demoLinks?.[0]?.url;
+    const highlightsList = getHighlights(proj);
+
+    const colorMap = {
+      purple: {
+        border: "border-purple-500/30",
+        text: "text-purple-400",
+        link: "text-purple-400 hover:text-purple-300",
+      },
+      emerald: {
+        border: "border-emerald-500/30",
+        text: "text-emerald-400",
+        link: "text-emerald-400 hover:text-emerald-300",
+      },
+      amber: {
+        border: "border-amber-500/30",
+        text: "text-amber-400",
+        link: "text-amber-400 hover:text-amber-300",
+      },
+      rose: {
+        border: "border-rose-500/30",
+        text: "text-rose-400",
+        link: "text-rose-400 hover:text-rose-300",
+      },
+      cyan: {
+        border: "border-cyan-500/30",
+        text: "text-cyan-400",
+        link: "text-cyan-400 hover:text-cyan-300",
+      },
+    };
+    const c = colorMap[accentColor] || colorMap.amber;
+
+    return (
+      <div
+        className={`p-3 rounded-xl bg-[#0e0f14]/95 border ${c.border} flex flex-col justify-between shadow-md hover:border-white/20 transition-all h-full`}
+      >
+        <div className="space-y-1.5">
+          {hasImage && firstImage ? (
+            <div className={`w-full ${isDense ? "h-26" : "h-36"} rounded-lg overflow-hidden bg-zinc-950 border border-zinc-800/80 relative shadow-inner`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={firstImage} alt={getTitle(proj)} className="w-full h-full object-cover" />
+              <div className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded bg-black/85 backdrop-blur-sm text-[9px] font-mono text-zinc-300 border border-zinc-700 font-bold">
+                {proj.year}
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between pb-1 border-b border-zinc-800/80">
+              <span className="px-2 py-0.5 rounded bg-zinc-900 text-zinc-300 text-[9px] font-mono border border-zinc-800 font-bold">
+                {proj.year}
               </span>
-              <span className="h-4 w-[1px] bg-white/20" />
-              <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#d4af37]">
-                {track === "it"
-                  ? "SPECIALIZATION TRACK: IT & SYSTEMS ARCHITECTURE COMPENDIUM"
-                  : track === "business"
-                  ? "SPECIALIZATION TRACK: BUSINESS SYSTEMS & OPERATIONS COMPENDIUM"
-                  : track === "multimedia"
-                  ? "SPECIALIZATION TRACK: PACKAGING & CREATIVE MEDIA COMPENDIUM"
-                  : track === "compact"
-                  ? "EXECUTIVE SUMMARY RESUME DECK (2-PAGE)"
-                  : "COMPREHENSIVE SYSTEMS & PHYSICAL ARCHITECTURE COMPENDIUM"}
+              <span className={`text-[10px] font-mono font-bold uppercase tracking-wider ${c.text}`}>
+                {getRole(proj)}
               </span>
             </div>
-            <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" />
-              <span>S.KOM iSTTS · {language === "id" ? "IPK 4.00" : "4.00 GPA"} SUMMA CUM LAUDE · 4x BEST PRACTITIONER</span>
+          )}
+
+          <div>
+            {hasImage && (
+              <div className={`text-[10px] font-mono ${c.text} font-bold tracking-wide uppercase line-clamp-1`}>
+                {getRole(proj)}
+              </div>
+            )}
+            <h3 className="text-[13px] font-bold text-white line-clamp-1 mt-0.5 tracking-tight">
+              {getTitle(proj)}
+            </h3>
+          </div>
+
+          <p className={`text-[10.5px] text-zinc-300 ${isDense ? "line-clamp-2" : "line-clamp-3"} leading-relaxed font-light`}>
+            {getDescription(proj)}
+          </p>
+
+          {/* Render 1-2 Key Highlights for 3-item / 4-item grids to fill space with valuable context */}
+          {!isDense && highlightsList && highlightsList.length > 0 && (
+            <div className="space-y-0.5 pt-0.5">
+              {highlightsList.slice(0, 1).map((hl, i) => (
+                <div key={i} className="flex items-start space-x-1.5 text-[9.5px] text-zinc-300 line-clamp-1">
+                  <span className={`${c.text} font-bold`}>✓</span>
+                  <span>{hl}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="space-y-1.5 pt-1.5 border-t border-zinc-800/80 mt-1.5">
+          <div className="flex flex-wrap gap-1">
+            {getTechStack(proj).slice(0, isDense ? 3 : 5).map((tech) => (
+              <span
+                key={tech}
+                className="px-1.5 py-0.2 rounded bg-zinc-950 text-zinc-300 text-[8.5px] font-mono border border-zinc-800"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          <div className="flex items-center justify-between text-[9px] font-mono text-zinc-400 pt-0.5">
+            <span className="line-clamp-1 text-zinc-400">{getClient(proj) || "Commercial / Open-Source"}</span>
+            <div className="flex items-center space-x-2 shrink-0">
+              {proj.githubUrl && (
+                <a
+                  href={proj.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-1 text-zinc-300 hover:text-white transition-colors font-medium"
+                >
+                  <GithubIcon className="w-2.5 h-2.5" />
+                  <span>Repo ↗</span>
+                </a>
+              )}
+              {demoHref && (
+                <a
+                  href={demoHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex items-center space-x-1 font-bold ${c.link} transition-colors`}
+                >
+                  <ExternalLink className="w-2.5 h-2.5" />
+                  <span>Demo ↗</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div id="printable-portfolio-root" className="printable-document-container bg-[#050608] text-white flex flex-col items-center">
+      {/* =========================================================================
+          SLIDE 01: HERO & EXECUTIVE COVER (MATCHING WEBSITE EDITORIAL CONCEPT)
+      ========================================================================= */}
+      <SlideWrapper sectionTitle="Executive Cover" currentPage={slideHero}>
+        <div className="grid grid-cols-12 gap-6 items-center h-full my-auto">
+          {/* Left Column: Headline & Editorial Narrative (7 cols) */}
+          <div className="col-span-7 flex flex-col justify-center space-y-3">
+            {/* Salutation with gold marker */}
+            <div className="space-y-1">
+              <div className="flex items-center space-x-2">
+                <span className="w-1.5 h-1.5 bg-[#d4af37] inline-block"></span>
+                <span className="text-[11px] font-mono uppercase tracking-widest text-[#d4af37] font-semibold">
+                  {t.hero.salutation || "JEM ANGKASA WIJAYA, S.KOM."}
+                </span>
+                <span className="h-[1px] w-10 bg-[#d4af37]/40"></span>
+              </div>
+
+              {/* Master Headline: Two-Tone Hairline Gold Stroke + Solid White Editorial Serif */}
+              <div className="flex items-baseline gap-x-3 pt-0.5">
+                <span
+                  style={{ WebkitTextStroke: "1.5px #d4af37", color: "transparent" }}
+                  className="font-serif text-5xl sm:text-6xl font-light tracking-tight select-none"
+                >
+                  JEM
+                </span>
+                <span className="font-serif text-5xl sm:text-6xl text-white font-normal tracking-tight">
+                  ANGKASA<span className="text-[#dc2626]">.</span>
+                </span>
+              </div>
+
+              {/* Master Editorial Title Subheading */}
+              <h2 className="font-serif text-xl sm:text-2xl font-light tracking-tight text-zinc-200 leading-snug">
+                {t.hero.titleFirst}{" "}
+                <span className="italic font-normal text-amber-400">
+                  {t.hero.titleHighlight}
+                </span>{" "}
+                {t.hero.titleLast}
+              </h2>
+            </div>
+
+            {/* Narrative Subheading */}
+            <p className="text-[11.5px] text-zinc-300 font-light leading-relaxed max-w-xl">
+              {t.hero.subheading ||
+                "Bridging operational reality with modern digital systems. I build full-stack web applications with Next.js and Laravel, streamline business workflows, and configure structured AI automation pipelines engineered for daily reliability."}
+            </p>
+
+            {/* 4 Key Stat Cards (Updated label to: Software, Systems & Business) */}
+            <div className="grid grid-cols-4 gap-2 pt-0.5">
+              <div className="p-2.5 rounded-lg bg-zinc-900/90 border border-amber-400/30 flex flex-col justify-between shadow-sm">
+                <div className="text-base font-bold text-amber-400 font-mono leading-tight">4.00 / 4.00</div>
+                <div className="text-[8.5px] text-zinc-400 font-mono uppercase tracking-wider mt-0.5">
+                  {language === "zh" ? "最高学术荣誉 (S.Kom.)" : language === "id" ? "IPK 4.00 (Sangat Memuaskan)" : "Perfect GPA (Highest Honors)"}
+                </div>
+              </div>
+              <div className="p-2.5 rounded-lg bg-zinc-900/90 border border-emerald-400/30 flex flex-col justify-between shadow-sm">
+                <div className="text-base font-bold text-emerald-400 font-mono leading-tight">20+ Projects</div>
+                <div className="text-[8.5px] text-zinc-400 font-mono uppercase tracking-wider mt-0.5">
+                  {language === "zh" ? "全栈软件、系统与商业" : language === "id" ? "Software, Sistem & Bisnis" : "Software, Systems & Business"}
+                </div>
+              </div>
+              <div className="p-2.5 rounded-lg bg-zinc-900/90 border border-sky-400/30 flex flex-col justify-between shadow-sm">
+                <div className="text-base font-bold text-sky-400 font-mono leading-tight">4x Awards</div>
+                <div className="text-[8.5px] text-zinc-400 font-mono uppercase tracking-wider mt-0.5">
+                  {language === "zh" ? "iSTTS 计算机实验室最佳实践奖" : language === "id" ? "Best Lab Practitioner iSTTS" : "iSTTS Best Practitioner"}
+                </div>
+              </div>
+              <div className="p-2.5 rounded-lg bg-zinc-900/90 border border-purple-400/30 flex flex-col justify-between shadow-sm">
+                <div className="text-base font-bold text-purple-400 font-mono leading-tight">4.5 Years</div>
+                <div className="text-[8.5px] text-zinc-400 font-mono uppercase tracking-wider mt-0.5">
+                  {language === "zh" ? "iSTTS 计算机科学本科学程" : language === "id" ? "Masa Studi Sarjana iSTTS" : "iSTTS Undergraduate Studies"}
+                </div>
+              </div>
+            </div>
+
+            {/* Direct Clickable Contact Capsules */}
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              <a
+                href="https://github.com/JAW12"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full px-3 py-1 bg-white/5 border border-white/10 hover:border-amber-400/40 text-[10.5px] font-mono text-zinc-300 hover:text-white transition-all flex items-center gap-1.5"
+              >
+                <GithubIcon className="w-3 h-3 text-zinc-400" />
+                <span>GitHub ↗</span>
+              </a>
+              <a
+                href="https://linkedin.com/in/jem-angkasa-wijaya"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full px-3 py-1 bg-white/5 border border-white/10 hover:border-amber-400/40 text-[10.5px] font-mono text-zinc-300 hover:text-white transition-all flex items-center gap-1.5"
+              >
+                <LinkedinIcon className="w-3 h-3 text-zinc-400" />
+                <span>LinkedIn ↗</span>
+              </a>
+              <a
+                href="mailto:jemangkasa.work@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full px-3 py-1 bg-white/5 border border-white/10 hover:border-amber-400/40 text-[10.5px] font-mono text-zinc-300 hover:text-white transition-all flex items-center gap-1.5"
+              >
+                <Mail className="w-3 h-3 text-zinc-400" />
+                <span>Email ↗</span>
+              </a>
+              <a
+                href="https://wa.me/6281273567384"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full px-3 py-1 bg-white/5 border border-white/10 hover:border-emerald-400/40 text-[10.5px] font-mono text-zinc-300 hover:text-white transition-all flex items-center gap-1.5"
+              >
+                <Phone className="w-3 h-3 text-emerald-400" />
+                <span>WhatsApp ↗</span>
+              </a>
+              <a
+                href="https://JAW12.github.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full px-3 py-1 bg-amber-400/10 border border-amber-400/30 hover:border-amber-400 text-[10.5px] font-mono text-amber-300 hover:text-amber-200 transition-all flex items-center gap-1.5 font-semibold"
+              >
+                <Globe className="w-3 h-3 text-amber-400" />
+                <span>Portfolio ↗</span>
+              </a>
             </div>
           </div>
 
-          {/* Central Stage: 8:4 Split */}
-          <div className="grid grid-cols-12 gap-8 items-center my-auto py-2">
-            
-            {/* Left 8 cols: Identity, Titles, Credentials */}
-            <div className="col-span-8 space-y-3.5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4af37]/15 border border-[#d4af37]/40 text-[#ebdca4] text-xs font-mono uppercase tracking-wider font-semibold">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#d4af37]" />
-                <span>OFFICIAL VERIFIED PORTFOLIO · CONFIDENTIAL & AUDITABLE</span>
-              </div>
-
-              <div className="space-y-1">
-                <h1 className="font-serif-editorial text-5xl text-white font-medium tracking-tight">
-                  Jem Angkasa Wijaya{language === "zh" ? " (范永安)" : ""}<span className="text-[#d4af37]">, S.Kom.</span>
-                </h1>
-                <p className="font-mono text-xs uppercase tracking-widest text-[#ebdca4] font-semibold">
-                  Full-Stack Systems Architect · Industrial Cold-Chain & AI Synthesizer
-                </p>
-              </div>
-
-              <p className="text-xs text-zinc-300 font-light leading-relaxed max-w-2xl text-justify">
-                {language === "zh"
-                  ? "毕业于泗水综合科学与技术学院 (iSTTS) 商业信息系统专业，以 4.00/4.00 满分绩点 (最高优等荣誉，4次最佳实训先锋奖) 荣誉毕业。精通将高并发企业级软件架构、实体工业冷链包装工程 (-25°C 耐低温工艺) 与本地化 AI/RAG 结构化智能管线深度融合。"
-                  : language === "id"
-                  ? "Lulusan Sarjana Komputer dari Institut Sains dan Teknologi Terpadu Surabaya (iSTTS) dengan IPK Sempurna 4.00/4.00 murni (Predikat Resmi: Sangat Memuaskan / Summa Cum Laude standard, 4x Praktisi Akademik Terbaik). Mengawinkan arsitektur sistem enterprise berkemampuan tinggi dengan ketahanan fisik manufaktur kemasan industri (-25°C) dan pipeline otomasi AI terstruktur."
-                  : "Sarjana Komputer graduate from Institut Sains dan Teknologi Terpadu Surabaya (iSTTS) with a flawless 4.00 / 4.00 cumulative GPA (Official Honors: Very Satisfactory / Summa Cum Laude standard, 4x Best Academic Practitioner). Merging high-concurrency enterprise software architecture with rugged industrial packaging manufacturing (-25°C) and deterministic AI synthesis."}
-              </p>
-
-              {/* 4 Core Disciplinary Framing Badges */}
-              <div className="grid grid-cols-4 gap-2.5 pt-2">
-                <div className="p-2.5 rounded-xl bg-[#111114] border border-[#d4af37]/40 text-center">
-                  <div className="font-serif-editorial text-xl text-[#ebdca4] font-bold">{language === "id" ? "IPK 4.00" : "4.00 GPA"}</div>
-                  <div className="text-xs font-mono text-zinc-400 uppercase mt-0.5">Summa Cum Laude</div>
-                </div>
-                <div className="p-2.5 rounded-xl bg-[#111114] border border-[#dc2626]/40 text-center">
-                  <div className="font-serif-editorial text-xl text-[#dc2626] font-bold">4x Awards</div>
-                  <div className="text-xs font-mono text-zinc-400 uppercase mt-0.5">Best Practitioner</div>
-                </div>
-                <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10 text-center">
-                  <div className="font-serif-editorial text-xl text-white font-bold">-25°C Stable</div>
-                  <div className="text-xs font-mono text-zinc-400 uppercase mt-0.5">Cold-Chain Nylon</div>
-                </div>
-                <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10 text-center">
-                  <div className="font-serif-editorial text-xl text-emerald-400 font-bold">20+ Works</div>
-                  <div className="text-xs font-mono text-zinc-400 uppercase mt-0.5">Real Deliverables</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right 4 cols: Cutout Silhouette Portrait */}
-            <div className="col-span-4 flex justify-center">
-              <div className="relative w-56 h-72 rounded-2xl overflow-hidden border-2 border-[#d4af37]/60 shadow-[0_15px_40px_rgba(0,0,0,0.8)] bg-gradient-to-b from-[#18181b] to-black">
+          {/* Right Column: Editorial Portrait in Obsidian Glass Vitrine (5 cols) */}
+          <div className="col-span-5 flex flex-col items-center justify-center">
+            <div className="relative w-full max-w-[260px] p-2 rounded-2xl bg-gradient-to-tr from-[#d4af37]/20 via-zinc-900/90 to-zinc-950 border border-[#d4af37]/40 shadow-2xl">
+              <div className="relative aspect-[4/5] w-full rounded-xl overflow-hidden bg-zinc-950 border border-zinc-800">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/assets/avatar/profile-quarter.png"
                   alt="Jem Angkasa Wijaya, S.Kom."
                   className="w-full h-full object-cover object-top filter contrast-[1.03]"
                 />
-                <div className="absolute inset-x-0 bottom-0 p-3 bg-black/85 backdrop-blur-md border-t border-white/15 text-center">
-                  <div className="font-serif-editorial text-sm text-white font-medium">Jem Angkasa Wijaya</div>
-                  <div className="text-xs font-mono text-[#ebdca4]">iSTTS · Sarjana Komputer (S.Kom.)</div>
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0c0d12] via-[#0c0d12]/70 to-transparent"></div>
+
+                {/* Dignified Card Inscription */}
+                <div className="absolute bottom-2.5 left-2.5 right-2.5 p-2 rounded-lg bg-black/80 backdrop-blur-md border border-white/15 space-y-0.5 shadow-xl">
+                  <div className="font-serif text-sm text-white font-medium">
+                    {language === "zh" ? "Jem Angkasa Wijaya (范永安)" : "Jem Angkasa Wijaya"}
+                  </div>
+                  <div className="text-[10px] text-amber-300 font-mono font-semibold">
+                    {language === "zh" ? "iSTTS · 业务信息系统学士 (S.Kom.)" : "iSTTS · Sarjana Komputer (S.Kom.)"}
+                  </div>
+                  <div className="text-[8.5px] text-zinc-400 font-mono">
+                    IPK 4.00 · Sangat Memuaskan
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </SlideWrapper>
+
+      {/* =========================================================================
+          SLIDE 02: ABOUT & SYSTEMS PHILOSOPHY (BALANCED 2-COLUMN DOSSIER)
+      ========================================================================= */}
+      <SlideWrapper sectionTitle="About & Systems Philosophy" currentPage={slideAbout}>
+        <div className="flex flex-col justify-between h-full py-1 space-y-2">
+          {/* Chapter Header Bar matching website */}
+          <div className="flex items-baseline justify-between border-b border-zinc-800/80 pb-2">
+            <div className="flex items-baseline gap-2">
+              <span className="font-serif text-2xl text-amber-400 font-light">/</span>
+              <h2 className="font-serif text-2xl font-normal text-white uppercase tracking-tight">
+                ABOUT
+              </h2>
+            </div>
+            <div className="text-right font-mono text-[10px]">
+              <span className="text-zinc-500">02 / 06 </span>
+              <span className="text-amber-400 font-semibold">{t.common.chapterIndex || "CHAPTER"}</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-12 gap-5 items-stretch flex-1 my-auto">
+            {/* Left Column: Core Philosophy Quote & Vitrine Metadata (5 cols) */}
+            <div className="col-span-5 flex flex-col justify-between space-y-2.5">
+              {/* Core Philosophy Quote Block */}
+              <div className="p-3.5 rounded-xl bg-gradient-to-br from-amber-500/10 via-zinc-900/90 to-zinc-950 border border-amber-400/30 shadow-md relative flex flex-col justify-between flex-1">
+                <div>
+                  <div className="flex items-center space-x-1.5 text-amber-400 font-mono text-[10px] uppercase tracking-widest mb-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                    <span>{language === "zh" ? "核心工程哲学" : language === "id" ? "FILOSOFI SISTEM & REKAYASA" : "CORE ENGINEERING PHILOSOPHY"}</span>
+                  </div>
+                  <blockquote className="font-serif text-[13.5px] italic text-zinc-100 font-light leading-relaxed border-l-2 border-amber-400/80 pl-3 py-0.5">
+                    &ldquo;{t.about.quote || "A good system is straightforward: it resolves real operational friction without creating new headaches for the people running it."}&rdquo;
+                  </blockquote>
+                </div>
+
+                <div className="mt-2 pt-1.5 border-t border-amber-400/20 flex items-center justify-between text-[10px] font-mono text-zinc-400">
+                  <span className="text-amber-400 font-medium">JEM ANGKASA WIJAYA</span>
+                  <span>SURABAYA, ID</span>
+                </div>
+              </div>
+
+              {/* Structured Museum Metadata Plaque */}
+              <div className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 space-y-1.5 font-mono text-[10.5px]">
+                <div className="flex justify-between items-center py-0.5 border-b border-zinc-800/80">
+                  <span className="text-zinc-500 uppercase tracking-wider">{language === "zh" ? "坐标基点" : language === "id" ? "Lokasi" : "Base"}</span>
+                  <span className="text-zinc-200 font-semibold">Surabaya, Indonesia (UTC+7)</span>
+                </div>
+                <div className="flex justify-between items-center py-0.5 border-b border-zinc-800/80">
+                  <span className="text-zinc-500 uppercase tracking-wider">{language === "zh" ? "核心方向" : language === "id" ? "Fokus Utama" : "Focus"}</span>
+                  <span className="text-amber-400 font-semibold">Business Systems & AI Workflows</span>
+                </div>
+                <div className="flex justify-between items-center py-0.5 border-b border-zinc-800/80">
+                  <span className="text-zinc-500 uppercase tracking-wider">{language === "zh" ? "学术资质" : language === "id" ? "Gelar Akademik" : "Academic Degree"}</span>
+                  <span className="text-zinc-200 font-semibold">S1 Sistem Informasi iSTTS (IPK 4.00)</span>
+                </div>
+                <div className="flex justify-between items-center py-0.5">
+                  <span className="text-zinc-500 uppercase tracking-wider">{language === "zh" ? "工作状态" : language === "id" ? "Status" : "Status"}</span>
+                  <span className="text-emerald-400 font-semibold flex items-center space-x-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>{language === "zh" ? "开放远程 / 混合办公" : language === "id" ? "Tersedia: Remote & Hybrid" : "Open: Remote & Hybrid"}</span>
+                  </span>
                 </div>
               </div>
             </div>
 
-          </div>
+            {/* Right Column: Smoked Obsidian Glass Vitrine (7 cols) */}
+            <div className="col-span-7 p-3.5 rounded-xl bg-zinc-900/70 border border-zinc-800 flex flex-col justify-between space-y-2">
+              <div className="flex items-center justify-between text-xs font-mono pb-2 border-b border-zinc-800 text-zinc-400">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#dc2626]"></span>
+                  <span className="uppercase tracking-widest text-amber-300 font-semibold">
+                    {language === "zh" ? "背景与历程" : language === "id" ? "LATAR BELAKANG" : "BACKGROUND"}
+                  </span>
+                </div>
+                <span className="text-zinc-500 tracking-wider">2010 — PRESENT</span>
+              </div>
 
-          {/* Bottom Contact Strip */}
-          <div className="border-t border-white/10 pt-2.5 pb-1 flex items-center justify-between text-xs font-mono text-zinc-400">
-            <div className="flex items-center gap-4 text-zinc-300">
-              <span className="text-[#ebdca4] font-bold">PAGE 01 / 15</span>
-              <span>·</span>
-              <span><strong>Email:</strong> jemangkasa.work@gmail.com</span>
-              <span>·</span>
-              <span><strong>GitHub:</strong> github.com/JAW12</span>
-              <span>·</span>
-              <span><strong>LinkedIn:</strong> linkedin.com/in/jem-angkasa-wijaya</span>
-            </div>
-            <div className="text-[#ebdca4]">
-              <span>Surabaya, Indonesia · Open for Strategic Remote Engagements</span>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ========================================================================= */}
-      {/* SLIDE 02: EXECUTIVE PROFILE, PHILOSOPHY & EMPIRICAL MILESTONES             */}
-      {/* ========================================================================= */}
-      {exportOptions.includeAbout && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-3">
-              <span className="font-serif-editorial text-2xl text-[#d4af37]">/ 02</span>
-              <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-                EXECUTIVE PROFILE & STRATEGIC FOUNDATIONS
-              </span>
-            </div>
-            <span className="font-mono text-xs text-zinc-400">
-              SHOW, DON&apos;T PITCH · THE ZERO AI-SLOP COMMITMENT
-            </span>
-          </div>
-
-          {/* Central 2-Column Grid */}
-          <div className="grid grid-cols-12 gap-8 my-auto py-2 items-stretch">
-            
-            {/* Left 6 cols: Narrative & Philosophy */}
-            <div className="col-span-6 space-y-3.5 flex flex-col justify-between">
-              <blockquote className="p-4 rounded-2xl bg-[#111114] border-l-4 border-l-[#d4af37] border border-white/10 font-serif-editorial text-base text-zinc-200 italic leading-snug">
-                &ldquo;Software is only as good as the physical and mathematical reality it orchestrates. Code without verifiable empirical proof is liability; systems tied to operational truth generate enduring value.&rdquo;
-              </blockquote>
-
-              <div className="p-4 rounded-2xl bg-[#111114] border border-white/10 space-y-2 text-xs text-zinc-300 font-light leading-relaxed">
-                <span className="font-mono text-xs text-[#d4af37] uppercase tracking-wider block font-bold">
-                  EMPIRICAL DISCIPLINARY STANCE
-                </span>
-                <p className="text-justify">
-                  {language === "zh"
-                    ? "职业经历深植于 PT Karya Buah Tropis 早期真实商业 B2B 运营管理，并在 iSTTS 综合科学与技术学院以全校最高学术荣誉锤炼（144 学分全 A 毕业）。完整掌控系统工程研发全生命周期：从高阶规范化数据库模式、现代 Next.js/TypeScript 交互前端、本地 AI 文档管线编排，直至食品级工业包装刀模印刷制造。"
-                    : language === "id"
-                    ? "Berakar dari pengelolaan operasional riil B2B PT Karya Buah Tropis sejak dini, kemudian ditempa secara akademis dengan predikat tertinggi di iSTTS (144 SKS lulus seluruh nilai A). Menguasai siklus lengkap perekayasaan: mulai dari skema database ternormalisasi, arsitektur UI/UX modern Next.js/TypeScript, otomasi pipeline kompilasi dokumen AI lokal, hingga presisi cetak kemasan nilon standar industri."
-                    : "Rooted in early hands-on commercial B2B operations at PT Karya Buah Tropis, then formally tempered with the highest academic record at iSTTS (144 credits graduated with straight A's). Mastering the full lifecycle of systems engineering: from normalized database schemas, modern Next.js/TypeScript frontends, deterministic local AI document compilers, to food-grade packaging dieline manufacturing."}
+              {/* The 3 Grounded Narrative Paragraphs */}
+              <div className="space-y-2 text-zinc-300 font-light leading-relaxed text-[11px]">
+                <p className="p-2.5 rounded-lg bg-zinc-950/80 border border-zinc-800/80 text-zinc-200">
+                  <strong className="text-amber-300 font-semibold font-mono text-[10px] block mb-0.5">
+                    01. {language === "zh" ? "家庭企业淬炼与实战敏捷性" : language === "id" ? "Akar Wirausaha & Ketahanan Lapangan" : "Family Enterprise Roots & Agility"}
+                  </strong>
+                  {t.about.p1 ||
+                    "Growing up, I actively supported my family enterprise through multiple shifting business ventures. The pivots spanned across multi-branch culinary franchises, HR character assessment services, and industrial cold-chain distribution. Navigating these varied models forced me to adapt fast and pick up whatever tools were needed on the fly. It built my resilience early on, teaching me how to step into unfamiliar operations, figure out the bottlenecks, and set up working systems from scratch."}
+                </p>
+                <p className="p-2.5 rounded-lg bg-zinc-950/80 border border-zinc-800/80 text-zinc-200">
+                  <strong className="text-sky-300 font-semibold font-mono text-[10px] block mb-0.5">
+                    02. {language === "zh" ? "严谨学术积淀与系统架构" : language === "id" ? "Fondasi Akademik & Rekayasa Perangkat Lunak" : "Academic Rigor & Systems Engineering"}
+                  </strong>
+                  {t.about.p2 ||
+                    "I brought that practical agility to my Business Information Systems degree at iSTTS, grounding my field experience in relational database architecture and structured software engineering. Alongside graduating with top honors (IPK 4.00 / 4.00, Sangat Memuaskan) and four lab practitioner awards, I led corporate sponsorships and fundraising for major campus initiatives."}
+                </p>
+                <p className="p-2.5 rounded-lg bg-zinc-950/80 border border-zinc-800/80 text-zinc-200">
+                  <strong className="text-emerald-300 font-semibold font-mono text-[10px] block mb-0.5">
+                    03. {language === "zh" ? "全栈开发与现代 AI 工作流构建" : language === "id" ? "Arsitek Sistem & Orkestrasi AI Modern" : "Full-Stack Development & AI Orchestration"}
+                  </strong>
+                  {t.about.p3 ||
+                    "Today, I operate as a builder at the intersection of technology and business operations. My core craft centers on building production web applications with Next.js and Laravel, alongside configuring structured AI automation workflows that eliminate repetitive manual friction. Having navigated constantly shifting business environments, I look at every line of code as an operational strategist: software must be reliable, easy to maintain, and flexible enough to adapt as the business scales."}
                 </p>
               </div>
 
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/10 flex items-center justify-between text-xs font-mono">
-                <span className="text-[#ebdca4]">{language === "zh" ? "学术记录：" : "ACADEMIC RECORD:"}</span>
-                <span className="text-white font-bold">
-                  {language === "zh" ? "144学分 · 100%全A · 最高优等 (4.00)" : language === "id" ? "144 SKS · 100% NILAI A · SUMMA CUM LAUDE (4.00)" : "144 CREDITS · 100% STRAIGHT A's · SUMMA CUM LAUDE (4.00)"}
-                </span>
+              {/* Status footer line inside vitrine */}
+              <div className="pt-2 border-t border-zinc-800 flex items-center justify-between text-[10px] font-mono text-zinc-400">
+                <span className="text-zinc-400">● {t.common.statusAvailable || "AVAILABLE FOR CONTRACT & FULL-TIME"}</span>
+                <span className="text-amber-300 font-medium">{t.common.statusLocation || "SURABAYA, ID (UTC+7)"}</span>
               </div>
             </div>
-
-            {/* Right 6 cols: 4 Key Empirical Milestones */}
-            <div className="col-span-6 space-y-2.5">
-              <span className="font-mono text-xs text-zinc-400 uppercase tracking-widest block font-bold">
-                AUDITABLE EMPIRICAL MILESTONES
-              </span>
-
-              <div className="grid grid-cols-2 gap-2.5">
-                {/* Milestone 1 */}
-                <div className="p-3 rounded-xl bg-[#111114] border border-[#d4af37]/40 space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="font-serif-editorial text-xl text-[#ebdca4] font-bold">4.00 / 4.00</span>
-                    <span className="px-1.5 py-0.5 rounded bg-[#d4af37]/20 text-[#d4af37] font-mono text-xs">S.Kom.</span>
-                  </div>
-                  <div className="text-xs font-mono text-zinc-300 font-semibold">IPK Sempurna iSTTS</div>
-                  <p className="text-xs text-zinc-400 font-light leading-snug">
-                    Predikat Sangat Memuaskan & 4x Penghargaan Praktikan Terbaik di 4 semester berturut-turut.
-                  </p>
-                </div>
-
-                {/* Milestone 2 */}
-                <div className="p-3 rounded-xl bg-[#111114] border border-white/10 space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="font-serif-editorial text-xl text-white font-bold">150+ Pages</span>
-                    <span className="px-1.5 py-0.5 rounded bg-white/10 text-white font-mono text-xs">AI Pipeline</span>
-                  </div>
-                  <div className="text-xs font-mono text-zinc-300 font-semibold">The Secret of Life</div>
-                  <p className="text-xs text-zinc-400 font-light leading-snug">
-                    Pipeline otomasi kompilasi buku personal resolusi tinggi siap cetak offset (turnaround 1 hari).
-                  </p>
-                </div>
-
-                {/* Milestone 3 */}
-                <div className="p-3 rounded-xl bg-[#111114] border border-white/10 space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="font-serif-editorial text-xl text-emerald-400 font-bold">-25°C Stable</span>
-                    <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono text-xs">Food Grade</span>
-                  </div>
-                  <div className="text-xs font-mono text-zinc-300 font-semibold">PT. Karya Buah Tropis</div>
-                  <p className="text-xs text-zinc-400 font-light leading-snug">
-                    Kemasan vakum nilon komersial 90+ SKU, katalog B2B digital, izin Kementan & sertifikasi Halal.
-                  </p>
-                </div>
-
-                {/* Milestone 4 */}
-                <div className="p-3 rounded-xl bg-[#111114] border border-[#dc2626]/30 space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="font-serif-editorial text-xl text-[#dc2626] font-bold">&lt; 15 ms</span>
-                    <span className="px-1.5 py-0.5 rounded bg-[#dc2626]/20 text-[#fca5a5] font-mono text-xs">Zero Cost</span>
-                  </div>
-                  <div className="text-xs font-mono text-zinc-300 font-semibold">CocokGa Engine</div>
-                  <p className="text-xs text-zinc-400 font-light leading-snug">
-                    Next.js 14 App Router deterministik dengan komputasi Web Worker, nol biaya operasional server.
-                  </p>
-                </div>
-              </div>
-
-              {/* 3 Pillars Summary Box */}
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 grid grid-cols-3 gap-2 text-center">
-                <div>
-                  <span className="text-xs font-mono text-[#d4af37] block font-bold">PILLAR I</span>
-                  <span className="text-xs text-zinc-300">Software Architecture</span>
-                </div>
-                <div>
-                  <span className="text-xs font-mono text-[#ebdca4] block font-bold">PILLAR II</span>
-                  <span className="text-xs text-zinc-300">Physical Packaging</span>
-                </div>
-                <div>
-                  <span className="text-xs font-mono text-emerald-400 block font-bold">PILLAR III</span>
-                  <span className="text-xs text-zinc-300">Automated Compilers</span>
-                </div>
-              </div>
-            </div>
-
           </div>
-
-          {/* Footer */}
-          <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span>MASTER PORTFOLIO DECK · PAGE 02 / 15</span>
-            <span>JEM ANGKASA WIJAYA, S.KOM. · iSTTS IPK 4.00</span>
-          </div>
-        </section>
-      )}
-
-      {/* ========================================================================= */}
-      {/* SLIDE 03: 4 CORE SERVICES & 3-PHASE ENGINEERING PROCESS                   */}
-      {/* ========================================================================= */}
-      {exportOptions.includeHighlights && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-3">
-          <div className="flex items-center gap-3">
-            <span className="font-serif-editorial text-2xl text-[#d4af37]">/ 03</span>
-            <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-              CORE SERVICES & EMPIRICAL PROCESS METHODOLOGY
-            </span>
-          </div>
-          <span className="font-mono text-xs text-zinc-400">
-            INSIDE THE ENGINEERING LAB · RIGOROUS PRODUCTION STANDARDS
-          </span>
         </div>
+      </SlideWrapper>
 
-        {/* 4 Core Services Grid */}
-        <div className="my-auto py-2 space-y-4">
+      {/* =========================================================================
+          SLIDE 03: TABLE OF CONTENTS & INDEX (ACCURATE 26 SLIDES SINKRON)
+      ========================================================================= */}
+      <SlideWrapper sectionTitle="Table of Contents & Index" currentPage={slideIndex}>
+        <div className="flex flex-col justify-between h-full py-0.5 space-y-2">
           <div>
-            <span className="text-xs font-mono text-[#d4af37] uppercase tracking-widest font-bold block mb-2">
-              4 CORE SERVICE DISCIPLINES:
-            </span>
-            <div className="grid grid-cols-4 gap-3">
-              <div className="p-3 rounded-xl bg-[#111114] border border-white/10 space-y-1.5">
-                <Code2 className="w-4 h-4 text-[#d4af37]" />
-                <h4 className="font-serif-editorial text-sm text-white font-medium">
-                  Full-Stack Architecture
-                </h4>
-                <p className="text-xs text-zinc-400 font-light leading-snug">
-                  Next.js 14/15, TypeScript, Tailwind, and Laravel backends with clean relational schemas and state management.
-                </p>
-              </div>
-
-              <div className="p-3 rounded-xl bg-[#111114] border border-white/10 space-y-1.5">
-                <Cpu className="w-4 h-4 text-emerald-400" />
-                <h4 className="font-serif-editorial text-sm text-white font-medium">
-                  AI Compilers & RAG
-                </h4>
-                <p className="text-xs text-zinc-400 font-light leading-snug">
-                  Deterministic Python compiling engines, structured LLM prompt orchestration, and zero-leakage local pipelines.
-                </p>
-              </div>
-
-              <div className="p-3 rounded-xl bg-[#111114] border border-white/10 space-y-1.5">
-                <Package className="w-4 h-4 text-[#dc2626]" />
-                <h4 className="font-serif-editorial text-sm text-white font-medium">
-                  Physical Packaging (-25°C)
-                </h4>
-                <p className="text-xs text-zinc-400 font-light leading-snug">
-                  Sub-millimeter industrial CAD dielines, food-grade vacuum nylon, Pantone color calibration, and offset print layouts.
-                </p>
-              </div>
-
-              <div className="p-3 rounded-xl bg-[#111114] border border-white/10 space-y-1.5">
-                <TrendingUp className="w-4 h-4 text-blue-400" />
-                <h4 className="font-serif-editorial text-sm text-white font-medium">
-                  B2B Systems & Operations
-                </h4>
-                <p className="text-xs text-zinc-400 font-light leading-snug">
-                  90+ SKU digital catalogs, automated inventory ledgers, standardized SOPs, and wholesale Horeca conversion funnels.
-                </p>
-              </div>
-            </div>
+            <h2 className="text-xl font-bold text-white tracking-tight">
+              {language === "zh" ? "作品集总览与精准页码索引" : language === "id" ? "Daftar Isi Portofolio & Indeks Halaman" : "Master Portfolio Ledger & Page Index"}
+            </h2>
+            <p className="text-[10.5px] text-zinc-400 font-mono mt-0.5">
+              {language === "zh"
+                ? `共 ${totalSlideCount} 页结构化文档 · 涵盖 5 大核心工程领域、实战项目展示、职业历程与权威履历`
+                : language === "id"
+                ? `Total ${totalSlideCount} Halaman Terstruktur · Mencakup 5 Pilar Disiplin, Showcase Proyek, Karir & Kredensial`
+                : `${totalSlideCount} Structured Pages · Covering 5 Core Disciplines, Complete Project Showcase, Career & Credentials`}
+            </p>
           </div>
 
-          {/* 3-Phase Process Breakdown */}
-          <div className="pt-2 border-t border-white/10">
-            <span className="text-xs font-mono text-[#ebdca4] uppercase tracking-widest font-bold block mb-2">
-              THE 3-PHASE ENGINEERING DELIVERY PROCESS:
-            </span>
-            <div className="grid grid-cols-3 gap-3">
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/10 space-y-1">
-                <span className="text-xs font-mono text-[#d4af37] font-bold block">PHASE 01: ARCHITECTURAL INGESTION</span>
-                <p className="text-xs text-zinc-300 font-light leading-relaxed">
-                  Deep mathematical domain modeling, 3NF schema normalization, and data sanitization. Decoupling core logic from the presentation layer.
-                </p>
-              </div>
-
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/10 space-y-1">
-                <span className="text-xs font-mono text-[#ebdca4] font-bold block">PHASE 02: HIGH-FIDELITY IMPLEMENTATION</span>
-                <p className="text-xs text-zinc-300 font-light leading-relaxed">
-                  Rigorous coding with zero-slop deterministic execution, in-browser Web Workers for sub-15ms compute, and component design systems.
-                </p>
-              </div>
-
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/10 space-y-1">
-                <span className="text-xs font-mono text-emerald-400 font-bold block">PHASE 03: EMPIRICAL PRODUCTION DELIVERY</span>
-                <p className="text-xs text-zinc-300 font-light leading-relaxed">
-                  Containerized Docker cutover, thermal testing (-25°C), regulatory compliance (Halal & Kementan), and verifiable client deliverables.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-          <span>MASTER PORTFOLIO DECK · PAGE 03 / 15</span>
-          <span>JEM ANGKASA WIJAYA, S.KOM. · ENGINEERING METHODOLOGY</span>
-        </div>
-      </section>
-      )}
-
-      {/* ========================================================================= */}
-      {/* SLIDE 04: FLAGSHIP SYSTEM 01 — THE SECRET OF LIFE                          */}
-      {/* ========================================================================= */}
-      {exportOptions.includeFeatured && (track === "all" || track === "it" || track === "multimedia") && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-[#d4af37]/40 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-3">
-              <span className="font-serif-editorial text-2xl text-[#d4af37]">/ 04</span>
-              <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-                FLAGSHIP 01: THE SECRET OF LIFE (AI PRINT ENGINE)
-              </span>
-            </div>
-            <a
-              href="https://thesecretoflife.id"
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs font-mono text-[#d4af37] underline flex items-center gap-1"
-            >
-              <span>thesecretoflife.id</span>
-              <ExternalLink className="w-2.5 h-2.5" />
-            </a>
-          </div>
-
-          {/* Body */}
-          <div className="grid grid-cols-12 gap-6 my-auto py-2 items-center">
-            
-            {/* Left 7 cols: Technical Details */}
-            <div className="col-span-7 space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded-full bg-[#d4af37]/20 text-[#ebdca4] font-mono text-xs uppercase border border-[#d4af37]/40 font-bold">
-                  AI ORCHESTRATION & LUXURY PRINT ENGINE · 2024–2026
-                </span>
-                <span className="text-zinc-400 font-mono text-xs">·</span>
-                <span className="text-zinc-400 font-mono text-xs">Lead Systems Architect & Product Engineer</span>
-              </div>
-
-              <h2 className="font-serif-editorial text-3xl text-white font-medium">
-                The Secret of Life — Automated Book Compilation Pipeline
-              </h2>
-
-              <p className="text-xs text-zinc-300 font-light leading-relaxed text-justify">
-                {flagshipProjects[0].description}
-              </p>
-
-              {/* 4 Factual Highlights */}
-              <div className="space-y-1.5 pt-1">
-                {flagshipProjects[0].highlights.map((h, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-[10.5px] text-zinc-300 font-light">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#d4af37] shrink-0 mt-0.5" />
-                    <span>{h}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* 4-Step Blueprint Flow */}
-              <div className="grid grid-cols-4 gap-2 pt-2 border-t border-white/10">
-                {flagshipProjects[0].blueprintFlow?.map((b, idx) => (
-                  <div key={idx} className="p-2 rounded-lg bg-[#111114] border border-white/5 space-y-0.5">
-                    <span className="text-xs font-mono text-[#d4af37] font-bold block">STEP 0{idx + 1}</span>
-                    <div className="text-xs font-mono text-white font-medium truncate">{b.step}</div>
-                    <div className="text-[8.5px] text-zinc-400 leading-tight truncate">{b.detail}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right 5 cols: Visual Gallery & Metrics */}
-            <div className="col-span-5 space-y-3">
-              <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-[#d4af37]/50 shadow-xl bg-black">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/assets/projects/secret-of-life/white_desk.png"
-                  alt="The Secret of Life Desk Mockup"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-2">
-                <div className="relative h-20 rounded-xl overflow-hidden border border-white/10 bg-black">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/assets/projects/secret-of-life/close_up.png"
-                    alt="Gold Foil Hardcover"
-                    className="w-full h-full object-cover"
-                  />
+          {/* Grid of TOC Cards (4 cols x 2 rows) */}
+          <div className="grid grid-cols-4 gap-2.5 flex-1 items-stretch">
+            {/* Section 1: Intro */}
+            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-zinc-800 flex flex-col justify-between shadow-sm">
+              <div className="space-y-1">
+                <div className="text-[9.5px] font-mono font-bold text-amber-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
+                  01 · INTRODUCTION
                 </div>
-                <div className="relative h-20 rounded-xl overflow-hidden border border-white/10 bg-black">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/assets/projects/secret-of-life/marble.png"
-                    alt="Marble Deck"
-                    className="w-full h-full object-cover"
-                  />
+                <div className="space-y-0.5 text-[10.5px] font-mono">
+                  <div className="flex justify-between text-zinc-300">
+                    <span>Executive Cover Spread</span>
+                    <span className="text-amber-400 font-bold">P. {String(slideHero).padStart(2, "0")}</span>
+                  </div>
+                  <div className="flex justify-between text-zinc-300">
+                    <span>About & Philosophy</span>
+                    <span className="text-amber-400 font-bold">P. {String(slideAbout).padStart(2, "0")}</span>
+                  </div>
+                  <div className="flex justify-between text-zinc-300">
+                    <span>Table of Contents</span>
+                    <span className="text-amber-400 font-bold">P. {String(slideIndex).padStart(2, "0")}</span>
+                  </div>
                 </div>
               </div>
-
-              <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10 flex justify-between items-center text-xs font-mono">
-                <span className="text-[#ebdca4]">VERIFIED TURNAROUND:</span>
-                <span className="text-emerald-400 font-bold">WEEKS ➔ 1 DAY COMPILATION</span>
-              </div>
             </div>
 
-          </div>
-
-          {/* Footer */}
-          <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span>MASTER PORTFOLIO DECK · PAGE 04 / 15</span>
-            <span>JEM ANGKASA WIJAYA, S.KOM. · FLAGSHIP CASE STUDY 01</span>
-          </div>
-        </section>
-      )}
-
-      {/* ========================================================================= */}
-      {/* SLIDE 05: FLAGSHIP SYSTEM 02 — COCOKGA RELATIONSHIP ENGINE                */}
-      {/* ========================================================================= */}
-      {exportOptions.includeFeatured && (track === "all" || track === "it") && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-3">
-              <span className="font-serif-editorial text-2xl text-[#d4af37]">/ 05</span>
-              <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-                FLAGSHIP 02: COCOKGA (ALGORITHMIC RELATIONSHIP ENGINE)
-              </span>
-            </div>
-            <a
-              href="https://siapacocok.com"
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs font-mono text-[#d4af37] underline flex items-center gap-1"
-            >
-              <span>siapacocok.com · cocokga.my.id</span>
-              <ExternalLink className="w-2.5 h-2.5" />
-            </a>
-          </div>
-
-          {/* Body */}
-          <div className="grid grid-cols-12 gap-6 my-auto py-2 items-center">
-            
-            {/* Left 7 cols */}
-            <div className="col-span-7 space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded-full bg-white/10 text-white font-mono text-xs uppercase border border-white/15 font-bold">
-                  HIGH-CONCURRENCY WEB APPLICATION · 2025–2026
-                </span>
-                <span className="text-zinc-400 font-mono text-xs">·</span>
-                <span className="text-zinc-400 font-mono text-xs">Full-Stack Software Engineer</span>
-              </div>
-
-              <h2 className="font-serif-editorial text-3xl text-white font-medium">
-                CocokGa — High-Performance Relationship Compatibility Engine
-              </h2>
-
-              <p className="text-xs text-zinc-300 font-light leading-relaxed text-justify">
-                {flagshipProjects[1].description}
-              </p>
-
-              {/* 4 Factual Highlights */}
-              <div className="space-y-1.5 pt-1">
-                {flagshipProjects[1].highlights.map((h, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-[10.5px] text-zinc-300 font-light">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#d4af37] shrink-0 mt-0.5" />
-                    <span>{h}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* 4-Step Blueprint Flow */}
-              <div className="grid grid-cols-4 gap-2 pt-2 border-t border-white/10">
-                {flagshipProjects[1].blueprintFlow?.map((b, idx) => (
-                  <div key={idx} className="p-2 rounded-lg bg-[#111114] border border-white/5 space-y-0.5">
-                    <span className="text-xs font-mono text-[#d4af37] font-bold block">STEP 0{idx + 1}</span>
-                    <div className="text-xs font-mono text-white font-medium truncate">{b.step}</div>
-                    <div className="text-[8.5px] text-zinc-400 leading-tight truncate">{b.detail}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right 5 cols */}
-            <div className="col-span-5 space-y-3">
-              <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-white/20 shadow-xl bg-black">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/assets/projects/cocokga/cocokga_bg_affinity.jpg"
-                  alt="CocokGa Compatibility Engine"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* Metric Highlights */}
-              <div className="grid grid-cols-2 gap-2 text-center text-xs font-mono">
-                <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10">
-                  <span className="text-[#ebdca4] font-bold block text-base">&lt; 15 ms</span>
-                  <span className="text-xs text-zinc-400">Client Compute Latency</span>
+            {/* Section 2: AI & Automation */}
+            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-purple-500/30 flex flex-col justify-between shadow-sm">
+              <div className="space-y-1">
+                <div className="text-[9.5px] font-mono font-bold text-purple-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
+                  02 · AI & AUTOMATION
                 </div>
-                <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10">
-                  <span className="text-emerald-400 font-bold block text-base">$0.00</span>
-                  <span className="text-xs text-zinc-400">Server Cost per Calc</span>
+                <div className="space-y-0.5 text-[10.5px] font-mono">
+                  <div className="flex justify-between text-zinc-300">
+                    <span>Flagship: The Secret of Life</span>
+                    <span className="text-purple-400 font-bold">P. {String(slideAiFlagship).padStart(2, "0")}</span>
+                  </div>
+                  {slideAiShowcase.map((pNum, idx) => (
+                    <div key={pNum} className="flex justify-between text-zinc-300">
+                      <span>Showcase Part {idx + 1}/{slideAiShowcase.length}</span>
+                      <span className="text-purple-400 font-bold">P. {String(pNum).padStart(2, "0")}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10 flex flex-wrap gap-1">
-                {flagshipProjects[1].techStack.map((tech) => (
-                  <span key={tech} className="px-2 py-0.5 rounded bg-white/5 font-mono text-xs text-zinc-300">
-                    {tech}
-                  </span>
-                ))}
-              </div>
             </div>
 
-          </div>
-
-          {/* Footer */}
-          <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span>MASTER PORTFOLIO DECK · PAGE 05 / 15</span>
-            <span>JEM ANGKASA WIJAYA, S.KOM. · FLAGSHIP CASE STUDY 02</span>
-          </div>
-        </section>
-      )}
-
-      {/* ========================================================================= */}
-      {/* SLIDE 06: FLAGSHIP SYSTEM 03 — PT. KARYA BUAH TROPIS (NANGKA PREMIUM)     */}
-      {/* ========================================================================= */}
-      {exportOptions.includeFeatured && (track === "all" || track === "multimedia") && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-[#d4af37]/40 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-3">
-              <span className="font-serif-editorial text-2xl text-[#d4af37]">/ 06</span>
-              <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-                FLAGSHIP 03: NANGKA PREMIUM | PT. KARYA BUAH TROPIS
-              </span>
-            </div>
-            <a
-              href="https://www.nangkapremium.id"
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs font-mono text-[#d4af37] underline flex items-center gap-1"
-            >
-              <span>nangkapremium.id · karyabuahtropis.com</span>
-              <ExternalLink className="w-2.5 h-2.5" />
-            </a>
-          </div>
-
-          {/* Body */}
-          <div className="grid grid-cols-12 gap-6 my-auto py-2 items-center">
-            
-            {/* Left 7 cols */}
-            <div className="col-span-7 space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded-full bg-[#d4af37]/20 text-[#ebdca4] font-mono text-xs uppercase border border-[#d4af37]/40 font-bold">
-                  B2B COMMERCIAL COLD-CHAIN PLATFORM · 2024–PRESENT
-                </span>
-                <span className="text-zinc-400 font-mono text-xs">·</span>
-                <span className="text-zinc-400 font-mono text-xs">Director & Digital Systems Architect</span>
-              </div>
-
-              <h2 className="font-serif-editorial text-3xl text-white font-medium">
-                Nangka Premium — B2B Wholesale & Cold-Chain Logistics Hub
-              </h2>
-
-              <p className="text-xs text-zinc-300 font-light leading-relaxed text-justify">
-                {flagshipProjects[2].description}
-              </p>
-
-              {/* 4 Factual Highlights */}
-              <div className="space-y-1.5 pt-1">
-                {flagshipProjects[2].highlights.map((h, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-[10.5px] text-zinc-300 font-light">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#d4af37] shrink-0 mt-0.5" />
-                    <span>{h}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* 4-Step Blueprint Flow */}
-              <div className="grid grid-cols-4 gap-2 pt-2 border-t border-white/10">
-                {flagshipProjects[2].blueprintFlow?.map((b, idx) => (
-                  <div key={idx} className="p-2 rounded-lg bg-[#111114] border border-white/5 space-y-0.5">
-                    <span className="text-xs font-mono text-[#d4af37] font-bold block">STEP 0{idx + 1}</span>
-                    <div className="text-xs font-mono text-white font-medium truncate">{b.step}</div>
-                    <div className="text-[8.5px] text-zinc-400 leading-tight truncate">{b.detail}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right 5 cols */}
-            <div className="col-span-5 space-y-3">
-              <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-[#d4af37]/50 shadow-xl bg-black">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/assets/projects/branding/kbt-packaging.jpg"
-                  alt="PT. Karya Buah Tropis Cold-Chain Packaging"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 text-center text-xs font-mono">
-                <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10">
-                  <span className="text-[#ebdca4] font-bold block text-base">-18°C Stable</span>
-                  <span className="text-xs text-zinc-400">Thermo King Fleet</span>
+            {/* Section 3: Software Development */}
+            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-emerald-500/30 flex flex-col justify-between shadow-sm">
+              <div className="space-y-1">
+                <div className="text-[9.5px] font-mono font-bold text-emerald-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
+                  03 · SOFTWARE DEV
                 </div>
-                <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10">
-                  <span className="text-emerald-400 font-bold block text-base">Halal & Kementan</span>
-                  <span className="text-xs text-zinc-400">Ministry Certified</span>
+                <div className="space-y-0.5 text-[10.5px] font-mono">
+                  <div className="flex justify-between text-zinc-300">
+                    <span>Flagship: CocokGa</span>
+                    <span className="text-emerald-400 font-bold">P. {String(slideSoftwareFlagship).padStart(2, "0")}</span>
+                  </div>
+                  {slideSoftwareShowcase.map((pNum, idx) => (
+                    <div key={pNum} className="flex justify-between text-zinc-300">
+                      <span>Showcase Part {idx + 1}/{slideSoftwareShowcase.length}</span>
+                      <span className="text-emerald-400 font-bold">P. {String(pNum).padStart(2, "0")}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10 flex flex-wrap gap-1">
-                {flagshipProjects[2].techStack.map((tech) => (
-                  <span key={tech} className="px-2 py-0.5 rounded bg-white/5 font-mono text-xs text-zinc-300">
-                    {tech}
-                  </span>
-                ))}
-              </div>
             </div>
 
-          </div>
-
-          {/* Footer */}
-          <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span>MASTER PORTFOLIO DECK · PAGE 06 / 15</span>
-            <span>JEM ANGKASA WIJAYA, S.KOM. · FLAGSHIP CASE STUDY 03</span>
-          </div>
-        </section>
-      )}
-
-      {/* ========================================================================= */}
-      {/* SLIDE 07: FLAGSHIP SYSTEM 04 — CATATCRYPTO (S1 THESIS GRADE A)            */}
-      {/* ========================================================================= */}
-      {exportOptions.includeFeatured && (track === "all" || track === "it" || track === "business") && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-[#dc2626]/40 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-3">
-              <span className="font-serif-editorial text-2xl text-[#dc2626]">/ 07</span>
-              <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-                FLAGSHIP 04: CATATCRYPTO & QUANT RESEARCH (S1 THESIS GRADE A)
-              </span>
-            </div>
-            <span className="font-mono text-xs text-emerald-400 font-bold">
-              iSTTS S1 THESIS DEFENSE · PERFECT GRADE A
-            </span>
-          </div>
-
-          {/* Body */}
-          <div className="grid grid-cols-12 gap-6 my-auto py-2 items-center">
-            
-            {/* Left 7 cols */}
-            <div className="col-span-7 space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded-full bg-[#dc2626]/20 text-[#fca5a5] font-mono text-xs uppercase border border-[#dc2626]/40 font-bold">
-                  QUANTITATIVE FINANCE & PORTFOLIO TRACKING · 2022–2023
-                </span>
-                <span className="text-zinc-400 font-mono text-xs">·</span>
-                <span className="text-zinc-400 font-mono text-xs">Lead Developer & Quantitative Researcher</span>
-              </div>
-
-              <h2 className="font-serif-editorial text-3xl text-white font-medium">
-                CatatCrypto — Investment Management & Multi-Market Trading Journal
-              </h2>
-
-              <p className="text-xs text-zinc-300 font-light leading-relaxed text-justify">
-                {flagshipProjects[3].description}
-              </p>
-
-              {/* 4 Factual Highlights */}
-              <div className="space-y-1.5 pt-1">
-                {flagshipProjects[3].highlights.map((h, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-[10.5px] text-zinc-300 font-light">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#dc2626] shrink-0 mt-0.5" />
-                    <span>{h}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* 4-Step Blueprint Flow */}
-              <div className="grid grid-cols-4 gap-2 pt-2 border-t border-white/10">
-                {flagshipProjects[3].blueprintFlow?.map((b, idx) => (
-                  <div key={idx} className="p-2 rounded-lg bg-[#111114] border border-white/5 space-y-0.5">
-                    <span className="text-xs font-mono text-[#dc2626] font-bold block">STEP 0{idx + 1}</span>
-                    <div className="text-xs font-mono text-white font-medium truncate">{b.step}</div>
-                    <div className="text-[8.5px] text-zinc-400 leading-tight truncate">{b.detail}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right 5 cols */}
-            <div className="col-span-5 space-y-3">
-              <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-[#dc2626]/40 shadow-xl bg-black">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/assets/projects/ai-automation/invoice-batch.png"
-                  alt="CatatCrypto Portfolio Suite"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 text-center text-xs font-mono">
-                <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10">
-                  <span className="text-emerald-400 font-bold block text-base">Grade A</span>
-                  <span className="text-xs text-zinc-400">Skripsi Nilai Sempurna</span>
+            {/* Section 4: Business Operations */}
+            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-amber-500/30 flex flex-col justify-between shadow-sm">
+              <div className="space-y-1">
+                <div className="text-[9.5px] font-mono font-bold text-amber-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
+                  04 · BUSINESS OPS
                 </div>
-                <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10">
-                  <span className="text-[#ebdca4] font-bold block text-base">3NF Normal</span>
-                  <span className="text-xs text-zinc-400">Relational Database</span>
+                <div className="space-y-0.5 text-[10.5px] font-mono">
+                  <div className="flex justify-between text-zinc-300">
+                    <span>Flagship: Nangka Premium</span>
+                    <span className="text-amber-400 font-bold">P. {String(slideBusinessFlagship).padStart(2, "0")}</span>
+                  </div>
+                  {slideBusinessShowcase.map((pNum) => (
+                    <div key={pNum} className="flex justify-between text-zinc-300">
+                      <span>Showcase (6 Systems)</span>
+                      <span className="text-amber-400 font-bold">P. {String(pNum).padStart(2, "0")}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
+            </div>
 
-              <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10 flex flex-wrap gap-1">
-                {flagshipProjects[3].techStack.map((tech) => (
-                  <span key={tech} className="px-2 py-0.5 rounded bg-white/5 font-mono text-xs text-zinc-300">
-                    {tech}
-                  </span>
-                ))}
+            {/* Section 5: Market Research & Data Analysis */}
+            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-rose-500/30 flex flex-col justify-between shadow-sm">
+              <div className="space-y-1">
+                <div className="text-[9.5px] font-mono font-bold text-rose-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
+                  05 · MARKET RESEARCH & DATA
+                </div>
+                <div className="space-y-0.5 text-[10.5px] font-mono">
+                  <div className="flex justify-between text-zinc-300">
+                    <span>Flagship: CatatCrypto</span>
+                    <span className="text-rose-400 font-bold">P. {String(slideDataFlagship).padStart(2, "0")}</span>
+                  </div>
+                  {slideDataShowcase.map((pNum, idx) => (
+                    <div key={pNum} className="flex justify-between text-zinc-300">
+                      <span>Showcase Part {idx + 1}/{slideDataShowcase.length}</span>
+                      <span className="text-rose-400 font-bold">P. {String(pNum).padStart(2, "0")}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
-          </div>
-
-          {/* Footer */}
-          <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span>MASTER PORTFOLIO DECK · PAGE 07 / 15</span>
-            <span>JEM ANGKASA WIJAYA, S.KOM. · S1 THESIS QUANT SUITE</span>
-          </div>
-        </section>
-      )}
-
-      {/* ========================================================================= */}
-      {/* SLIDE 08: PHYSICAL PACKAGING MANUFACTURING & BRAND ARCHITECTURE           */}
-      {/* ========================================================================= */}
-      {exportOptions.includeFeatured && (track === "all" || track === "multimedia" || track === "business") && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-3">
-          <div className="flex items-center gap-3">
-            <span className="font-serif-editorial text-2xl text-[#d4af37]">/ 08</span>
-            <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-              PHYSICAL PACKAGING MANUFACTURING & INDUSTRIAL DIELINES
-            </span>
-          </div>
-          <span className="font-mono text-xs text-zinc-400">
-            SUB-MILLIMETER CAD ACCURACY · FOOD-GRADE NYLON (-25°C)
-          </span>
-        </div>
-
-        {/* 3 Creative Projects Showcase */}
-        <div className="grid grid-cols-3 gap-5 my-auto py-2">
-          
-          {/* Card 1: PT. Karya Buah Tropis & Key's Brand */}
-          <div className="p-3.5 rounded-2xl bg-[#111114] border border-[#d4af37]/40 space-y-2.5 flex flex-col justify-between">
-            <div className="space-y-1.5">
-              <span className="px-2 py-0.5 rounded bg-[#d4af37]/20 text-[#ebdca4] font-mono text-xs uppercase font-bold">
-                VACUUM NYLON (-25°C) · 2021–2023
-              </span>
-              <h3 className="font-serif-editorial text-lg text-white font-medium">
-                PT. Karya Buah Tropis & Key&apos;s Brand Packaging
-              </h3>
-              <p className="text-xs text-zinc-300 font-light leading-snug">
-                Pola pisau kemasan plastik vakum nilon food-grade berstandar industri dengan ketahanan suhu beku ekstrem -25°C. Dilengkapi standing pouch zipper Key&apos;s Brand alpukat dadu dan katalog harga B2B 3.4MB.
-              </p>
+            {/* Section 6: Brand & Multimedia */}
+            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-purple-500/30 flex flex-col justify-between shadow-sm">
+              <div className="space-y-1">
+                <div className="text-[9.5px] font-mono font-bold text-purple-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
+                  06 · BRAND & MULTIMEDIA
+                </div>
+                <div className="space-y-0.5 text-[10.5px] font-mono">
+                  <div className="flex justify-between text-zinc-300">
+                    <span>Flagship: Jan&apos;Ok (26 Outlets)</span>
+                    <span className="text-purple-400 font-bold">P. {String(slideDesignFlagship).padStart(2, "0")}</span>
+                  </div>
+                  {slideDesignShowcase.map((pNum, idx) => (
+                    <div key={pNum} className="flex justify-between text-zinc-300">
+                      <span>Showcase Part {idx + 1}/{slideDesignShowcase.length}</span>
+                      <span className="text-purple-400 font-bold">P. {String(pNum).padStart(2, "0")}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden border border-white/15 bg-black">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/assets/projects/branding/kbt-packaging.jpg"
-                alt="KBT Packaging Dielines"
-                className="w-full h-full object-cover"
-              />
+            {/* Section 7: Career & Skills */}
+            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-sky-500/30 flex flex-col justify-between shadow-sm">
+              <div className="space-y-1">
+                <div className="text-[9.5px] font-mono font-bold text-sky-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
+                  07 · CAREER & SKILLS
+                </div>
+                <div className="space-y-0.5 text-[10.5px] font-mono">
+                  <div className="flex justify-between text-zinc-300">
+                    <span>Career Timeline (1/2)</span>
+                    <span className="text-sky-400 font-bold">P. {String(slideExp1).padStart(2, "0")}</span>
+                  </div>
+                  <div className="flex justify-between text-zinc-300">
+                    <span>Career Timeline (2/2)</span>
+                    <span className="text-sky-400 font-bold">P. {String(slideExp2).padStart(2, "0")}</span>
+                  </div>
+                  <div className="flex justify-between text-zinc-300">
+                    <span>4 Engineering Pillars</span>
+                    <span className="text-sky-400 font-bold">P. {String(slideSkills).padStart(2, "0")}</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="flex flex-wrap gap-1 pt-1 border-t border-white/5 font-mono text-[8.5px] text-zinc-400">
-              <span>Industrial Dielines</span> · <span>Food-Grade Nylon</span> · <span>Pantone Calibration</span>
-            </div>
-          </div>
-
-          {/* Card 2: Nasi Goreng Jan'Ok Franchise (26 Branches) */}
-          <div className="p-3.5 rounded-2xl bg-[#111114] border border-white/10 space-y-2.5 flex flex-col justify-between">
-            <div className="space-y-1.5">
-              <span className="px-2 py-0.5 rounded bg-white/10 text-white font-mono text-xs uppercase font-bold">
-                26 FRANCHISE BRANCHES · 2013–2020
-              </span>
-              <h3 className="font-serif-editorial text-lg text-white font-medium">
-                Nasi Goreng Jan&apos;Ok Franchise Brand & Takeaway Boxes
-              </h3>
-              <p className="text-xs text-zinc-300 font-light leading-snug">
-                Perancangan identitas visual merek, menu engineering tingkatan pedas, kotak kardus takeaway fungsional, dan standardisasi buku besar operasional di 26 gerai waralaba kuliner.
-              </p>
-            </div>
-
-            <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden border border-white/15 bg-black">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/assets/projects/branding/janok-packaging.png"
-                alt="JanOk Franchise Packaging"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <div className="flex flex-wrap gap-1 pt-1 border-t border-white/5 font-mono text-[8.5px] text-zinc-400">
-              <span>26 Gerai Waralaba</span> · <span>Takeaway Box</span> · <span>CorelDRAW Master</span>
+            {/* Section 8: Credentials & Closing */}
+            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-zinc-700 flex flex-col justify-between shadow-sm">
+              <div className="space-y-1">
+                <div className="text-[9.5px] font-mono font-bold text-amber-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
+                  08 · CREDENTIALS & CLOSING
+                </div>
+                <div className="space-y-0.5 text-[10.5px] font-mono">
+                  <div className="flex justify-between text-zinc-300">
+                    <span>Formal Education & Awards</span>
+                    <span className="text-amber-400 font-bold">P. {String(slideCred1).padStart(2, "0")}</span>
+                  </div>
+                  <div className="flex justify-between text-zinc-300">
+                    <span>Leadership & Organizations</span>
+                    <span className="text-amber-400 font-bold">P. {String(slideCred2).padStart(2, "0")}</span>
+                  </div>
+                  <div className="flex justify-between text-zinc-300">
+                    <span>Certifications & Trilingual</span>
+                    <span className="text-amber-400 font-bold">P. {String(slideCred3).padStart(2, "0")}</span>
+                  </div>
+                  <div className="flex justify-between text-zinc-300">
+                    <span>Contact & Direct Closing</span>
+                    <span className="text-amber-400 font-bold">P. {String(slideContact).padStart(2, "0")}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-
-          {/* Card 3: Chicken Center Takeaway Lock-Tab Dielines */}
-          <div className="p-3.5 rounded-2xl bg-[#111114] border border-white/10 space-y-2.5 flex flex-col justify-between">
-            <div className="space-y-1.5">
-              <span className="px-2 py-0.5 rounded bg-white/10 text-white font-mono text-xs uppercase font-bold">
-                LOCK-TAB DIELINE · 2010–2014
-              </span>
-              <h3 className="font-serif-editorial text-lg text-white font-medium">
-                Chicken Center Greaseproof Packaging Dielines
-              </h3>
-              <p className="text-xs text-zinc-300 font-light leading-snug">
-                Pola pisau plong cetak industri untuk kotak kardus takeaway anti minyak lipat kancing tanpa lem kimia beracun, kantong kertas ayam goreng, dan spanduk gerobak kemitraan.
-              </p>
-            </div>
-
-            <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden border border-white/15 bg-black">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/assets/projects/branding/chicken-center-packaging.png"
-                alt="Chicken Center Dielines"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <div className="flex flex-wrap gap-1 pt-1 border-t border-white/5 font-mono text-[8.5px] text-zinc-400">
-              <span>Non-Toxic Lock-Tab</span> · <span>Greaseproof Paper</span> · <span>Offset Plong</span>
-            </div>
-          </div>
-
         </div>
+      </SlideWrapper>
 
-        {/* Footer */}
-        <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-          <span>MASTER PORTFOLIO DECK · PAGE 08 / 15</span>
-          <span>JEM ANGKASA WIJAYA, S.KOM. · PHYSICAL PACKAGING COMPENDIUM</span>
-        </div>
-      </section>
-    )}
-
-      {/* ========================================================================= */}
-      {/* SLIDE 09: MASTER PROJECT ARCHIVE LEDGER — PART 1 (AI, WEB & DATA)         */}
-      {/* ========================================================================= */}
-      {exportOptions.includeFeatured && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-3">
-          <div className="flex items-center gap-3">
-            <span className="font-serif-editorial text-2xl text-[#d4af37]">/ 09</span>
-            <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-              MASTER PROJECT ARCHIVE LEDGER — PART 1 (2020 – 2026)
-            </span>
-          </div>
-          <span className="font-mono text-xs text-zinc-400">
-            100% AUDITABLE CODEBASES & REAL-WORLD DEPLOYMENTS
-          </span>
-        </div>
-
-        {/* Tabular Ledger */}
-        <div className="my-auto py-2">
-          <table className="w-full text-left text-xs border-collapse">
-            <thead>
-              <tr className="border-b border-white/20 font-mono text-[#d4af37] uppercase text-xs tracking-wider">
-                <th className="py-2 px-3">Year</th>
-                <th className="py-2 px-3">Project / Platform</th>
-                <th className="py-2 px-3">Domain</th>
-                <th className="py-2 px-3">Role & Responsibilities</th>
-                <th className="py-2 px-3">Verified Tech Stack</th>
-                <th className="py-2 px-3 text-right">Status / Deliverable</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/10">
-              {allArchiveProjects.slice(0, 10).map((p) => (
-                <tr key={p.id} className="hover:bg-white/[0.02]">
-                  <td className="py-2 px-3 font-mono text-[#ebdca4] whitespace-nowrap">{p.year}</td>
-                  <td className="py-2 px-3 font-serif-editorial text-xs text-white font-medium">{p.title}</td>
-                  <td className="py-2 px-3 font-mono text-xs uppercase text-zinc-400">{p.category}</td>
-                  <td className="py-2 px-3 text-zinc-300 text-[9.5px]">{p.role}</td>
-                  <td className="py-2 px-3 font-mono text-xs text-zinc-400">{p.techStack.slice(0, 3).join(", ")}</td>
-                  <td className="py-2 px-3 font-mono text-xs text-right text-emerald-400">
-                    {p.liveUrl ? "🌐 Production Live" : "✅ Audited Deliverable"}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Footer */}
-        <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-          <span>MASTER PORTFOLIO DECK · PAGE 09 / 15</span>
-          <span>JEM ANGKASA WIJAYA, S.KOM. · MASTER ARCHIVE LEDGER PART 1</span>
-        </div>
-      </section>
-    )}
-
-      {/* ========================================================================= */}
-      {/* SLIDE 10: MASTER PROJECT ARCHIVE LEDGER — PART 2 (DESKTOP & PACKAGING)    */}
-      {/* ========================================================================= */}
-      {exportOptions.includeFeatured && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-3">
-          <div className="flex items-center gap-3">
-            <span className="font-serif-editorial text-2xl text-[#d4af37]">/ 10</span>
-            <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-              MASTER PROJECT ARCHIVE LEDGER — PART 2 (2010 – 2023)
-            </span>
-          </div>
-          <span className="font-mono text-xs text-zinc-400">
-            ENTERPRISE DESKTOP SUITES, PACKAGING DIELINES & PROTOCOLS
-          </span>
-        </div>
-
-        {/* Tabular Ledger */}
-        <div className="my-auto py-2">
-          <table className="w-full text-left text-xs border-collapse">
-            <thead>
-              <tr className="border-b border-white/20 font-mono text-[#d4af37] uppercase text-xs tracking-wider">
-                <th className="py-2 px-3">Year</th>
-                <th className="py-2 px-3">Project / Platform</th>
-                <th className="py-2 px-3">Domain</th>
-                <th className="py-2 px-3">Role & Responsibilities</th>
-                <th className="py-2 px-3">Verified Tech Stack</th>
-                <th className="py-2 px-3 text-right">Status / Deliverable</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/10">
-              {allArchiveProjects.slice(10).map((p) => (
-                <tr key={p.id} className="hover:bg-white/[0.02]">
-                  <td className="py-2 px-3 font-mono text-[#ebdca4] whitespace-nowrap">{p.year}</td>
-                  <td className="py-2 px-3 font-serif-editorial text-xs text-white font-medium">{p.title}</td>
-                  <td className="py-2 px-3 font-mono text-xs uppercase text-zinc-400">{p.category}</td>
-                  <td className="py-2 px-3 text-zinc-300 text-[9.5px]">{p.role}</td>
-                  <td className="py-2 px-3 font-mono text-xs text-zinc-400">{p.techStack.slice(0, 3).join(", ")}</td>
-                  <td className="py-2 px-3 font-mono text-xs text-right text-emerald-400">
-                    {p.liveUrl ? "🌐 Production Live" : "✅ Factory / Deployed"}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Footer */}
-        <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-          <span>MASTER PORTFOLIO DECK · PAGE 10 / 15</span>
-          <span>JEM ANGKASA WIJAYA, S.KOM. · MASTER ARCHIVE LEDGER PART 2</span>
-        </div>
-      </section>
-    )}
-
-      {/* ========================================================================= */}
-      {/* SLIDE 11: PROFESSIONAL CAREER & VENTURE CHRONOLOGY                        */}
-      {/* ========================================================================= */}
-      {exportOptions.includeExperience && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-3">
-              <span className="font-serif-editorial text-2xl text-[#d4af37]">/ 11</span>
-              <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-                PROFESSIONAL CAREER & VENTURE CHRONOLOGY
-              </span>
-            </div>
-            <span className="font-mono text-xs text-zinc-400">
-              6 VERIFIED INDUSTRY & VENTURE ROLES (2014 – 2026)
-            </span>
-          </div>
-
-          {/* 6 Experience Roles Grid 3x2 */}
-          <div className="grid grid-cols-3 gap-3 my-auto py-1">
-            {experiencesData.map((exp) => (
-              <div
-                key={exp.id}
-                className="p-3 rounded-xl bg-[#111114] border border-white/10 space-y-1 flex flex-col justify-between"
-              >
+      {/* =========================================================================
+          SLIDE 04: AI FLAGSHIP - THE SECRET OF LIFE
+      ========================================================================= */}
+      {(() => {
+        const p = flagshipProjects[0];
+        return (
+          <SlideWrapper
+            sectionTitle="AI & Automation Flagship Project"
+            categoryBadge="AI & AUTOMATION"
+            currentPage={slideAiFlagship}
+          >
+            <div className="grid grid-cols-12 gap-6 items-center h-full my-auto">
+              <div className="col-span-7 flex flex-col justify-between space-y-2.5">
                 <div>
-                  <div className="flex items-center justify-between pb-1 border-b border-white/5">
-                    <span className="font-mono text-[8.5px] text-[#d4af37] uppercase tracking-wider font-bold truncate max-w-[130px]">
-                      {exp.type}
-                    </span>
-                    <span className="px-1.5 py-0.5 rounded bg-white/5 font-mono text-[7.5px] text-zinc-300">
-                      {exp.period}
-                    </span>
+                  <div className="flex items-center space-x-2 text-zinc-400 text-[10.5px] font-mono mb-1">
+                    <span>{p.year}</span>
+                    <span>·</span>
+                    <span className="text-amber-400 font-semibold">{getRole(p)}</span>
                   </div>
-
-                  <h4 className="font-serif-editorial text-sm text-white font-medium pt-1 leading-snug">
-                    {exp.role}
-                  </h4>
-
-                  <div className="text-[10px] font-mono text-[#ebdca4] flex items-center gap-1.5 pt-0.5">
-                    <span className="truncate">{exp.company}</span>
-                    <span className="text-zinc-600">·</span>
-                    <span className="text-zinc-400 shrink-0">{exp.location}</span>
-                  </div>
-
-                  <p className="text-[9px] text-zinc-300 font-light leading-snug pt-1 line-clamp-2">
-                    {exp.description}
+                  <h2 className="text-2xl font-bold text-white tracking-tight leading-snug">
+                    {getTitle(p)}
+                  </h2>
+                  <p className="text-[11.5px] font-medium text-amber-300/90 font-mono mt-0.5">
+                    {getTagline(p)}
                   </p>
                 </div>
 
-                <div className="space-y-1 pt-1 border-t border-white/5">
-                  {exp.bullets.slice(0, 2).map((b, idx) => (
-                    <div key={idx} className="flex items-start gap-1 text-[8.5px] text-zinc-300 font-light leading-tight">
-                      <CheckCircle2 className="w-2.5 h-2.5 text-[#d4af37] shrink-0 mt-0.5" />
-                      <span className="line-clamp-2">{b}</span>
+                <p className="text-[11px] text-zinc-300 leading-relaxed font-light">
+                  {getDescription(p)}
+                </p>
+
+                {/* Key Deliverables */}
+                <div className="space-y-1.5 py-0.5">
+                  {getHighlights(p).slice(0, 3).map((hl, i) => (
+                    <div key={i} className="flex items-start space-x-2 text-[10.5px] text-zinc-300">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+                      <span>{hl}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="flex flex-wrap gap-1 pt-1">
-                  {exp.tags.slice(0, 3).map((tag) => (
-                    <span key={tag} className="px-1.5 py-0.2 rounded bg-white/5 text-[7.5px] font-mono text-zinc-400">
-                      {tag}
-                    </span>
+                {/* Key Metrics */}
+                <div className="grid grid-cols-3 gap-2 pt-0.5">
+                  {p.metrics?.map((m, i) => (
+                    <div key={i} className="p-2 rounded-lg bg-zinc-900/90 border border-zinc-800">
+                      <div className="text-sm font-bold text-amber-400 font-mono">{m.value}</div>
+                      <div className="text-[8.5px] text-zinc-400 font-mono uppercase tracking-wider mt-0.5">
+                        {language === "zh" && m.labelZh ? m.labelZh : language === "id" && m.labelId ? m.labelId : m.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tech Stack Tags & Link */}
+                <div className="space-y-1.5 pt-0.5">
+                  <div className="flex flex-wrap gap-1">
+                    {getTechStack(p).slice(0, 5).map((tech) => (
+                      <span key={tech} className="px-2 py-0.5 rounded bg-zinc-900 text-zinc-300 text-[9.5px] font-mono border border-zinc-800">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {p.liveUrl && (
+                    <div className="pt-0.5">
+                      <a
+                        href={p.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-1.5 text-[11px] font-mono text-amber-400 hover:text-amber-300 font-semibold"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>{p.liveUrl.replace(/^https?:\/\//, "")} ↗</span>
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Right: Dual Visual Previews */}
+              <div className="col-span-5 flex flex-col space-y-2.5">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.images?.[0] || "/assets/projects/secret-of-life/white_desk.png"}
+                    alt="The Secret of Life Cover"
+                    className="w-full h-34 object-cover"
+                  />
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                    {getAssetCaption("secret-of-life", 0)}
+                  </div>
+                </div>
+
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.images?.[4] || p.images?.[1] || "/assets/projects/hermes/hermes_command_center.png"}
+                    alt="Hermes Orchestrator CLI"
+                    className="w-full h-34 object-cover"
+                  />
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                    {getAssetCaption("secret-of-life", 1)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SlideWrapper>
+        );
+      })()}
+
+      {/* =========================================================================
+          SLIDES 05-06: AI SHOWCASE (CHUNKED BALANCED 4 + 3)
+      ========================================================================= */}
+      {aiChunks.map((chunk, chunkIdx) => (
+        <SlideWrapper
+          key={`ai-chunk-${chunkIdx}`}
+          sectionTitle={`AI & Automation Projects Showcase (${chunkIdx + 1}/${aiChunks.length})`}
+          categoryBadge="AI & AUTOMATION"
+          currentPage={slideAiShowcase[chunkIdx]}
+        >
+          <div className="flex flex-col justify-between h-full py-0.5 space-y-2">
+            <div>
+              <h2 className="text-xl font-bold text-white tracking-tight">{getCategoryTitle("ai")} Matrix</h2>
+              <p className="text-[10.5px] text-zinc-400 font-mono">{getCategorySubtitle("ai")}</p>
+            </div>
+
+            <div className={`grid ${chunk.length === 4 ? "grid-cols-2 gap-3" : "grid-cols-3 gap-3"} flex-1 items-stretch`}>
+              {chunk.map((proj) => (
+                <ShowcaseCard key={proj.id} proj={proj} accentColor="purple" isDense={chunk.length >= 6} />
+              ))}
+            </div>
+          </div>
+        </SlideWrapper>
+      ))}
+
+      {/* =========================================================================
+          SLIDE 07: SOFTWARE DEV FLAGSHIP - COCOKGA
+      ========================================================================= */}
+      {(() => {
+        const p = flagshipProjects[1];
+        return (
+          <SlideWrapper
+            sectionTitle="Software Engineering Flagship Project"
+            categoryBadge="SOFTWARE DEVELOPMENT"
+            currentPage={slideSoftwareFlagship}
+          >
+            <div className="grid grid-cols-12 gap-6 items-center h-full my-auto">
+              <div className="col-span-7 flex flex-col justify-between space-y-2.5">
+                <div>
+                  <div className="flex items-center space-x-2 text-zinc-400 text-[10.5px] font-mono mb-1">
+                    <span>{p.year}</span>
+                    <span>·</span>
+                    <span className="text-emerald-400 font-semibold">{getRole(p)}</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-white tracking-tight leading-snug">
+                    {getTitle(p)}
+                  </h2>
+                  <p className="text-[11.5px] font-medium text-emerald-300/90 font-mono mt-0.5">
+                    {getTagline(p)}
+                  </p>
+                </div>
+
+                <p className="text-[11px] text-zinc-300 leading-relaxed font-light">
+                  {getDescription(p)}
+                </p>
+
+                {/* Key Deliverables */}
+                <div className="space-y-1.5 py-0.5">
+                  {getHighlights(p).slice(0, 3).map((hl, i) => (
+                    <div key={i} className="flex items-start space-x-2 text-[10.5px] text-zinc-300">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>{hl}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Key Metrics */}
+                <div className="grid grid-cols-4 gap-2 pt-0.5">
+                  {p.metrics?.map((m, i) => (
+                    <div key={i} className="p-2 rounded-lg bg-zinc-900/90 border border-zinc-800">
+                      <div className="text-sm font-bold text-emerald-400 font-mono">{m.value}</div>
+                      <div className="text-[8px] text-zinc-400 font-mono uppercase tracking-wider mt-0.5">
+                        {language === "zh" && m.labelZh ? m.labelZh : language === "id" && m.labelId ? m.labelId : m.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tech Stack Tags & Link */}
+                <div className="space-y-1.5 pt-0.5">
+                  <div className="flex flex-wrap gap-1">
+                    {getTechStack(p).slice(0, 5).map((tech) => (
+                      <span key={tech} className="px-2 py-0.5 rounded bg-zinc-900 text-zinc-300 text-[9.5px] font-mono border border-zinc-800">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {p.liveUrl && (
+                    <div className="pt-0.5">
+                      <a
+                        href={p.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-1.5 text-[11px] font-mono text-emerald-400 hover:text-emerald-300 font-semibold"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>{p.liveUrl.replace(/^https?:\/\//, "")} ↗</span>
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Right: Dual Visual Previews */}
+              <div className="col-span-5 flex flex-col space-y-2.5">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.images?.[0] || "/assets/projects/cocokga/result.png"}
+                    alt="CocokGa Analysis Breakdown"
+                    className="w-full h-34 object-cover"
+                  />
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                    {getAssetCaption("cocokga", 0)}
+                  </div>
+                </div>
+
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.images?.[1] || "/assets/projects/cocokga/hero.png"}
+                    alt="Arcade Mode Scoring Engine"
+                    className="w-full h-34 object-cover"
+                  />
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                    {getAssetCaption("cocokga", 1)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SlideWrapper>
+        );
+      })()}
+
+      {/* =========================================================================
+          SLIDES 08-10: SOFTWARE DEV SHOWCASE (CHUNKED 6 + 6 + 7)
+      ========================================================================= */}
+      {softwareChunks.map((chunk, chunkIdx) => (
+        <SlideWrapper
+          key={`software-chunk-${chunkIdx}`}
+          sectionTitle={`Software & Full-Stack Projects Showcase (${chunkIdx + 1}/${softwareChunks.length})`}
+          categoryBadge="SOFTWARE DEVELOPMENT"
+          currentPage={slideSoftwareShowcase[chunkIdx]}
+        >
+          <div className="flex flex-col justify-between h-full py-0.5 space-y-1.5">
+            <div>
+              <h2 className="text-xl font-bold text-white tracking-tight">{getCategoryTitle("software")} Matrix</h2>
+              <p className="text-[10.5px] text-zinc-400 font-mono">{getCategorySubtitle("software")}</p>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 flex-1 items-stretch">
+              {chunk.map((proj) => (
+                <ShowcaseCard key={proj.id} proj={proj} accentColor="emerald" isDense={true} />
+              ))}
+            </div>
+          </div>
+        </SlideWrapper>
+      ))}
+
+      {/* =========================================================================
+          SLIDE 11: BUSINESS OPERATIONS FLAGSHIP - NANGKA PREMIUM
+      ========================================================================= */}
+      {(() => {
+        const p = flagshipProjects[2];
+        return (
+          <SlideWrapper
+            sectionTitle="Business Operations Flagship Project"
+            categoryBadge="BUSINESS OPERATIONS"
+            currentPage={slideBusinessFlagship}
+          >
+            <div className="grid grid-cols-12 gap-6 items-center h-full my-auto">
+              <div className="col-span-7 flex flex-col justify-between space-y-2.5">
+                <div>
+                  <div className="flex items-center space-x-2 text-zinc-400 text-[10.5px] font-mono mb-1">
+                    <span>{p.year}</span>
+                    <span>·</span>
+                    <span className="text-amber-400 font-semibold">{getRole(p)}</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-white tracking-tight leading-snug">
+                    {getTitle(p)}
+                  </h2>
+                  <p className="text-[11.5px] font-medium text-amber-300/90 font-mono mt-0.5">
+                    {getTagline(p)}
+                  </p>
+                </div>
+
+                <p className="text-[11px] text-zinc-300 leading-relaxed font-light">
+                  {getDescription(p)}
+                </p>
+
+                {/* Key Deliverables */}
+                <div className="space-y-1.5 py-0.5">
+                  {getHighlights(p).slice(0, 3).map((hl, i) => (
+                    <div key={i} className="flex items-start space-x-2 text-[10.5px] text-zinc-300">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+                      <span>{hl}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Key Metrics */}
+                <div className="grid grid-cols-3 gap-2 pt-0.5">
+                  {p.metrics?.map((m, i) => (
+                    <div key={i} className="p-2 rounded-lg bg-zinc-900/90 border border-zinc-800">
+                      <div className="text-sm font-bold text-amber-400 font-mono">{m.value}</div>
+                      <div className="text-[8.5px] text-zinc-400 font-mono uppercase tracking-wider mt-0.5">
+                        {language === "zh" && m.labelZh ? m.labelZh : language === "id" && m.labelId ? m.labelId : m.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tech Stack Tags & Link */}
+                <div className="space-y-1.5 pt-0.5">
+                  <div className="flex flex-wrap gap-1">
+                    {getTechStack(p).slice(0, 5).map((tech) => (
+                      <span key={tech} className="px-2 py-0.5 rounded bg-zinc-900 text-zinc-300 text-[9.5px] font-mono border border-zinc-800">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {p.liveUrl && (
+                    <div className="pt-0.5">
+                      <a
+                        href={p.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-1.5 text-[11px] font-mono text-amber-400 hover:text-amber-300 font-semibold"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>{p.liveUrl.replace(/^https?:\/\//, "")} ↗</span>
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Right: Dual Visual Previews */}
+              <div className="col-span-5 flex flex-col space-y-2.5">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.images?.[0] || "/assets/projects/nangka-premium/single_front.png"}
+                    alt="Nangka Packaging Render"
+                    className="w-full h-34 object-cover"
+                  />
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                    {getAssetCaption("nangka-premium", 0)}
+                  </div>
+                </div>
+
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.images?.[1] || "/assets/projects/nangka-premium/nangka_hero.png"}
+                    alt="PT. Karya Buah Tropis Showcase"
+                    className="w-full h-34 object-cover"
+                  />
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                    {getAssetCaption("nangka-premium", 1)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SlideWrapper>
+        );
+      })()}
+
+      {/* =========================================================================
+          SLIDE 12: BUSINESS OPERATIONS SHOWCASE (ALL 6 PROJECTS IN BALANCED 3x2 GRID)
+      ========================================================================= */}
+      {businessChunks.map((chunk, chunkIdx) => (
+        <SlideWrapper
+          key={`business-chunk-${chunkIdx}`}
+          sectionTitle="Business Operations Showcase (6 Enterprise Systems)"
+          categoryBadge="BUSINESS OPERATIONS"
+          currentPage={slideBusinessShowcase[chunkIdx]}
+        >
+          <div className="flex flex-col justify-between h-full py-0.5 space-y-1.5">
+            <div>
+              <h2 className="text-xl font-bold text-white tracking-tight">{getCategoryTitle("business")} Matrix</h2>
+              <p className="text-[10.5px] text-zinc-400 font-mono">{getCategorySubtitle("business")}</p>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2.5 flex-1 items-stretch">
+              {chunk.map((proj) => (
+                <ShowcaseCard key={proj.id} proj={proj} accentColor="amber" isDense={true} />
+              ))}
+            </div>
+          </div>
+        </SlideWrapper>
+      ))}
+
+      {/* =========================================================================
+          SLIDE 13: MARKET RESEARCH & DATA ANALYSIS FLAGSHIP - CATATCRYPTO
+      ========================================================================= */}
+      {(() => {
+        const p = flagshipProjects[3];
+        return (
+          <SlideWrapper
+            sectionTitle="Market Research & Data Analysis Flagship Project"
+            categoryBadge="MARKET RESEARCH & DATA ANALYSIS"
+            currentPage={slideDataFlagship}
+          >
+            <div className="grid grid-cols-12 gap-6 items-center h-full my-auto">
+              <div className="col-span-7 flex flex-col justify-between space-y-2.5">
+                <div>
+                  <div className="flex items-center space-x-2 text-zinc-400 text-[10.5px] font-mono mb-1">
+                    <span>{p.year}</span>
+                    <span>·</span>
+                    <span className="text-rose-400 font-semibold">{getRole(p)}</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-white tracking-tight leading-snug">
+                    {getTitle(p)}
+                  </h2>
+                  <p className="text-[11.5px] font-medium text-rose-300/90 font-mono mt-0.5">
+                    {getTagline(p)}
+                  </p>
+                </div>
+
+                <p className="text-[11px] text-zinc-300 leading-relaxed font-light">
+                  {getDescription(p)}
+                </p>
+
+                {/* Key Deliverables */}
+                <div className="space-y-1.5 py-0.5">
+                  {getHighlights(p).slice(0, 3).map((hl, i) => (
+                    <div key={i} className="flex items-start space-x-2 text-[10.5px] text-zinc-300">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-rose-400 shrink-0 mt-0.5" />
+                      <span>{hl}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Key Metrics */}
+                <div className="grid grid-cols-3 gap-2 pt-0.5">
+                  {p.metrics?.map((m, i) => (
+                    <div key={i} className="p-2 rounded-lg bg-zinc-900/90 border border-zinc-800">
+                      <div className="text-sm font-bold text-rose-400 font-mono">{m.value}</div>
+                      <div className="text-[8.5px] text-zinc-400 font-mono uppercase tracking-wider mt-0.5">
+                        {language === "zh" && m.labelZh ? m.labelZh : language === "id" && m.labelId ? m.labelId : m.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tech Stack Tags & Link */}
+                <div className="space-y-1.5 pt-0.5">
+                  <div className="flex flex-wrap gap-1">
+                    {getTechStack(p).slice(0, 5).map((tech) => (
+                      <span key={tech} className="px-2 py-0.5 rounded bg-zinc-900 text-zinc-300 text-[9.5px] font-mono border border-zinc-800">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {p.githubUrl && (
+                    <div className="pt-0.5">
+                      <a
+                        href={p.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-1.5 text-[11px] font-mono text-rose-400 hover:text-rose-300 font-semibold"
+                      >
+                        <GithubIcon className="w-3.5 h-3.5" />
+                        <span>{p.githubUrl.replace(/^https?:\/\//, "")} ↗</span>
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Right: Dual Visual Previews */}
+              <div className="col-span-5 flex flex-col space-y-2.5">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.images?.[0] || "/assets/projects/catatcrypto/dashboard.png"}
+                    alt="CatatCrypto Dashboard"
+                    className="w-full h-34 object-cover"
+                  />
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                    {getAssetCaption("catatcrypto", 0)}
+                  </div>
+                </div>
+
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.images?.[1] || "/assets/projects/catatcrypto/ta.png"}
+                    alt="Technical Analytics Suite"
+                    className="w-full h-34 object-cover"
+                  />
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                    {getAssetCaption("catatcrypto", 1)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SlideWrapper>
+        );
+      })()}
+
+      {/* =========================================================================
+          SLIDES 14-15: MARKET RESEARCH & DATA ANALYSIS SHOWCASE (CHUNKED 4 + 3)
+      ========================================================================= */}
+      {dataChunks.map((chunk, chunkIdx) => (
+        <SlideWrapper
+          key={`data-chunk-${chunkIdx}`}
+          sectionTitle={`Market Research & Data Analysis Showcase (${chunkIdx + 1}/${dataChunks.length})`}
+          categoryBadge="MARKET RESEARCH & DATA ANALYSIS"
+          currentPage={slideDataShowcase[chunkIdx]}
+        >
+          <div className="flex flex-col justify-between h-full py-0.5 space-y-2">
+            <div>
+              <h2 className="text-xl font-bold text-white tracking-tight">{getCategoryTitle("data")} Matrix</h2>
+              <p className="text-[10.5px] text-zinc-400 font-mono">{getCategorySubtitle("data")}</p>
+            </div>
+
+            <div className={`grid ${chunk.length === 4 ? "grid-cols-2 gap-3" : "grid-cols-3 gap-3"} flex-1 items-stretch`}>
+              {chunk.map((proj) => (
+                <ShowcaseCard key={proj.id} proj={proj} accentColor="rose" isDense={chunk.length >= 6} />
+              ))}
+            </div>
+          </div>
+        </SlideWrapper>
+      ))}
+
+      {/* =========================================================================
+          SLIDE 16: BRAND DESIGN FLAGSHIP - NASI GORENG JAN'OK
+      ========================================================================= */}
+      {(() => {
+        const p = flagshipProjects[4];
+        return (
+          <SlideWrapper
+            sectionTitle="Brand Design & Packaging Flagship Project"
+            categoryBadge="MULTIMEDIA BRAND DESIGN"
+            currentPage={slideDesignFlagship}
+          >
+            <div className="grid grid-cols-12 gap-6 items-center h-full my-auto">
+              <div className="col-span-7 flex flex-col justify-between space-y-2.5">
+                <div>
+                  <div className="flex items-center space-x-2 text-zinc-400 text-[10.5px] font-mono mb-1">
+                    <span>{p.year}</span>
+                    <span>·</span>
+                    <span className="text-purple-400 font-semibold">{getRole(p)}</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-white tracking-tight leading-snug">
+                    {getTitle(p)}
+                  </h2>
+                  <p className="text-[11.5px] font-medium text-purple-300/90 font-mono mt-0.5">
+                    {getTagline(p)}
+                  </p>
+                </div>
+
+                <p className="text-[11px] text-zinc-300 leading-relaxed font-light">
+                  {getDescription(p)}
+                </p>
+
+                {/* Key Deliverables */}
+                <div className="space-y-1.5 py-0.5">
+                  {getHighlights(p).slice(0, 3).map((hl, i) => (
+                    <div key={i} className="flex items-start space-x-2 text-[10.5px] text-zinc-300">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-purple-400 shrink-0 mt-0.5" />
+                      <span>{hl}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Key Metrics */}
+                <div className="grid grid-cols-3 gap-2 pt-0.5">
+                  {p.metrics?.map((m, i) => (
+                    <div key={i} className="p-2 rounded-lg bg-zinc-900/90 border border-zinc-800">
+                      <div className="text-sm font-bold text-purple-400 font-mono">{m.value}</div>
+                      <div className="text-[8.5px] text-zinc-400 font-mono uppercase tracking-wider mt-0.5">
+                        {language === "zh" && m.labelZh ? m.labelZh : language === "id" && m.labelId ? m.labelId : m.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tech Stack Tags & Link */}
+                <div className="space-y-1.5 pt-0.5">
+                  <div className="flex flex-wrap gap-1">
+                    {getTechStack(p).slice(0, 5).map((tech) => (
+                      <span key={tech} className="px-2 py-0.5 rounded bg-zinc-900 text-zinc-300 text-[9.5px] font-mono border border-zinc-800">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {p.liveUrl && (
+                    <div className="pt-0.5">
+                      <a
+                        href={p.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-1.5 text-[11px] font-mono text-purple-400 hover:text-purple-300 font-semibold"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>{p.liveUrl.replace(/^https?:\/\//, "")} ↗</span>
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Right: Dual Visual Previews */}
+              <div className="col-span-5 flex flex-col space-y-2.5">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.images?.[0] || "/assets/projects/branding/janok_packaging.png"}
+                    alt="Packaging Box Dieline"
+                    className="w-full h-34 object-cover"
+                  />
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                    {getAssetCaption("jan-ok", 0)}
+                  </div>
+                </div>
+
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.images?.[1] || "/assets/projects/branding/janok_brochure.png"}
+                    alt="Franchise Brochure"
+                    className="w-full h-34 object-cover"
+                  />
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                    {getAssetCaption("jan-ok", 1)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SlideWrapper>
+        );
+      })()}
+
+      {/* =========================================================================
+          SLIDES 17-19: MULTIMEDIA BRAND DESIGN SHOWCASE (CHUNKED 6 + 5 + 5)
+      ========================================================================= */}
+      {designChunks.map((chunk, chunkIdx) => (
+        <SlideWrapper
+          key={`design-chunk-${chunkIdx}`}
+          sectionTitle={`Brand & Packaging Showcase (${chunkIdx + 1}/${designChunks.length})`}
+          categoryBadge="MULTIMEDIA BRAND DESIGN"
+          currentPage={slideDesignShowcase[chunkIdx]}
+        >
+          <div className="flex flex-col justify-between h-full py-0.5 space-y-1.5">
+            <div>
+              <h2 className="text-xl font-bold text-white tracking-tight">{getCategoryTitle("design")} Matrix</h2>
+              <p className="text-[10.5px] text-zinc-400 font-mono">{getCategorySubtitle("design")}</p>
+            </div>
+
+            <div className={`grid ${chunk.length <= 4 ? "grid-cols-2 gap-3" : "grid-cols-3 gap-2.5"} flex-1 items-stretch`}>
+              {chunk.map((proj) => (
+                <ShowcaseCard key={proj.id} proj={proj} accentColor="purple" isDense={chunk.length >= 6} />
+              ))}
+            </div>
+          </div>
+        </SlideWrapper>
+      ))}
+
+      {/* =========================================================================
+          SLIDE 20: CAREER TIMELINE (PART 1/2 - 3 EXPERIENCES RICH & COMPLETE)
+      ========================================================================= */}
+      <SlideWrapper sectionTitle="Professional Career Chronology (1/2)" currentPage={slideExp1}>
+        <div className="flex flex-col justify-between h-full py-0.5 space-y-2">
+          <div>
+            <h2 className="text-xl font-bold text-white tracking-tight">
+              {language === "zh" ? "职业历程与核心系统工程经验 (第一部分)" : language === "id" ? "Buku Besar Karir Profesional & Pengalaman Sistem (1/2)" : "Professional Career Ledger & Systems Experience (1/2)"}
+            </h2>
+            <p className="text-[10.5px] text-zinc-400 font-mono">
+              {language === "zh" ? "涵盖企业总监、系统架构师、全栈开发与社区量化技术导师" : language === "id" ? "Pengalaman sebagai Direktur Operasional, Arsitek Sistem & Mentor Komunitas" : "Proven tenure across Operations Directorship, Systems Architecture & Community Mentorship"}
+            </p>
+          </div>
+
+          <div className="relative pl-5 border-l-2 border-amber-400/50 space-y-2.5 flex-1 flex flex-col justify-around my-auto">
+            {experiencesData.slice(0, 3).map((exp, idx) => (
+              <div key={idx} className="relative group">
+                {/* Timeline Node Icon */}
+                <div className="absolute -left-[27px] top-1 w-3.5 h-3.5 rounded-full bg-[#0c0d12] border-2 border-amber-400 flex items-center justify-center shadow-md">
+                  <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 shadow-sm space-y-1">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <span className="px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-400 font-mono text-[9.5px] font-semibold border border-amber-400/30">
+                        {getExpPeriod(exp)}
+                      </span>
+                      <h3 className="text-xs font-bold text-white">
+                        {getExpRole(exp)}
+                      </h3>
+                    </div>
+                    <div className="text-[9.5px] font-mono text-zinc-400">
+                      <span className="text-amber-300 font-medium">
+                        {getExpCompany(exp)}
+                      </span>
+                      <span className="mx-1 text-zinc-600">·</span>
+                      <span>{exp.location}</span>
+                    </div>
+                  </div>
+
+                  <p className="text-[10.5px] text-zinc-300 font-light leading-relaxed">
+                    {getExpDescription(exp)}
+                  </p>
+
+                  <div className="space-y-0.5 pt-1 border-t border-zinc-800/80">
+                    {getExpBullets(exp).map((pt, pIdx) => (
+                      <div key={pIdx} className="flex items-start space-x-1.5 text-[10px] text-zinc-300 leading-snug">
+                        <span className="text-amber-400 font-bold">•</span>
+                        <span>{pt}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {getExpTags(exp).length > 0 && (
+                    <div className="flex flex-wrap gap-1 pt-1">
+                      {getExpTags(exp).map((tag) => (
+                        <span key={tag} className="px-1.5 py-0.2 rounded bg-zinc-950 text-zinc-400 text-[8px] font-mono border border-zinc-800">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </SlideWrapper>
+
+      {/* =========================================================================
+          SLIDE 21: CAREER TIMELINE (PART 2/2 - 3 EXPERIENCES RICH & COMPLETE)
+      ========================================================================= */}
+      <SlideWrapper sectionTitle="Professional Career Chronology (2/2)" currentPage={slideExp2}>
+        <div className="flex flex-col justify-between h-full py-0.5 space-y-2">
+          <div>
+            <h2 className="text-xl font-bold text-white tracking-tight">
+              {language === "zh" ? "职业历程与早期创新创业经验 (第二部分)" : language === "id" ? "Buku Besar Karir Profesional & Pengalaman Awal (2/2)" : "Professional Career Ledger & Early Ventures (2/2)"}
+            </h2>
+            <p className="text-[10.5px] text-zinc-400 font-mono">
+              {language === "zh" ? "涵盖开源青年发展后端开发、生鲜电商创业创始人与人才测评软件工程" : language === "id" ? "Pengalaman Backend Non-Profit, Founder E-Grocery & Pengembang Software Asesmen SDM" : "Tenure across Non-profit Backend Engineering, Early Startup Founder & Assessment Software"}
+            </p>
+          </div>
+
+          <div className="relative pl-5 border-l-2 border-amber-400/50 space-y-2.5 flex-1 flex flex-col justify-around my-auto">
+            {experiencesData.slice(3, 6).map((exp, idx) => (
+              <div key={idx} className="relative group">
+                {/* Timeline Node Icon */}
+                <div className="absolute -left-[27px] top-1 w-3.5 h-3.5 rounded-full bg-[#0c0d12] border-2 border-amber-400 flex items-center justify-center shadow-md">
+                  <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 shadow-sm space-y-1">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <span className="px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-400 font-mono text-[9.5px] font-semibold border border-amber-400/30">
+                        {getExpPeriod(exp)}
+                      </span>
+                      <h3 className="text-xs font-bold text-white">
+                        {getExpRole(exp)}
+                      </h3>
+                    </div>
+                    <div className="text-[9.5px] font-mono text-zinc-400">
+                      <span className="text-amber-300 font-medium">
+                        {getExpCompany(exp)}
+                      </span>
+                      <span className="mx-1 text-zinc-600">·</span>
+                      <span>{exp.location}</span>
+                    </div>
+                  </div>
+
+                  <p className="text-[10.5px] text-zinc-300 font-light leading-relaxed">
+                    {getExpDescription(exp)}
+                  </p>
+
+                  <div className="space-y-0.5 pt-1 border-t border-zinc-800/80">
+                    {getExpBullets(exp).map((pt, pIdx) => (
+                      <div key={pIdx} className="flex items-start space-x-1.5 text-[10px] text-zinc-300 leading-snug">
+                        <span className="text-amber-400 font-bold">•</span>
+                        <span>{pt}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {getExpTags(exp).length > 0 && (
+                    <div className="flex flex-wrap gap-1 pt-1">
+                      {getExpTags(exp).map((tag) => (
+                        <span key={tag} className="px-1.5 py-0.2 rounded bg-zinc-950 text-zinc-400 text-[8px] font-mono border border-zinc-800">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </SlideWrapper>
+
+      {/* =========================================================================
+          SLIDE 22: SKILLS SECTION (4 PILLARS - DIRECT STACK & DISCIPLINES)
+      ========================================================================= */}
+      <SlideWrapper sectionTitle="Core Technical Capabilities (4 Pillars)" currentPage={slideSkills}>
+        <div className="flex flex-col justify-between h-full py-0.5 space-y-2">
+          {/* Header matching web Chapter Style */}
+          <div className="flex items-baseline justify-between border-b border-zinc-800/80 pb-1.5">
+            <div className="flex items-baseline gap-2">
+              <span className="font-serif text-xl text-amber-400 font-light">/</span>
+              <h2 className="font-serif text-xl font-normal text-white uppercase tracking-tight">
+                SKILLS
+              </h2>
+              <span className="text-xs font-mono text-zinc-400 ml-2">
+                Tools, Stacks & Systems Architecture
+              </span>
+            </div>
+            <div className="text-right font-mono text-[10px]">
+              <span className="text-zinc-500">04 / 06 </span>
+              <span className="text-amber-400 font-semibold">{t.common.chapterIndex || "CHAPTER"}</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3.5 flex-1 items-stretch my-auto">
+            {/* Pillar 1: Web & Frontend */}
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-amber-400/30 flex flex-col justify-between shadow-sm">
+              <div className="space-y-1">
+                <div className="flex items-center justify-between pb-1 border-b border-zinc-800">
+                  <div className="flex items-center space-x-1.5 text-amber-400 font-mono text-[11px] uppercase font-bold">
+                    <Layout className="w-4 h-4 text-amber-400" />
+                    <span>Web & Frontend Architecture</span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 font-mono text-[8.5px] font-bold border border-amber-400/30">
+                    PILLAR 01
+                  </span>
+                </div>
+                <p className="text-[10px] text-zinc-300 font-light leading-relaxed">
+                  {language === "zh" ? "现代组件驱动架构、响应式状态管理、客户端瞬时计算与高保真交互体验。" : language === "id" ? "Framework modern, manajemen state reaktif, komputasi sisi klien, dan aplikasi web responsif." : "Modern component frameworks, reactive state management, client-side compute, and responsive web applications."}
+                </p>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-zinc-800/80">
+                <div className="space-y-1">
+                  <span className="text-[8.5px] font-mono text-zinc-400 uppercase tracking-wider font-semibold block">
+                    TECHNOLOGIES & CORE TOOLS
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {["Next.js (App Router)", "TypeScript", "React.js", "Tailwind CSS", "Figma (UI/UX)", "Git & GitHub"].map((tool) => (
+                      <span key={tool} className="px-2 py-0.5 rounded bg-zinc-950 text-zinc-200 text-[9.5px] font-mono border border-zinc-800">
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <span className="text-[8.5px] font-mono text-amber-400/90 uppercase tracking-wider font-semibold block">
+                    ARCHITECTURE & DISCIPLINES
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {["RESTful API Architecture", "Client-Side State & Compute", "Browser & Web Share APIs", "Responsive UI Standards"].map((disc) => (
+                      <span key={disc} className="px-2 py-0.5 rounded bg-amber-400/5 text-amber-300 text-[9.5px] font-mono border border-amber-400/20">
+                        {disc}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Pillar 2: Backend & Enterprise */}
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-sky-400/30 flex flex-col justify-between shadow-sm">
+              <div className="space-y-1">
+                <div className="flex items-center justify-between pb-1 border-b border-zinc-800">
+                  <div className="flex items-center space-x-1.5 text-sky-400 font-mono text-[11px] uppercase font-bold">
+                    <Server className="w-4 h-4 text-sky-400" />
+                    <span>Backend & Enterprise Systems</span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded bg-sky-400/10 text-sky-400 font-mono text-[8.5px] font-bold border border-sky-400/30">
+                    PILLAR 02
+                  </span>
+                </div>
+                <p className="text-[10px] text-zinc-300 font-light leading-relaxed">
+                  {language === "zh" ? "关系型数据建模、多层事务后端、离散数学算法优化与企业级高可靠服务架构。" : language === "id" ? "Pemodelan data relasional, backend transaksional multi-tier, algoritma, dan arsitektur server." : "Relational data modeling, multi-tier transactional backends, algorithms, and server infrastructure."}
+                </p>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-zinc-800/80">
+                <div className="space-y-1">
+                  <span className="text-[8.5px] font-mono text-zinc-400 uppercase tracking-wider font-semibold block">
+                    TECHNOLOGIES & STACK
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {["PHP / Laravel Framework", "MySQL (3NF Relational DB)", "C# (.NET / WinForms)", "Java (OOP)", "Docker Containerization"].map((tool) => (
+                      <span key={tool} className="px-2 py-0.5 rounded bg-zinc-950 text-zinc-200 text-[9.5px] font-mono border border-zinc-800">
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <span className="text-[8.5px] font-mono text-sky-400/90 uppercase tracking-wider font-semibold block">
+                    ARCHITECTURE & DISCIPLINES
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {["ERP & POS Data Modeling", "Client-Server Sockets", "Query Profiling & Indexing", "Multi-Tier Architecture"].map((disc) => (
+                      <span key={disc} className="px-2 py-0.5 rounded bg-sky-400/5 text-sky-300 text-[9.5px] font-mono border border-sky-400/20">
+                        {disc}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Pillar 3: AI Workflows & Automation */}
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-purple-400/30 flex flex-col justify-between shadow-sm">
+              <div className="space-y-1">
+                <div className="flex items-center justify-between pb-1 border-b border-zinc-800">
+                  <div className="flex items-center space-x-1.5 text-purple-400 font-mono text-[11px] uppercase font-bold">
+                    <Cpu className="w-4 h-4 text-purple-400" />
+                    <span>AI Workflows & Automation</span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded bg-purple-400/10 text-purple-400 font-mono text-[8.5px] font-bold border border-purple-400/30">
+                    PILLAR 03
+                  </span>
+                </div>
+                <p className="text-[10px] text-zinc-300 font-light leading-relaxed">
+                  {language === "zh" ? "确定性大模型编译引擎、结构化提示词工程、本地 RAG 知识库与自动化事件流水线。" : language === "id" ? "Deterministic compiling engines, structured prompt engineering, local RAG, dan automated workflows." : "Deterministic compiling engines, structured prompt engineering, local RAG, and automated workflows."}
+                </p>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-zinc-800/80">
+                <div className="space-y-1">
+                  <span className="text-[8.5px] font-mono text-zinc-400 uppercase tracking-wider font-semibold block">
+                    FRAMEWORKS & TOOLS
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {["Python Automation", "n8n Workflow Engine", "Multi-Agent Systems & CLI", "Web Scraping (Playwright)"].map((tool) => (
+                      <span key={tool} className="px-2 py-0.5 rounded bg-zinc-950 text-zinc-200 text-[9.5px] font-mono border border-zinc-800">
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <span className="text-[8.5px] font-mono text-purple-400/90 uppercase tracking-wider font-semibold block">
+                    AI PIPELINES & METHODS
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {["Structured Prompting", "Vector RAG & Knowledge Vaults", "LLM Multi-Pass Chaining", "Automated Publishing Pipeline"].map((disc) => (
+                      <span key={disc} className="px-2 py-0.5 rounded bg-purple-400/5 text-purple-300 text-[9.5px] font-mono border border-purple-400/20">
+                        {disc}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Pillar 4: Business Ops & Quant */}
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-emerald-400/30 flex flex-col justify-between shadow-sm">
+              <div className="space-y-1">
+                <div className="flex items-center justify-between pb-1 border-b border-zinc-800">
+                  <div className="flex items-center space-x-1.5 text-emerald-400 font-mono text-[11px] uppercase font-bold">
+                    <Package className="w-4 h-4 text-emerald-400" />
+                    <span>Business Operations & Quant</span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded bg-emerald-400/10 text-emerald-400 font-mono text-[8.5px] font-bold border border-emerald-400/30">
+                    PILLAR 04
+                  </span>
+                </div>
+                <p className="text-[10px] text-zinc-300 font-light leading-relaxed">
+                  {language === "zh" ? "B2B 大宗批发商业流程、量化投资账本核算、-25°C 低温冷链物流与食品级包装合规。" : language === "id" ? "B2B commercial workflows, quantitative portfolio ledgers, -25°C cold chain, dan packaging compliance." : "B2B commercial workflows, quantitative portfolio ledgers, -25°C cold chain, and packaging compliance."}
+                </p>
+              </div>
+
+              <div className="space-y-2 pt-2 border-t border-zinc-800/80">
+                <div className="space-y-1">
+                  <span className="text-[8.5px] font-mono text-zinc-400 uppercase tracking-wider font-semibold block">
+                    SUPPLY CHAIN & OPS
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {["Cold-Chain Logistics (-25°C)", "Industrial Barrier Packaging", "Factory Die-Cut Dielines", "FIFO Inventory Ledgers"].map((tool) => (
+                      <span key={tool} className="px-2 py-0.5 rounded bg-zinc-950 text-zinc-200 text-[9.5px] font-mono border border-zinc-800">
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <span className="text-[8.5px] font-mono text-emerald-400/90 uppercase tracking-wider font-semibold block">
+                    QUANT FINANCE & COMPLIANCE
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {["Quantitative DCA Reconciliation", "Risk/Reward (RR) & Drawdown", "Multi-Timeframe Charting", "Halal & Kementan Compliance"].map((disc) => (
+                      <span key={disc} className="px-2 py-0.5 rounded bg-emerald-400/5 text-emerald-300 text-[9.5px] font-mono border border-emerald-400/20">
+                        {disc}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </SlideWrapper>
+
+      {/* =========================================================================
+          SLIDE 23: CREDENTIALS PART 1 - FORMAL EDUCATION & EXCELLENCE HONORS
+      ========================================================================= */}
+      <SlideWrapper sectionTitle="Credentials Part 1 · Formal Education & Honors" currentPage={slideCred1}>
+        <div className="flex flex-col justify-between h-full py-0.5 space-y-2">
+          <div>
+            <h2 className="text-xl font-bold text-white tracking-tight">
+              {language === "zh" ? "正规学历背景与学术卓越荣誉" : language === "id" ? "Gelar Akademik Formal & Penghargaan Keunggulan" : "Formal Academic Degrees & Excellence Honors"}
+            </h2>
+            <p className="text-[10.5px] text-zinc-400 font-mono">
+              {language === "zh" ? "以 4.00 / 4.00 满分绩点 (Sangat Memuaskan) 毕业于 iSTTS 并荣获 4 项计算机实验室最佳实践奖" : language === "id" ? "Lulus dengan IPK Sempurna 4.00 / 4.00 (Sangat Memuaskan) di iSTTS dan 4x Best Lab Practitioner Awards" : "Graduated with Perfect 4.00 / 4.00 GPA (Sangat Memuaskan) at iSTTS and 4x Best Lab Practitioner Awards"}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3.5 flex-1 items-stretch my-auto">
+            {/* Degree 1: iSTTS Bachelor */}
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-amber-400/30 flex flex-col justify-between space-y-2 shadow-sm">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 font-mono text-[9.5px] font-bold border border-amber-400/30">
+                    {educationData[0]?.honors || "HONORS: VERY SATISFACTORY (PERFECT 4.00 GPA)"}
+                  </span>
+                  <span className="text-[10px] font-mono text-zinc-400 font-semibold">{educationData[0]?.period}</span>
+                </div>
+
+                <div>
+                  <h3 className="text-[14px] font-bold text-white mt-0.5">
+                    {getEduDegree(educationData[0])}
+                  </h3>
+                  <div className="text-[11px] text-amber-300 font-mono font-medium">
+                    {getEduInstitution(educationData[0])}
+                  </div>
+                </div>
+
+                <p className="text-[10.5px] text-zinc-300 font-light leading-relaxed">
+                  {getEduDescription(educationData[0])}
+                </p>
+              </div>
+
+              <div className="pt-2 border-t border-zinc-800/80 space-y-1">
+                <div className="text-[9px] font-mono text-zinc-400 uppercase tracking-wider font-semibold">Key Academic Highlights & Honors:</div>
+                <div className="text-[10px] text-zinc-300 space-y-0.5">
+                  {getEduHighlights(educationData[0]).map((hl, i) => (
+                    <div key={i} className="flex items-start space-x-1.5">
+                      <span className="text-amber-400 font-bold">•</span>
+                      <span>{hl}</span>
+                    </div>
                   ))}
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* Footer */}
-          <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span>MASTER PORTFOLIO DECK · PAGE 11 / 15</span>
-            <span>JEM ANGKASA WIJAYA, S.KOM. · PROFESSIONAL CAREER HISTORY</span>
-          </div>
-        </section>
-      )}
-
-      {/* ========================================================================= */}
-      {/* SLIDE 12: 6-PILLAR TECHNICAL SKILLS AUDITABLE PROOF MATRIX                */}
-      {/* ========================================================================= */}
-      {exportOptions.includeSkills && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-3">
-              <span className="font-serif-editorial text-2xl text-[#d4af37]">/ 12</span>
-              <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-                6-PILLAR TECHNICAL SKILLS AUDITABLE PROOF MATRIX
-              </span>
             </div>
-            <span className="font-mono text-xs text-zinc-400">
-              TIER 1 (PROD ACTIVE) · TIER 2 (ACADEMIC VERIFIED) · TIER 3 (CERTIFIED)
-            </span>
-          </div>
 
-          {/* 6 Pillars in 3x2 Grid */}
-          <div className="grid grid-cols-3 gap-3.5 my-auto py-2">
-            {skillsData.map((category) => (
-              <div
-                key={category.id}
-                className="p-3 rounded-2xl bg-[#111114] border border-white/10 space-y-2 flex flex-col justify-between"
-              >
+            {/* Degree 2: Xin Zhong High School */}
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col justify-between space-y-2 shadow-sm">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="px-2 py-0.5 rounded bg-sky-400/10 text-sky-400 font-mono text-[9.5px] font-bold border border-sky-400/30">
+                    TOP 50 SCORERS CITY SCIENCE OLYMPIAD (OSK) COMPUTER & TECHNOLOGY
+                  </span>
+                  <span className="text-[10px] font-mono text-zinc-400 font-semibold">{educationData[1]?.period}</span>
+                </div>
+
                 <div>
-                  <div className="flex items-center justify-between pb-1 border-b border-white/10">
-                    <h4 className="font-mono text-xs font-bold text-[#ebdca4]">
-                      {category.title}
-                    </h4>
-                    <span className="w-2 h-2 rounded-full bg-[#d4af37]" />
-                  </div>
-                  <p className="text-[9.5px] text-zinc-400 font-mono pt-1 leading-tight">
-                    {category.description}
-                  </p>
-                </div>
-
-                {/* Tier 1 Skills */}
-                <div className="space-y-1">
-                  <span className="text-[8.5px] font-mono text-[#d4af37] font-bold block uppercase">
-                    TIER 1 — PRODUCTION ACTIVE:
-                  </span>
-                  <div className="flex flex-wrap gap-1">
-                    {category.tier1.map((s, idx) => (
-                      <span key={idx} className="px-1.5 py-0.5 rounded bg-white/5 border border-[#d4af37]/30 text-xs font-mono text-zinc-200">
-                        {s.name} <strong className="text-[#ebdca4]">[{s.tag}]</strong>
-                      </span>
-                    ))}
+                  <h3 className="text-[14px] font-bold text-white mt-0.5">
+                    {getEduDegree(educationData[1])}
+                  </h3>
+                  <div className="text-[11px] text-sky-300 font-mono font-medium">
+                    {getEduInstitution(educationData[1])}
                   </div>
                 </div>
 
-                {/* Tier 2 Skills */}
-                <div className="space-y-1 pt-1 border-t border-white/5">
-                  <span className="text-[8.5px] font-mono text-zinc-400 font-bold block uppercase">
-                    TIER 2 — ACADEMIC VERIFIED:
-                  </span>
-                  <div className="flex flex-wrap gap-1">
-                    {category.tier2.map((s, idx) => (
-                      <span key={idx} className="px-1.5 py-0.2 rounded bg-white/[0.02] border border-white/5 text-[8.5px] font-mono text-zinc-400">
-                        {s.name} [{s.tag}]
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tier 3 Skills */}
-                <div className="space-y-1 pt-1 border-t border-white/5">
-                  <span className="text-[8.5px] font-mono text-zinc-400 font-bold block uppercase">
-                    TIER 3 — CERTIFIED / LAB:
-                  </span>
-                  <div className="flex flex-wrap gap-1">
-                    {category.tier3.map((s, idx) => (
-                      <span key={idx} className="px-1.5 py-0.2 rounded bg-white/[0.01] border border-white/5 text-[8.5px] font-mono text-zinc-400">
-                        {s.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Footer */}
-          <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span>MASTER PORTFOLIO DECK · PAGE 12 / 15</span>
-            <span>JEM ANGKASA WIJAYA, S.KOM. · 6-PILLAR AUDIT MATRIX</span>
-          </div>
-        </section>
-      )}
-
-      {/* ========================================================================= */}
-      {/* SLIDE 13: ACADEMIC CREDENTIALS, 4x AWARDS & OFFICIAL SIGNOFF              */}
-      {/* ========================================================================= */}
-      {exportOptions.includeCredentials && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-[#d4af37]/50 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-3">
-              <span className="font-serif-editorial text-2xl text-[#d4af37]">/ 13</span>
-              <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-                ACADEMIC HONORS, 4x AWARDS, CERTIFICATIONS & OFFICIAL SIGNOFF
-              </span>
-            </div>
-            <span className="font-mono text-xs text-zinc-400">
-              INSTITUT SAINS DAN TEKNOLOGI TERPADU SURABAYA (iSTTS)
-            </span>
-          </div>
-
-          {/* 3 Columns: Education, Awards, Official Stamp */}
-          <div className="grid grid-cols-12 gap-5 my-auto py-2 items-stretch">
-            
-            {/* Col 1 (4 cols): Formal Education */}
-            <div className="col-span-4 p-4 rounded-2xl bg-[#111114] border border-[#d4af37]/40 space-y-3 flex flex-col justify-between">
-              <div>
-                <span className="text-xs font-mono text-[#d4af37] font-bold uppercase tracking-wider block">
-                  FORMAL ACADEMIC DEGREE
-                </span>
-                <h3 className="font-serif-editorial text-2xl text-white font-medium pt-1">
-                  Sarjana Komputer (S.Kom.)
-                </h3>
-                <div className="text-xs font-mono text-zinc-300">
-                  Institut Sains dan Teknologi Terpadu Surabaya (iSTTS)
-                </div>
-                <div className="text-xs font-mono text-zinc-400">
-                  S1 Sistem Informasi Bisnis · 2018 – 2023
-                </div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-black/60 border border-[#d4af37]/30 space-y-1 text-center">
-                <div className="font-serif-editorial text-3xl text-[#ebdca4] font-bold">{language === "id" ? "IPK 4.00 / 4.00" : "4.00 / 4.00 GPA"}</div>
-                <div className="text-xs font-mono text-white font-semibold uppercase">
-                  Predikat Resmi: Sangat Memuaskan
-                </div>
-                <div className="text-xs font-mono text-zinc-400">
-                  144 SKS Lulus Seluruh Nilai A Tanpa Remedial
-                </div>
-              </div>
-
-              <div className="text-xs text-zinc-400 font-light leading-snug">
-                Fokus riset tugas akhir: Rekayasa sistem web modern, otomasi kalkulasi data, dan sinkronisasi proses bisnis multi-entitas (Skripsi A Sempurna).
-              </div>
-            </div>
-
-            {/* Col 2 (4 cols): 4x Best Practitioner & Certifications */}
-            <div className="col-span-4 p-4 rounded-2xl bg-[#111114] border border-[#dc2626]/40 space-y-3 flex flex-col justify-between">
-              <div>
-                <span className="text-xs font-mono text-[#dc2626] font-bold uppercase tracking-wider block">
-                  4x BEST ACADEMIC PRACTITIONER
-                </span>
-                <p className="text-xs text-zinc-400 font-mono">
-                  Penghargaan Praktikan Terbaik Laboratorium Komputer iSTTS:
+                <p className="text-[10.5px] text-zinc-300 font-light leading-relaxed">
+                  {getEduDescription(educationData[1])}
                 </p>
               </div>
 
-              <div className="space-y-1.5">
-                {awardsData.map((award, idx) => (
-                  <div key={idx} className="p-2 rounded-lg bg-black/50 border border-white/5 flex items-center justify-between text-xs font-mono">
-                    <span className="text-[#ebdca4] font-semibold">{award.subject}</span>
-                    <span className="text-zinc-400">{award.year}</span>
+              <div className="pt-2 border-t border-zinc-800/80 space-y-1">
+                <div className="text-[9px] font-mono text-zinc-400 uppercase tracking-wider font-semibold">Key Academic Highlights & Honors:</div>
+                <div className="text-[10px] text-zinc-300 space-y-0.5">
+                  {getEduHighlights(educationData[1]).map((hl, i) => (
+                    <div key={i} className="flex items-start space-x-1.5">
+                      <span className="text-sky-400 font-bold">•</span>
+                      <span>{hl}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 4x Best Lab Practitioner Awards Strip */}
+          <div className="space-y-1.5 pt-1.5 border-t border-zinc-800/80">
+            <div className="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-wider flex items-center space-x-1.5">
+              <Award className="w-3.5 h-3.5 text-amber-400" />
+              <span>BEST ACADEMIC PRACTITIONER AWARDS (4X RECIPIENT)</span>
+            </div>
+            <div className="grid grid-cols-4 gap-2">
+              {awardsData.map((award, idx) => (
+                <div key={idx} className="p-2 rounded-lg bg-zinc-900/90 border border-amber-400/20 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <Award className="w-3 h-3 text-amber-400" />
+                      <span className="text-[8.5px] font-mono text-zinc-400 font-bold">{award.year}</span>
+                    </div>
+                    <div className="text-[9.5px] font-bold text-white mt-1 line-clamp-1">
+                      {getAwardTitle(award)}
+                    </div>
                   </div>
-                ))}
+                  <div className="text-[8.5px] text-zinc-400 font-light line-clamp-2 mt-0.5">
+                    {getAwardDescription(award)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </SlideWrapper>
+
+      {/* =========================================================================
+          SLIDE 24: CREDENTIALS PART 2 - LEADERSHIP & STUDENT ORGANIZATIONS (COMPLETE 6 FULL CARDS)
+      ========================================================================= */}
+      <SlideWrapper sectionTitle="Credentials Part 2 · Leadership & Student Organizations" currentPage={slideCred2}>
+        <div className="flex flex-col justify-between h-full py-0.5 space-y-1.5">
+          <div>
+            <h2 className="text-xl font-bold text-white tracking-tight">
+              {language === "zh" ? "大学领导力、学生组织与社会服务" : language === "id" ? "Kepemimpinan Kampus, Organisasi Mahasiswa & Layanan" : "Campus Leadership, Student Organizations & Service"}
+            </h2>
+            <p className="text-[10.5px] text-zinc-400 font-mono">
+              {language === "zh" ? "主导 PRENSSIB 新生导师项目、系学生会核心干部、企业工业参访与全校级商业赞助统筹" : language === "id" ? "Memimpin Orientasi Mahasiswa Baru PRENSSIB, Pengurus HIMA SIB, Kunjungan Industri & Sponsorship Kampus" : "Leading PRENSSIB freshman orientation, HIMA SIB department board, Industrial Visits & Campus Sponsorships"}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2.5 flex-1 items-stretch my-auto">
+            {/* Leadership 1: PRENSSIB */}
+            {(() => {
+              const item = leadershipExperiencesData[0];
+              return (
+                <div className="p-3 rounded-xl bg-zinc-900/90 border border-amber-400/25 flex flex-col justify-between space-y-1.5 shadow-sm">
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-[8.5px] font-mono text-zinc-400">
+                      <span>{getExpPeriod(item)}</span>
+                      <span className="px-1.5 py-0.2 rounded bg-amber-400/10 text-amber-400 border border-amber-400/20 uppercase font-bold">
+                        LEADERSHIP
+                      </span>
+                    </div>
+                    <h3 className="text-xs font-bold text-white leading-tight">{getExpRole(item)}</h3>
+                    <div className="text-[10px] font-mono text-amber-300 font-semibold">{getExpCompany(item)}</div>
+                    <p className="text-[9.5px] text-zinc-300 font-light leading-snug">
+                      {getExpDescription(item)}
+                    </p>
+                  </div>
+
+                  <div className="space-y-1 pt-1 border-t border-zinc-800/80">
+                    {getExpBullets(item).slice(0, 2).map((b, bIdx) => (
+                      <div key={bIdx} className="flex items-start space-x-1 text-[9.5px] text-zinc-300 leading-tight">
+                        <span className="text-amber-400 font-bold">•</span>
+                        <span>{b}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {getExpTags(item).length > 0 && (
+                    <div className="flex flex-wrap gap-1 pt-0.5">
+                      {getExpTags(item).slice(0, 4).map((tag) => (
+                        <span key={tag} className="px-1 py-0.2 rounded bg-zinc-950 text-zinc-400 text-[8px] font-mono border border-zinc-800">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Leadership 2: HIMA SIB Tutor */}
+            {(() => {
+              const item = leadershipExperiencesData[1];
+              return (
+                <div className="p-3 rounded-xl bg-zinc-900/90 border border-sky-400/25 flex flex-col justify-between space-y-1.5 shadow-sm">
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-[8.5px] font-mono text-zinc-400">
+                      <span>{getExpPeriod(item)}</span>
+                      <span className="px-1.5 py-0.2 rounded bg-sky-400/10 text-sky-400 border border-sky-400/20 uppercase font-bold">
+                        TUTORING
+                      </span>
+                    </div>
+                    <h3 className="text-xs font-bold text-white leading-tight">{getExpRole(item)}</h3>
+                    <div className="text-[10px] font-mono text-sky-300 font-semibold">{getExpCompany(item)}</div>
+                    <p className="text-[9.5px] text-zinc-300 font-light leading-snug">
+                      {getExpDescription(item)}
+                    </p>
+                  </div>
+
+                  <div className="space-y-1 pt-1 border-t border-zinc-800/80">
+                    {getExpBullets(item).slice(0, 2).map((b, bIdx) => (
+                      <div key={bIdx} className="flex items-start space-x-1 text-[9.5px] text-zinc-300 leading-tight">
+                        <span className="text-sky-400 font-bold">•</span>
+                        <span>{b}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {getExpTags(item).length > 0 && (
+                    <div className="flex flex-wrap gap-1 pt-0.5">
+                      {getExpTags(item).slice(0, 4).map((tag) => (
+                        <span key={tag} className="px-1 py-0.2 rounded bg-zinc-950 text-zinc-400 text-[8px] font-mono border border-zinc-800">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Leadership 3: Kunjungan Industri SIB */}
+            {(() => {
+              const item = leadershipExperiencesData[2];
+              return (
+                <div className="p-3 rounded-xl bg-zinc-900/90 border border-emerald-400/25 flex flex-col justify-between space-y-1.5 shadow-sm">
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-[8.5px] font-mono text-zinc-400">
+                      <span>{getExpPeriod(item)}</span>
+                      <span className="px-1.5 py-0.2 rounded bg-emerald-400/10 text-emerald-400 border border-emerald-400/20 uppercase font-bold">
+                        RELATIONS
+                      </span>
+                    </div>
+                    <h3 className="text-xs font-bold text-white leading-tight">{getExpRole(item)}</h3>
+                    <div className="text-[10px] font-mono text-emerald-300 font-semibold">{getExpCompany(item)}</div>
+                    <p className="text-[9.5px] text-zinc-300 font-light leading-snug">
+                      {getExpDescription(item)}
+                    </p>
+                  </div>
+
+                  <div className="space-y-1 pt-1 border-t border-zinc-800/80">
+                    {getExpBullets(item).slice(0, 2).map((b, bIdx) => (
+                      <div key={bIdx} className="flex items-start space-x-1 text-[9.5px] text-zinc-300 leading-tight">
+                        <span className="text-emerald-400 font-bold">•</span>
+                        <span>{b}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {getExpTags(item).length > 0 && (
+                    <div className="flex flex-wrap gap-1 pt-0.5">
+                      {getExpTags(item).slice(0, 4).map((tag) => (
+                        <span key={tag} className="px-1 py-0.2 rounded bg-zinc-950 text-zinc-400 text-[8px] font-mono border border-zinc-800">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Leadership 4: iSTTS Gamers League (IGL) */}
+            {(() => {
+              const item = leadershipExperiencesData[3];
+              return (
+                <div className="p-3 rounded-xl bg-zinc-900/90 border border-purple-400/25 flex flex-col justify-between space-y-1.5 shadow-sm">
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-[8.5px] font-mono text-zinc-400">
+                      <span>{getExpPeriod(item)}</span>
+                      <span className="px-1.5 py-0.2 rounded bg-purple-400/10 text-purple-400 border border-purple-400/20 uppercase font-bold">
+                        SPONSORSHIP
+                      </span>
+                    </div>
+                    <h3 className="text-xs font-bold text-white leading-tight">{getExpRole(item)}</h3>
+                    <div className="text-[10px] font-mono text-purple-300 font-semibold">{getExpCompany(item)}</div>
+                    <p className="text-[9.5px] text-zinc-300 font-light leading-snug">
+                      {getExpDescription(item)}
+                    </p>
+                  </div>
+
+                  <div className="space-y-1 pt-1 border-t border-zinc-800/80">
+                    {getExpBullets(item).slice(0, 2).map((b, bIdx) => (
+                      <div key={bIdx} className="flex items-start space-x-1 text-[9.5px] text-zinc-300 leading-tight">
+                        <span className="text-purple-400 font-bold">•</span>
+                        <span>{b}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {getExpTags(item).length > 0 && (
+                    <div className="flex flex-wrap gap-1 pt-0.5">
+                      {getExpTags(item).slice(0, 4).map((tag) => (
+                        <span key={tag} className="px-1 py-0.2 rounded bg-zinc-950 text-zinc-400 text-[8px] font-mono border border-zinc-800">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Leadership 5: Kartini iSTTS */}
+            {(() => {
+              const item = leadershipExperiencesData[4];
+              return (
+                <div className="p-3 rounded-xl bg-zinc-900/90 border border-rose-400/25 flex flex-col justify-between space-y-1.5 shadow-sm">
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-[8.5px] font-mono text-zinc-400">
+                      <span>{getExpPeriod(item)}</span>
+                      <span className="px-1.5 py-0.2 rounded bg-rose-400/10 text-rose-400 border border-rose-400/20 uppercase font-bold">
+                        FUNDRAISING
+                      </span>
+                    </div>
+                    <h3 className="text-xs font-bold text-white leading-tight">{getExpRole(item)}</h3>
+                    <div className="text-[10px] font-mono text-rose-300 font-semibold">{getExpCompany(item)}</div>
+                    <p className="text-[9.5px] text-zinc-300 font-light leading-snug">
+                      {getExpDescription(item)}
+                    </p>
+                  </div>
+
+                  <div className="space-y-1 pt-1 border-t border-zinc-800/80">
+                    {getExpBullets(item).slice(0, 2).map((b, bIdx) => (
+                      <div key={bIdx} className="flex items-start space-x-1 text-[9.5px] text-zinc-300 leading-tight">
+                        <span className="text-rose-400 font-bold">•</span>
+                        <span>{b}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {getExpTags(item).length > 0 && (
+                    <div className="flex flex-wrap gap-1 pt-0.5">
+                      {getExpTags(item).slice(0, 4).map((tag) => (
+                        <span key={tag} className="px-1 py-0.2 rounded bg-zinc-950 text-zinc-400 text-[8px] font-mono border border-zinc-800">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Leadership 6: Community Health & Campus Fellowship */}
+            <div className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col justify-between space-y-1.5 shadow-sm">
+              <div className="space-y-1">
+                {/* Donor Darah PMI */}
+                <div className="pb-1.5 border-b border-zinc-800/80 space-y-0.5">
+                  <div className="flex items-center justify-between text-[8.5px] font-mono text-zinc-400">
+                    <span>Oct 2018 – Nov 2018 (2 Mos)</span>
+                    <span className="text-emerald-400 font-bold">PMI NGO PARTNER</span>
+                  </div>
+                  <div className="text-[11px] font-bold text-white">Donor Darah Dies Natalis XXXIX iSTTS</div>
+                  <div className="text-[9px] text-emerald-300 font-mono">Palang Merah Indonesia (PMI)</div>
+                  <p className="text-[9.5px] text-zinc-300 font-light leading-snug">
+                    • Coordinated institutional community blood donation drive with PMI, organizing donor queues and logistics.
+                  </p>
+                </div>
+
+                {/* IFJ iSTTS */}
+                <div className="pt-0.5 space-y-0.5">
+                  <div className="flex items-center justify-between text-[8.5px] font-mono text-zinc-400">
+                    <span>Aug 2018 – Jan 2019 (6 Mos)</span>
+                    <span className="text-sky-400 font-bold">OPERATIONS</span>
+                  </div>
+                  <div className="text-[11px] font-bold text-white">Service Management & Usher</div>
+                  <div className="text-[9px] text-sky-300 font-mono">IFJ iSTTS Campus Gatherings</div>
+                  <p className="text-[9.5px] text-zinc-300 font-light leading-snug">
+                    • Coordinated weekly campus community fellowship flow, stage setup, and ushering operations.
+                  </p>
+                </div>
               </div>
 
-              <div className="pt-2 border-t border-white/10 space-y-1 text-[8.5px] font-mono">
+              <div className="text-[8.5px] font-mono text-zinc-500 pt-1 border-t border-zinc-800">
+                Surabaya, Indonesia
+              </div>
+            </div>
+          </div>
+        </div>
+      </SlideWrapper>
+
+      {/* =========================================================================
+          SLIDE 25: CREDENTIALS PART 3 - CERTIFICATIONS (TOP GRID) & TRILINGUAL (BOTTOM HORIZONTAL STRIP)
+      ========================================================================= */}
+      <SlideWrapper sectionTitle="Credentials Part 3 · Certifications & Trilingual Mastery" currentPage={slideCred3}>
+        <div className="flex flex-col justify-between h-full py-0.5 space-y-2">
+          <div>
+            <h2 className="text-xl font-bold text-white tracking-tight">
+              {language === "zh" ? "专业行业认证、合规资质与三语精通" : language === "id" ? "Sertifikasi Profesional, Kepatuhan & Kemampuan Trilingual" : "Professional Certifications, Regulatory Compliance & Trilingual Mastery"}
+            </h2>
+            <p className="text-[10.5px] text-zinc-400 font-mono">
+              {language === "zh" ? "涵盖 IBM、AWS、Google Developers、Dicoding 权威认证与官方 HSK 4 级满分普通话" : language === "id" ? "Mencakup Sertifikasi IBM, AWS, Google Developers, Dicoding & Tersertifikasi Mandarin HSK 4" : "Covering IBM, AWS, Google Developers, Dicoding Certifications & Certified HSK 4 Mandarin"}
+            </p>
+          </div>
+
+          {/* TOP: 14 Professional Certifications Grid (4 columns x 4 rows) */}
+          <div className="grid grid-cols-4 gap-2 flex-1 items-stretch">
+            {certificationsData.slice(0, 14).map((cert, idx) => (
+              <div key={idx} className="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col justify-between space-y-1 shadow-sm">
                 <div>
-                  <span className="text-zinc-400 font-bold uppercase block text-[8px]">
-                    CAMPUS LEADERSHIP & VOLUNTEERING (iSTTS):
+                  <div className="flex items-center justify-between">
+                    <span className="text-[9px] font-mono text-zinc-400 font-semibold line-clamp-1">{cert.issuer}</span>
+                    <span className="text-[9px] font-mono text-amber-400 font-bold ml-1">{cert.year}</span>
+                  </div>
+                  <div className="text-[10.5px] font-bold text-white mt-0.5 line-clamp-2 leading-tight">
+                    {getCertTitle(cert)}
+                  </div>
+                </div>
+                <div className="pt-1 flex items-center justify-between border-t border-zinc-800/80">
+                  <span className="text-[8px] font-mono px-1.5 py-0.2 rounded bg-zinc-950 text-cyan-400 border border-zinc-800 uppercase font-semibold">
+                    {cert.category || "TECH"}
                   </span>
-                  <p className="text-zinc-300 leading-tight">
-                    Vice Chairman PRENSSIB · Python Tutor HIMA SIB · Chairman Kunjungan Industri · PR Coordinator IGL · Kartini iSTTS.
-                  </p>
+                  <span className="text-[8px] font-mono text-zinc-500">VERIFIED</span>
                 </div>
-                <div className="pt-1">
-                  <span className="text-zinc-400 font-bold uppercase block text-[8px]">
-                    VERIFIED INDUSTRY CERTIFICATIONS:
+              </div>
+            ))}
+          </div>
+
+          {/* BOTTOM: Luxury Trilingual Mastery Horizontal Strip (Full Width Container with 3 Cards) */}
+          <div className="p-3 rounded-xl bg-zinc-900/95 border border-amber-400/30 space-y-2 shadow-md shrink-0">
+            <div className="flex items-center space-x-2 text-amber-400 font-mono text-[10.5px] uppercase tracking-wider pb-1 border-b border-zinc-800">
+              <Globe className="w-4 h-4 text-amber-400" />
+              <span className="font-bold">{language === "zh" ? "全球化三语无缝沟通能力" : language === "id" ? "KEMAMPUAN TRILINGUAL GLOBAL" : "TRILINGUAL FLUENCY · GLOBAL CROSS-BORDER COLLABORATION"}</span>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2.5">
+              {/* Indonesian */}
+              <div className="p-2.5 rounded-lg bg-zinc-950 border border-zinc-800 flex flex-col justify-between space-y-1">
+                <div className="flex items-center justify-between">
+                  <div className="text-[12px] font-bold text-white">Bahasa Indonesia</div>
+                  <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[9px] font-bold border border-emerald-500/30">
+                    NATIVE
                   </span>
-                  <p className="text-zinc-300 leading-tight">
-                    IBM Granite AI (2024), Dicoding React Web (2022), SOLID Principles (2021), AWS Cloud (2021), RevoU PM (2022).
-                  </p>
                 </div>
-              </div>
-            </div>
-
-            {/* Col 3 (4 cols): Trilingual Skills & Official Seal */}
-            <div className="col-span-4 p-4 rounded-2xl bg-[#111114] border border-white/10 space-y-3 flex flex-col justify-between">
-              <div>
-                <span className="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider block">
-                  TRILINGUAL PROFICIENCY
-                </span>
-                <div className="space-y-1.5 pt-2 text-xs font-mono">
-                  <div className="flex justify-between items-center p-1.5 rounded bg-white/5">
-                    <span>🇮🇩 Indonesian</span>
-                    <strong className="text-[#ebdca4]">Native / Bilingual</strong>
-                  </div>
-                  <div className="flex justify-between items-center p-1.5 rounded bg-white/5">
-                    <span>🇬🇧 English</span>
-                    <strong className="text-white">Cambridge A-Level (Prof.)</strong>
-                  </div>
-                  <div className="flex justify-between items-center p-1.5 rounded bg-white/5">
-                    <span>🇨🇳 Mandarin Chinese</span>
-                    <strong className="text-emerald-400">HSK Level 4 (247/300)</strong>
-                  </div>
+                <div className="text-[9px] text-zinc-400 font-mono">
+                  {language === "zh" ? "母语 · 商业洽谈与系统文档" : language === "id" ? "Penutur Asli · Negosiasi & Sistem" : "Native Tongue · Business & Systems"}
                 </div>
-              </div>
-
-              {/* Official Seal / Signature Medallion */}
-              <div className="p-3.5 rounded-xl bg-gradient-to-br from-[#18181b] to-black border border-[#d4af37]/60 text-center space-y-1">
-                <span className="font-serif-editorial text-2xl text-[#ebdca4] tracking-widest font-normal block">
-                  JAW<span className="text-[#dc2626]">.</span>
-                </span>
-                <div className="text-xs font-mono text-[#d4af37] font-bold uppercase tracking-widest">
-                  OFFICIAL AUDITED PORTFOLIO SEAL
-                </div>
-                <div className="text-[8.5px] font-mono text-zinc-400">
-                  Signed & Authenticated by Jem Angkasa Wijaya, S.Kom.
-                </div>
-                <div className="text-[8px] font-mono text-zinc-400 pt-0.5">
-                  Direct Verification: jemangkasa.work@gmail.com
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Footer */}
-          <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span>MASTER PORTFOLIO DECK · PAGE 13 / 15</span>
-            <span>JEM ANGKASA WIJAYA, S.KOM. · S1 SISTEM INFORMASI BISNIS iSTTS</span>
-          </div>
-        </section>
-      )}
-
-      {/* ========================================================================= */}
-      {/* SLIDE 14: DIRECT CONTACT, STRATEGIC CHANNELS & PROPOSAL SPECIFICATION     */}
-      {/* ========================================================================= */}
-      {exportOptions.includeContact && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-3">
-              <span className="font-serif-editorial text-2xl text-[#d4af37]">/ 14</span>
-              <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-                DIRECT COMMUNICATION CHANNELS & STRATEGIC ENGAGEMENT
-              </span>
-            </div>
-            <span className="font-mono text-xs text-zinc-400">
-              SURABAYA, INDONESIA · GMT+7 (WIB) · SLA &lt;24H RESPONSE
-            </span>
-          </div>
-
-          {/* Body */}
-          <div className="grid grid-cols-12 gap-5 my-auto py-2 items-stretch">
-            
-            {/* Left 7 cols: Strategic Engagement Blueprint & Direct Inquiry Specifications */}
-            <div className="col-span-7 p-4 rounded-2xl bg-[#111114] border border-[#d4af37]/40 space-y-3 flex flex-col justify-between">
-              <div className="space-y-2">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs font-mono text-emerald-400">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#10b981]" />
-                  <span>TERBUKA UNTUK KOLABORASI STRATEGIS & KONTRAK SISTEM (Q1–Q4 2026)</span>
-                </div>
-
-                <h3 className="font-serif-editorial text-2xl text-white font-medium">
-                  Direct Strategic Inquiry & System Consultation
-                </h3>
-                <p className="text-xs text-zinc-300 font-light leading-relaxed">
-                  Tersedia untuk perancangan arsitektur perangkat lunak skala produksi, otomasi AI pipeline lokal, rekayasa kemasan industri rantai dingin, dan konsultasi teknis tingkat tinggi.
+                <p className="text-[9.5px] text-zinc-300 font-light leading-snug pt-0.5">
+                  Full verbal & written fluency for high-stakes business negotiations, system documentation, and corporate operations.
                 </p>
               </div>
 
-              {/* Inquiry Architecture Blueprint Table */}
-              <div className="space-y-2 p-3 rounded-xl bg-black/60 border border-white/10 font-mono text-xs">
-                <div className="text-[#ebdca4] font-bold uppercase tracking-wider text-xs border-b border-white/10 pb-1 flex justify-between">
-                  <span>ENGAGEMENT DOMAINS</span>
-                  <span className="text-zinc-400 font-normal">AVERAGE TURNAROUND</span>
+              {/* English */}
+              <div className="p-2.5 rounded-lg bg-zinc-950 border border-zinc-800 flex flex-col justify-between space-y-1">
+                <div className="flex items-center justify-between">
+                  <div className="text-[12px] font-bold text-white">English (US/UK)</div>
+                  <span className="px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 font-mono text-[9px] font-bold border border-sky-500/30">
+                    PROFESSIONAL
+                  </span>
                 </div>
-                <div className="grid grid-cols-2 gap-2 text-zinc-300 text-[9.5px]">
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
-                    <span>AI Compilation & LLM Pipelines</span>
-                  </div>
-                  <div className="text-right text-emerald-400">Production Ready: 2–4 Weeks</div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
-                    <span>High-Concurrency Web Platforms</span>
-                  </div>
-                  <div className="text-right text-emerald-400">Production Ready: 3–6 Weeks</div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
-                    <span>Food-Grade Packaging Dielines (-25°C)</span>
-                  </div>
-                  <div className="text-right text-emerald-400">CAD Plong Ready: 3–7 Days</div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
-                    <span>Enterprise ERP / Multi-Tenant Systems</span>
-                  </div>
-                  <div className="text-right text-emerald-400">Full Scoping: 4–8 Weeks</div>
+                <div className="text-[9px] text-zinc-400 font-mono">
+                  {language === "zh" ? "全工作级软件工程与跨国协作" : language === "id" ? "Full Professional Engineering" : "Full Professional Engineering"}
                 </div>
+                <p className="text-[9.5px] text-zinc-300 font-light leading-snug pt-0.5">
+                  Engineering documentation, clean architecture specifications, international client alignment, and technical writing.
+                </p>
               </div>
 
-              {/* Response SLA Commitment */}
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-white/[0.04] to-transparent border border-white/10 text-xs font-mono">
-                <div className="flex items-center gap-2 text-zinc-300">
-                  <Clock className="w-3.5 h-3.5 text-[#d4af37]" />
-                  <span>SLA Respons Resmi: Terjamin &lt; 24 Jam Kerja</span>
+              {/* Chinese Mandarin */}
+              <div className="p-2.5 rounded-lg bg-zinc-950 border border-amber-400/25 flex flex-col justify-between space-y-1">
+                <div className="flex items-center justify-between">
+                  <div className="text-[12px] font-bold text-amber-300">Chinese Mandarin (普通话)</div>
+                  <span className="px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 font-mono text-[9px] font-bold border border-amber-400/30">
+                    HSK 4 CERTIFIED
+                  </span>
                 </div>
-                <span className="text-[#ebdca4] font-bold">100% Direct to Principal</span>
+                <div className="text-[9px] text-zinc-400 font-mono">
+                  {language === "zh" ? "官方认证 HSK 4 级 (听力满分 100/100)" : language === "id" ? "Tersertifikasi HSK 4 (Nilai Sempurna 100/100)" : "Certified HSK 4 (Perfect 100/100)"}
+                </div>
+                <p className="text-[9.5px] text-zinc-300 font-light leading-snug pt-0.5">
+                  Official HSK 4 credential with perfect listening marks, ready for Greater China cross-border trade & technical dialogue.
+                </p>
               </div>
             </div>
-
-            {/* Right 5 cols: Verified Direct Contact Channels */}
-            <div className="col-span-5 space-y-2 flex flex-col justify-between">
-              
-              {/* Channel 1: Email */}
-              <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <div className="p-2 rounded-lg bg-white/5 border border-white/10 text-[#d4af37]">
-                    <Mail className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-xs font-mono text-zinc-400 uppercase block">PRIMARY EMAIL (RFP & SPECS)</span>
-                    <a href="mailto:jemangkasa.work@gmail.com" className="text-xs font-mono text-white font-semibold hover:underline">
-                      jemangkasa.work@gmail.com
-                    </a>
-                  </div>
-                </div>
-                <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400" />
-              </div>
-
-              {/* Channel 2: WhatsApp */}
-              <div className="p-2.5 rounded-xl bg-[#111114] border border-emerald-500/30 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-                    <MessageSquare className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-xs font-mono text-emerald-400 uppercase block font-semibold">WHATSAPP DIRECT CHAT</span>
-                    <a href="https://wa.me/6281273567384" target="_blank" rel="noreferrer" className="text-xs font-mono text-white font-semibold hover:underline">
-                      +62 812-7356-7384
-                    </a>
-                  </div>
-                </div>
-                <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">Instant</span>
-              </div>
-
-              {/* Channel 3: LinkedIn */}
-              <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <div className="p-2 rounded-lg bg-white/5 border border-white/10 text-cyan-400">
-                    <LinkedinIcon className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-xs font-mono text-zinc-400 uppercase block">PROFESSIONAL NETWORK</span>
-                    <span className="text-xs font-mono text-white">linkedin.com/in/jem-angkasa-wijaya</span>
-                  </div>
-                </div>
-                <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400" />
-              </div>
-
-              {/* Channel 4: GitHub */}
-              <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <div className="p-2 rounded-lg bg-white/5 border border-white/10 text-zinc-300">
-                    <GithubIcon className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-xs font-mono text-zinc-400 uppercase block">OPEN-SOURCE CODEBASES</span>
-                    <span className="text-xs font-mono text-white">github.com/JAW12</span>
-                  </div>
-                </div>
-                <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400" />
-              </div>
-
-              {/* Channel 5: Geographic Base */}
-              <div className="p-2.5 rounded-xl bg-[#111114] border border-white/10 flex items-center justify-between text-xs font-mono">
-                <div className="flex items-center gap-2.5">
-                  <div className="p-2 rounded-lg bg-white/5 border border-white/10 text-amber-400">
-                    <MapPin className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-xs font-mono text-zinc-400 uppercase block">BASE LOCATION & MOBILITY</span>
-                    <span className="text-xs font-mono text-white">Surabaya, ID · Global Remote Access</span>
-                  </div>
-                </div>
-                <span className="text-xs font-mono text-zinc-400">GMT+7</span>
-              </div>
-
-            </div>
-
           </div>
+        </div>
+      </SlideWrapper>
 
-          {/* Footer */}
-          <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span>MASTER PORTFOLIO DECK · PAGE 14 / 15</span>
-            <span>JEM ANGKASA WIJAYA, S.KOM. · DIRECT CONTACT & STRATEGIC ENGAGEMENT</span>
-          </div>
-        </section>
-      )}
-
-      {/* ========================================================================= */}
-      {/* SLIDE 15: EXECUTIVE FOOTER, SITEMAP & MONUMENTAL WORDMARK SPREAD           */}
-      {/* ========================================================================= */}
-      {exportOptions.includeContact && (
-        <section className="print-landscape-page bg-[#09090b] border-2 border-[#d4af37]/60 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-3">
-              <span className="font-serif-editorial text-2xl text-[#d4af37]">/ 15</span>
-              <span className="font-serif-editorial text-xl text-white uppercase tracking-wider">
-                EXECUTIVE FOOTER, SITEMAP & MONUMENTAL SIGN-OFF
+      {/* =========================================================================
+          SLIDE 26: DIRECT ENGAGEMENT & CLOSING (COMBINED FINAL CONTACT SLIDE)
+      ========================================================================= */}
+      <SlideWrapper sectionTitle="Direct Engagement & Closing" currentPage={slideContact}>
+        <div className="flex flex-col justify-around items-center h-full py-2 text-center">
+          <div className="space-y-1.5">
+            <div className="inline-flex items-center space-x-1.5 px-3 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-mono text-[10.5px] border border-emerald-500/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>
+                {language === "zh"
+                  ? "合作状态：开放全球远程 / 混合办公机会"
+                  : language === "id"
+                  ? "Status: Terbuka untuk Peluang Remote / Hybrid"
+                  : "Status: Open for Remote / Hybrid Roles"}
               </span>
             </div>
-            <span className="font-mono text-xs text-[#ebdca4] font-semibold">
-              FINAL COMPENDIUM · 100% AUDITED RECORD (2010 – 2026)
-            </span>
+            <h2 className="text-3xl font-bold text-white tracking-tight">
+              {language === "zh" ? "让我们携手构建稳健系统" : language === "id" ? "Mari Terhubung & Bangun Sistem" : "Let's Connect & Build Systems"}
+            </h2>
+            <p className="text-xs text-zinc-300 max-w-lg mx-auto font-light leading-relaxed">
+              {language === "zh"
+                ? "无论是全栈 Web 应用开发、业务自动化流程搭建，还是企业级系统数字化转型，我都随时准备好提供坚实有力的技术支持。"
+                : language === "id"
+                ? "Baik untuk rekayasa aplikasi web modern, otomasi proses bisnis, maupun transformasi sistem digital perusahaan, saya siap berkontribusi secara nyata."
+                : "Whether for modern web application engineering, operational business automations, or enterprise digital systems, I am ready to deliver high-impact results."}
+            </p>
           </div>
 
-          {/* Top Collaboration Callout */}
-          <div className="border-b border-white/10 pb-3 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="text-3xl text-[#d4af37] font-light">↗</span>
-              <h2 className="font-serif-editorial text-2xl text-white uppercase tracking-tight">
-                LET&apos;S WORK <span className="text-[#ebdca4] italic">TOGETHER</span>
-              </h2>
-            </div>
-            <div className="px-3.5 py-1 rounded-full bg-white/5 border border-white/15 text-xs font-mono text-zinc-300">
-              Jem Angkasa Wijaya, S.Kom. · Systems Architect & Product Engineer
-            </div>
-          </div>
-
-          {/* 3-Column Bracketed Editorial Sitemap WITH MONUMENTAL WORDMARK OVERLAY */}
-          <div className="relative w-full py-6 my-auto overflow-hidden border-y border-white/10">
-            {/* Background Overlay: Monumental Ghost Typography Edge-to-Edge */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-20">
-              <svg
-                viewBox="0 0 1600 140"
-                className="w-full h-auto block select-none pointer-events-none"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                <text
-                  x="50%"
-                  y="55%"
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  textLength="1540"
-                  lengthAdjust="spacing"
-                  fill="rgba(255, 255, 255, 0.02)"
-                  stroke="rgba(212, 175, 55, 0.45)"
-                  strokeWidth="1.8"
-                  className="font-serif-editorial font-black uppercase"
-                  style={{
-                    fontFamily: '"Cormorant Garamond", "Cinzel", "Playfair Display", Georgia, serif',
-                    fontWeight: 900,
-                    fontSize: "120px",
-                  }}
-                >
-                  JEM ANGKASA WIJAYA
-                </text>
-              </svg>
-            </div>
-
-            {/* Foreground: 3-Column Bracketed Editorial Sitemap */}
-            <div className="grid grid-cols-3 gap-6 relative z-10">
-              {/* Column 1: Navigation */}
-              <div className="space-y-1.5">
-                <span className="text-xs font-mono text-[#d4af37] uppercase tracking-widest block font-bold">
-                  ■ ■ [ NAVIGATION INDEX ]
-                </span>
-                <div className="flex flex-col space-y-1 text-[9.5px] font-mono text-zinc-400">
-                  <span>[ 01 · HOME / COVER SPREAD ]</span>
-                  <span>[ 02 · PHILOSOPHY & ABOUT ]</span>
-                  <span>[ 03 · ENGINEERING DISCIPLINES ]</span>
-                  <span>[ 04 · SELECTED FLAGSHIP WORKS ]</span>
-                  <span>[ 05 · MASTER ARCHIVE LEDGER ]</span>
-                </div>
+          {/* 5 Clickable Contact Channels Grid */}
+          <div className="grid grid-cols-5 gap-3 w-full max-w-4xl">
+            <a
+              href="mailto:jemangkasa.work@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col items-center justify-between space-y-1 hover:border-amber-400/50 hover:bg-zinc-800/80 transition-all shadow-md group cursor-pointer"
+            >
+              <Mail className="w-5 h-5 text-amber-400 group-hover:scale-110 transition-transform" />
+              <div className="text-[9px] font-mono text-zinc-400 uppercase font-semibold">Email</div>
+              <div className="text-[10px] font-mono text-white font-semibold break-all">
+                jemangkasa.work@gmail.com
               </div>
+              <span className="text-[8.5px] font-mono text-amber-400 font-bold">Kirim Email ↗</span>
+            </a>
 
-              {/* Column 2: Disciplines & Rigor */}
-              <div className="space-y-1.5">
-                <span className="text-xs font-mono text-[#d4af37] uppercase tracking-widest block font-bold">
-                  ■ ■ [ CORE DISCIPLINES ]
-                </span>
-                <div className="flex flex-col space-y-1 text-[9.5px] font-mono text-zinc-400">
-                  <span>[ FULL-STACK SYSTEMS ARCHITECTURE ]</span>
-                  <span>[ COLD-CHAIN INDUSTRIAL PACKAGING ]</span>
-                  <span>[ LOCAL RAG & AI EMBEDDING PIPELINES ]</span>
-                  <span>[ 4.00 GPA ALGORITHMIC ENGINEERING ]</span>
-                  <span>[ MULTI-TENANT ENTERPRISE BACKENDS ]</span>
-                </div>
+            <a
+              href="https://wa.me/6281273567384"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-xl bg-zinc-900/90 border border-emerald-400/50 hover:bg-zinc-800/80 transition-all shadow-md group cursor-pointer"
+            >
+              <Phone className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform" />
+              <div className="text-[9px] font-mono text-zinc-400 uppercase font-semibold">WhatsApp</div>
+              <div className="text-[10.5px] font-mono text-white font-semibold">
+                +6281273567384
               </div>
+              <span className="text-[8.5px] font-mono text-emerald-400 font-bold">Chat WhatsApp ↗</span>
+            </a>
 
-              {/* Column 3: Verified Connections */}
-              <div className="space-y-1.5">
-                <span className="text-xs font-mono text-[#d4af37] uppercase tracking-widest block font-bold">
-                  ■ ■ [ NETWORK & PROOFS ]
-                </span>
-                <div className="flex flex-col space-y-1 text-[9.5px] font-mono text-zinc-400">
-                  <span>[ GITHUB: GITHUB.COM/JAW12 ]</span>
-                  <span>[ LINKEDIN: JEM-ANGKASA-WIJAYA ]</span>
-                  <span>[ EMAIL: JEMANGKASA.WORK@GMAIL.COM ]</span>
-                  <span>[ PHONE/WA: +62 812-7356-7384 ]</span>
-                  <span>[ PORTFOLIO: JAW12.GITHUB.IO ]</span>
-                </div>
+            <a
+              href="https://linkedin.com/in/jem-angkasa-wijaya"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col items-center justify-between space-y-1 hover:border-sky-400/50 hover:bg-zinc-800/80 transition-all shadow-md group cursor-pointer"
+            >
+              <LinkedinIcon className="w-5 h-5 text-sky-400 group-hover:scale-110 transition-transform" />
+              <div className="text-[9px] font-mono text-zinc-400 uppercase font-semibold">LinkedIn</div>
+              <div className="text-[10px] font-mono text-white font-semibold">
+                /in/jem-angkasa-wijaya
               </div>
-            </div>
+              <span className="text-[8.5px] font-mono text-sky-400 font-bold">Lihat Profil ↗</span>
+            </a>
+
+            <a
+              href="https://github.com/JAW12"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col items-center justify-between space-y-1 hover:border-purple-400/50 hover:bg-zinc-800/80 transition-all shadow-md group cursor-pointer"
+            >
+              <GithubIcon className="w-5 h-5 text-purple-400 group-hover:scale-110 transition-transform" />
+              <div className="text-[9px] font-mono text-zinc-400 uppercase font-semibold">GitHub</div>
+              <div className="text-[10.5px] font-mono text-white font-semibold">
+                github.com/JAW12
+              </div>
+              <span className="text-[8.5px] font-mono text-purple-400 font-bold">Buka Repository ↗</span>
+            </a>
+
+            <a
+              href="https://JAW12.github.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col items-center justify-between space-y-1 hover:border-amber-400/50 hover:bg-zinc-800/80 transition-all shadow-md group cursor-pointer"
+            >
+              <Globe className="w-5 h-5 text-amber-400 group-hover:scale-110 transition-transform" />
+              <div className="text-[9px] font-mono text-zinc-400 uppercase font-semibold">Portfolio</div>
+              <div className="text-[10.5px] font-mono text-white font-semibold">
+                JAW12.github.io
+              </div>
+              <span className="text-[8.5px] font-mono text-amber-400 font-bold">Kunjungi Web ↗</span>
+            </a>
           </div>
 
-          {/* Persona & Verification Capsule Bar */}
-          <div className="flex items-center justify-between pt-1 text-xs font-mono text-zinc-400">
-            <div className="flex items-center gap-3 text-zinc-300">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white font-medium">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/assets/avatar/profile-quarter.png"
-                  alt="Jem Angkasa"
-                  className="w-4 h-4 rounded-full object-cover"
-                />
-                <span>Jem Angkasa Wijaya, S.Kom.</span>
-              </div>
-              <span className="text-[#ebdca4]">iSTTS {language === "id" ? "IPK 4.00 / 4.00" : "4.00 / 4.00 GPA"} (Sangat Memuaskan)</span>
-              <span>·</span>
-              <span>4x Praktikan Terbaik</span>
-            </div>
-            <div>
-              <span>Surabaya, Indonesia · Worldwide Delivery</span>
-            </div>
+          <div className="pt-1">
+            <h3 className="text-base font-bold text-white tracking-tight">
+              <span className="text-amber-400">JEM</span> ANGKASA WIJAYA, S.Kom.
+            </h3>
+            <p className="text-[10.5px] font-mono text-zinc-400 mt-0.5">
+              Surabaya, Indonesia · Business Systems, Full-Stack Software & AI Workflows
+            </p>
+            <p className="text-[9px] font-mono text-zinc-600 mt-0.5">
+              © {new Date().getFullYear()} Jem Angkasa Wijaya. All Rights Reserved.
+            </p>
           </div>
-
-          {/* Footer */}
-          <div className="border-t border-white/10 pt-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span>MASTER PORTFOLIO DECK · PAGE 15 / 15 (OFFICIAL CONCLUSION)</span>
-            <span>© 2026 JEM ANGKASA WIJAYA, S.KOM. ALL RIGHTS RESERVED. · jaw12.github.io</span>
-          </div>
-        </section>
-      )}
-
+        </div>
+      </SlideWrapper>
     </div>
   );
 }

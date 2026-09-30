@@ -248,7 +248,12 @@ export function ExperienceTimelineChronology() {
                                   {language === "id" ? "KOMPETENSI & TOOLS" : language === "zh" ? "核心能力与工具栈" : "CORE COMPETENCIES"}
                                 </span>
                                 <div className="flex flex-wrap gap-2">
-                                  {exp.tags.map((tag) => (
+                                  {(language === "zh" && exp.tagsZh
+                                    ? exp.tagsZh
+                                    : language === "id" && exp.tagsId
+                                    ? exp.tagsId
+                                    : exp.tags
+                                  ).map((tag) => (
                                     <span
                                       key={tag}
                                       className="px-2.5 py-1 rounded bg-white/[0.06] border border-white/10 hover:border-[#d4af37]/50 hover:bg-[#d4af37]/15 hover:text-[#ebdca4] text-xs font-mono text-zinc-300 transition-colors cursor-default font-medium"

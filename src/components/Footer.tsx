@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
-import { FileText, ArrowUpRight } from "lucide-react";
+import { FileText, Download, ArrowUpRight } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 
 export interface FooterProps {
@@ -29,27 +29,28 @@ export function Footer({ onOpenPdfModal }: FooterProps) {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            {onOpenPdfModal ? (
+            {/* 1. Download CV Button (Direct PDF Download) */}
+            <a
+              href="/assets/cv/Jem_Angkasa_Wijaya_CV.pdf"
+              download="CV_Jem_Angkasa_Wijaya_2026.pdf"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#d4af37] hover:bg-[#ebdca4] text-zinc-950 font-mono text-xs uppercase tracking-wider font-bold transition-all duration-300 shadow-md group cursor-pointer"
+              title={t.footer.downloadCv}
+            >
+              <Download className="w-3.5 h-3.5 text-zinc-950 group-hover:scale-110 transition-transform" />
+              <span>{t.footer.downloadCv}</span>
+            </a>
+
+            {/* 2. Download Portfolio Button (Opens Interactive PDF Generator Modal) */}
+            {onOpenPdfModal && (
               <button
                 type="button"
                 onClick={onOpenPdfModal}
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.05] hover:bg-white/[0.12] border border-white/15 hover:border-[#d4af37]/50 text-white font-mono text-xs uppercase tracking-wider transition-all duration-300 shadow-md group cursor-pointer"
-                title={t.footer.downloadCv}
+                title={t.footer.downloadPortfolio}
               >
                 <FileText className="w-3.5 h-3.5 text-[#d4af37] group-hover:scale-110 transition-transform" />
-                <span>{t.footer.downloadCv}</span>
+                <span>{t.footer.downloadPortfolio}</span>
               </button>
-            ) : (
-              <a
-                href="/assets/cv/Jem_Angkasa_Wijaya_CV.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.05] hover:bg-white/[0.12] border border-white/15 hover:border-[#d4af37]/50 text-white font-mono text-xs uppercase tracking-wider transition-all duration-300 shadow-md group cursor-pointer"
-                title={t.footer.downloadCv}
-              >
-                <FileText className="w-3.5 h-3.5 text-[#d4af37] group-hover:scale-110 transition-transform" />
-                <span>{t.footer.downloadCv}</span>
-              </a>
             )}
 
             <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.03] border border-white/10 text-xs font-mono text-zinc-300">

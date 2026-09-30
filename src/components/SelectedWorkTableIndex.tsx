@@ -16,8 +16,12 @@ interface TableProjectItem {
   roleZh?: string;
   year: string;
   category: string;
+  categoryId?: string;
+  categoryZh?: string;
   previewImage: string;
   metricBadge: string;
+  metricBadgeId?: string;
+  metricBadgeZh?: string;
   summary: string;
   summaryId: string;
   summaryZh?: string;
@@ -31,13 +35,19 @@ export function SelectedWorkTableIndex() {
     {
       id: "secret-of-life",
       name: "The Secret of Life",
+      nameId: "The Secret of Life",
+      nameZh: "The Secret of Life",
       role: "Lead Systems Architect & Packaging",
       roleId: "Arsitek Sistem & Kemasan",
       roleZh: "系统首席架构师与包装工程师",
       year: "2026",
       category: "PHYSICAL & ARCHITECTURE",
+      categoryId: "ARSITEKTUR FISIK & BUKU",
+      categoryZh: "实体出版与系统架构",
       previewImage: "/assets/projects/secret-of-life/white_desk.png",
       metricBadge: "OFFSET HARDCOVER · PROPRIETARY",
+      metricBadgeId: "HARDCOVER OFFSET · HAK MILIK",
+      metricBadgeZh: "定制胶印精装 · 自研私有系统",
       summary: "Comprehensive hardcover engineering monograph, custom offset die proofing, and digital archive architecture.",
       summaryId: "Monograf rekayasa sampul keras komprehensif, proofing die offset kustom, dan arsitektur arsip digital.",
       summaryZh: "精装工程专论、定制胶印刀模打样与数字化归档系统架构。",
@@ -46,13 +56,19 @@ export function SelectedWorkTableIndex() {
     {
       id: "cocokga",
       name: "CocokGa",
+      nameId: "CocokGa",
+      nameZh: "CocokGa",
       role: "Full-Stack Software Engineer",
       roleId: "Perekayasa Software Full-Stack",
       roleZh: "全栈软件架构师",
       year: "2026",
       category: "HIGH-PERFORMANCE COMPUTE",
+      categoryId: "KOMPUTASI BERPERFORMA TINGGI",
+      categoryZh: "高性能本地即时计算",
       previewImage: "/assets/projects/cocokga/cocokga_bg_affinity.jpg",
       metricBadge: "SUB-15MS LATENCY · ZERO SERVER COST",
+      metricBadgeId: "LATENSI <15MS · BIAYA SERVER NOL",
+      metricBadgeZh: "<15MS 极速响应 · 零服务器开销",
       summary: "High-performance relationship compatibility assessment tool executing computations client-side.",
       summaryId: "Aplikasi penilaian kompatibilitas relasi berkinerja tinggi dengan komputasi deterministik di sisi klien.",
       summaryZh: "极高并发关系匹配度评估工具，全量确定性计算于客户端本地毫秒级执行。",
@@ -61,13 +77,19 @@ export function SelectedWorkTableIndex() {
     {
       id: "nangka-premium",
       name: "Nangka Packaging Systems",
+      nameId: "Sistem Kemasan Nangka",
+      nameZh: "南菠萝工业包装系统",
       role: "Packaging & Brand Engineering",
       roleId: "Rekayasa Kemasan & Merek",
       roleZh: "工业包装与品牌工程",
       year: "2024",
       category: "COMMERCIAL PACKAGING",
+      categoryId: "KEMASAN KOMERSIAL",
+      categoryZh: "商业出口级工业包装",
       previewImage: "/assets/projects/nangka-premium/pack_satu_1.png",
       metricBadge: "FOOD-GRADE BARRIER · EXPORT READY",
+      metricBadgeId: "BARRIER FOOD-GRADE · SIAP EKSPOR",
+      metricBadgeZh: "食品级高阻隔 · 出口认证就绪",
       summary: "Moisture-barrier agricultural export packaging with Pantone-calibrated offset dielines and retail batch coding.",
       summaryId: "Kemasan ekspor pertanian penahan kelembaban dengan dieline cetak offset terkalibrasi Pantone dan pengkodean batch ritel.",
       summaryZh: "耐湿农业出口级包装，经Pantone精准调色之胶印刀线与零售批次编码规范。",
@@ -76,13 +98,19 @@ export function SelectedWorkTableIndex() {
     {
       id: "kbt-cold-chain",
       name: "KBT Cold-Chain Packaging",
+      nameId: "Kemasan Rantai Dingin KBT",
+      nameZh: "KBT 极寒冷链包装工程",
       role: "Industrial Packaging Engineer",
       roleId: "Perekayasa Kemasan Industri",
       roleZh: "工业包装工程师",
       year: "2023",
       category: "INDUSTRIAL PACKAGING",
+      categoryId: "KEMASAN INDUSTRI",
+      categoryZh: "工业级冷冻阻隔包装",
       previewImage: "/assets/projects/branding/kbt-packaging.jpg",
       metricBadge: "-25°C NYLON · PANTONE VERIFIED",
+      metricBadgeId: "NILON -25°C · TERVERIFIKASI PANTONE",
+      metricBadgeZh: "-25°C 尼龙复合 · PANTONE 认证",
       summary: "Industrial food packaging engineered for -25°C blast-freeze storage, tensile dieline tolerance, and 10,000+ retail rollout.",
       summaryId: "Kemasan pangan industri dirancang untuk penyimpanan beku -25°C, toleransi dieline tensil, dan distribusi 10.000+ unit ritel.",
       summaryZh: "-25°C急冻冷链食品级包装，抗拉伸高抗裂公差，10,000+套零售分销实绩。",
@@ -90,13 +118,19 @@ export function SelectedWorkTableIndex() {
     {
       id: "catatcrypto",
       name: "CatatCrypto & Quant Research",
+      nameId: "CatatCrypto & Riset Kuantitatif",
+      nameZh: "CatatCrypto 与量化研究模型",
       role: "Full-Stack Developer (S1 Thesis)",
       roleId: "Pengembang Full-Stack (Skripsi S1)",
       roleZh: "全栈开发者 (学士毕业论文)",
       year: "2023",
       category: "FINANCIAL QUANT ENGINE",
+      categoryId: "ENGINE KUANTITATIF FINANSIAL",
+      categoryZh: "量化金融交易与核算引擎",
       previewImage: "/assets/projects/branding/kbt-brosur.jpg",
       metricBadge: "GRADE A THESIS · 3NF RELATIONAL",
+      metricBadgeId: "SKRIPSI NILAI A · RELASIONAL 3NF",
+      metricBadgeZh: "满分A级本科论文 · 3NF 数据库范式",
       summary: "Undergraduate thesis project featuring DCA cost tracking, floating PnL, win-rate metrics, and drawdown curves.",
       summaryId: "Skripsi S1 iSTTS dengan pelacakan DCA otomatis, unrealized PnL, metrik win rate, dan kurva drawdown.",
       summaryZh: "iSTTS本科满分毕业论文，含自动DCA定投追踪、浮动盈亏、胜率模型与回撤曲线。",
@@ -104,13 +138,19 @@ export function SelectedWorkTableIndex() {
     {
       id: "squeecapsule",
       name: "SqueeCapsule Hotel Frontdesk ERP",
+      nameId: "ERP Frontdesk Hotel SqueeCapsule",
+      nameZh: "SqueeCapsule 胶囊旅馆 ERP",
       role: "Lead Software Architect",
       roleId: "Arsitek Software Utama",
       roleZh: "首席软件架构师",
       year: "2021",
       category: "ENTERPRISE DESKTOP ERP",
+      categoryId: "ERP DESKTOP ENTERPRISE",
+      categoryZh: "企业级桌面 ERP 管理系统",
       previewImage: "/assets/projects/software/Untitled 19.png",
       metricBadge: "INTERACTIVE BED MAP · THERMAL BILLING",
+      metricBadgeId: "PETA KAMAR DINAMIS · STRUK TERMAL",
+      metricBadgeZh: "动态可视化床位图 · 热敏票据打印",
       summary: "Desktop enterprise ERP software featuring visual color-coded capsule bed selection and thermal invoice printing.",
       summaryId: "Perangkat lunak desktop ERP dengan peta denah kamar kapsul interaktif berbasis warna dan cetak struk kasir termal.",
       summaryZh: "胶囊旅馆桌面级ERP软件，支持可视化床位动态状态图与热敏小票账单打印。",
@@ -119,6 +159,24 @@ export function SelectedWorkTableIndex() {
 
   const [activeId, setActiveId] = useState<string>(projects[0].id);
   const activeProject = projects.find((p) => p.id === activeId) || projects[0];
+
+  const getName = (item: TableProjectItem) => {
+    if (language === "zh" && item.nameZh) return item.nameZh;
+    if (language === "id" && item.nameId) return item.nameId;
+    return item.name;
+  };
+
+  const getCategory = (item: TableProjectItem) => {
+    if (language === "zh" && item.categoryZh) return item.categoryZh;
+    if (language === "id" && item.categoryId) return item.categoryId;
+    return item.category;
+  };
+
+  const getMetricBadge = (item: TableProjectItem) => {
+    if (language === "zh" && item.metricBadgeZh) return item.metricBadgeZh;
+    if (language === "id" && item.metricBadgeId) return item.metricBadgeId;
+    return item.metricBadge;
+  };
 
   const getSummary = (item: TableProjectItem) => {
     if (language === "zh" && item.summaryZh) return item.summaryZh;
@@ -179,7 +237,7 @@ export function SelectedWorkTableIndex() {
                 >
                   <Image
                     src={activeProject.previewImage}
-                    alt={activeProject.name}
+                    alt={getName(activeProject)}
                     fill
                     loading="lazy"
                     quality={75}
@@ -194,10 +252,10 @@ export function SelectedWorkTableIndex() {
               <div className="absolute bottom-3 left-3 right-3 p-3.5 rounded-xl bg-black/85 backdrop-blur-md border border-white/10 flex items-center justify-between z-10">
                 <div className="space-y-1 min-w-0 pr-2">
                   <span className="font-mono text-xs text-[#ebdca4] uppercase tracking-wider block truncate font-semibold">
-                    {activeProject.category}
+                    {getCategory(activeProject)}
                   </span>
                   <span className="font-mono text-xs sm:text-sm text-white font-medium block truncate">
-                    {activeProject.metricBadge}
+                    {getMetricBadge(activeProject)}
                   </span>
                 </div>
                 {activeProject.liveUrl ? (
@@ -261,7 +319,7 @@ export function SelectedWorkTableIndex() {
                     )}
                     <div className="min-w-0 truncate">
                       <span className={`font-mono text-xs sm:text-sm tracking-wide truncate block ${isActive ? "font-bold text-zinc-950" : "text-white"}`}>
-                        {item.name}
+                        {getName(item)}
                       </span>
                       <span className={`font-mono text-[11px] truncate block sm:hidden ${isActive ? "text-zinc-700" : "text-zinc-400"}`}>
                         {getRole(item)}

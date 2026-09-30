@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import { ProjectItem } from "@/data/projects";
+import { translateTech, translateActionLabel } from "@/data/techDictionary";
 import { X, ExternalLink, ChevronLeft, ChevronRight, Maximize2, ShieldCheck, Terminal, Layers, CheckCircle2 } from "lucide-react";
 import { GithubIcon } from "@/components/icons";
 import { ProjectLightboxViewer } from "@/components/ProjectLightboxViewer";
@@ -271,12 +272,17 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
                 {language === "zh" ? "已验证核心技术栈" : language === "id" ? "STACK TEKNOLOGI TERVERIFIKASI" : "VERIFIED TECH STACK"}
               </span>
               <div className="flex flex-wrap gap-2">
-                {project.techStack.map((tech) => (
+                {(language === "zh" && project.techStackZh
+                  ? project.techStackZh
+                  : language === "id" && project.techStackId
+                  ? project.techStackId
+                  : project.techStack
+                ).map((tech) => (
                   <span
                     key={tech}
                     className="px-3 py-1 rounded-full bg-white/5 border border-white/10 font-mono text-xs text-zinc-200 hover:border-[#d4af37]/50 transition-colors"
                   >
-                    {tech}
+                    {translateTech(tech, language)}
                   </span>
                 ))}
               </div>
@@ -285,16 +291,37 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
             {/* External Action Links */}
             <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10">
               <div className="flex items-center gap-3">
-                {project.liveUrl && (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-5 py-2.5 rounded-full bg-[#d4af37] hover:bg-[#ebdca4] text-zinc-950 font-mono text-xs uppercase tracking-wider font-bold flex items-center gap-2 transition-colors shadow-lg cursor-pointer"
-                  >
-                    <span>{language === "zh" ? "访问生产级实装" : language === "id" ? "KUNJUNGI SISTEM LIVE" : "LIVE PRODUCTION"}</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
+                {project.demoLinks && project.demoLinks.length > 0 ? (
+                  project.demoLinks.map((demo, dIdx) => (
+                    <a
+                      key={dIdx}
+                      href={demo.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-5 py-2.5 rounded-full bg-[#d4af37] hover:bg-[#ebdca4] text-zinc-950 font-mono text-xs uppercase tracking-wider font-bold flex items-center gap-2 transition-colors shadow-lg cursor-pointer"
+                    >
+                      <span>
+                        {language === "zh" && demo.labelZh
+                          ? demo.labelZh
+                          : language === "id" && demo.labelId
+                          ? demo.labelId
+                          : translateActionLabel(demo.label, language)}
+                      </span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  ))
+                ) : (
+                  project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-5 py-2.5 rounded-full bg-[#d4af37] hover:bg-[#ebdca4] text-zinc-950 font-mono text-xs uppercase tracking-wider font-bold flex items-center gap-2 transition-colors shadow-lg cursor-pointer"
+                    >
+                      <span>{language === "zh" ? "访问生产级实装" : language === "id" ? "KUNJUNGI SISTEM LIVE" : "LIVE PRODUCTION"}</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )
                 )}
                 {project.githubUrl && (
                   <a
@@ -304,7 +331,7 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
                     className="px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white font-mono text-xs uppercase tracking-wider flex items-center gap-2 transition-colors cursor-pointer"
                   >
                     <GithubIcon className="w-3.5 h-3.5" />
-                    <span>{language === "zh" ? "代码仓库" : language === "id" ? "REPOSITORI KODE" : "REPOSITORY"}</span>
+                    <span>{language === "zh" ? "GitHub 源码仓库" : language === "id" ? "REPOSITORI GITHUB" : "GITHUB REPOSITORY"}</span>
                   </a>
                 )}
               </div>

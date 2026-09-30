@@ -125,6 +125,8 @@ export function CredentialsSection() {
       levelEn: "Native or Bilingual Proficiency",
       levelZh: "母语 / 双语精通 (Native)",
       badge: "Native",
+      badgeId: "Bahasa Ibu",
+      badgeZh: "母语",
       detail: "Bahasa ibu, komunikasi lisan & penulisan formal profesional.",
       detailEn: "Mother tongue, professional verbal & written communication.",
       detailZh: "母语，具备高阶商务口语与专业公文写作能力。",
@@ -137,6 +139,8 @@ export function CredentialsSection() {
       levelEn: "Professional Working Proficiency",
       levelZh: "专业工作流利水准 (Professional)",
       badge: "Professional Working",
+      badgeId: "Kerja Profesional",
+      badgeZh: "专业商务水准",
       detail: "Berlatar kurikulum Cambridge A-Level (University of Cambridge). Digunakan aktif dalam riset teknis, repositori open-source, dan komunikasi remote internasional.",
       detailEn: "Cambridge A-Level curriculum foundation (University of Cambridge). Actively used in technical research, open-source repositories, and global remote collaboration.",
       detailZh: "英国剑桥大学国际考试局 A-Level 体系背景。深度应用于高阶技术文献研发、开源代码库维护与全球跨国协作。",
@@ -149,6 +153,8 @@ export function CredentialsSection() {
       levelEn: "Working Proficiency (HSK 4)",
       levelZh: "商务工作能力 (HSK 4级 247/300)",
       badge: "HSK Level 4 (247/300)",
+      badgeId: "HSK Level 4 (247/300)",
+      badgeZh: "HSK 4级 (247/300)",
       detail: "Sertifikasi resmi HSK Level 4 dari Confucius Institute Headquarters / Hanban (Skor: 247 / 300, 2017).",
       detailEn: "Official HSK Level 4 certification from Confucius Institute Headquarters / Hanban (Score: 247 / 300, 2017).",
       detailZh: "中国国家汉办 / 孔子学院总部官方 HSK 4级认证 (官方成绩: 247 / 300, 2017)。具备流利的听说读写能力。",
@@ -425,7 +431,12 @@ export function CredentialsSection() {
                     </div>
 
                     <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/5 relative z-10">
-                      {item.tags.map((tag) => (
+                      {(language === "zh" && item.tagsZh
+                        ? item.tagsZh
+                        : language === "id" && item.tagsId
+                        ? item.tagsId
+                        : item.tags
+                      ).map((tag) => (
                         <span key={tag} className="px-2 py-0.5 rounded bg-white/5 text-[10px] font-mono text-zinc-400">
                           {tag}
                         </span>
@@ -541,7 +552,11 @@ export function CredentialsSection() {
                     {language === "zh" ? langItem.nameZh : language === "id" ? langItem.name : langItem.nameEn}
                   </h4>
                   <span className="px-3 py-1 rounded text-xs font-mono uppercase bg-[#d4af37]/10 text-[#ebdca4] border border-[#d4af37]/30 font-bold">
-                    {langItem.badge}
+                    {language === "zh" && langItem.badgeZh
+                      ? langItem.badgeZh
+                      : language === "id" && langItem.badgeId
+                      ? langItem.badgeId
+                      : langItem.badge}
                   </span>
                 </div>
                 <div className="text-xs sm:text-sm font-mono text-[#ebdca4] font-semibold">

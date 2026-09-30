@@ -154,23 +154,61 @@ function AsteroidRock({
 export function SectionTickerTape() {
   const { language } = useLanguage();
 
-  const primaryItems = [
-    "iSTTS PERFECT 4.00 GPA · 4x BEST PRACTITIONER",
-    "ZERO HALLUCINATIONS · 100% AUDITABLE CODE",
-    "-25°C BLAST-FREEZE NYLON PACKAGING",
-    "<15ms ZERO-LATENCY CLIENT ENGINES",
-    "PHYSICAL MANUFACTURING & DIGITAL LOGIC",
-    "TRILINGUAL FLUENCY · ID / EN / HSK 4",
-  ];
+  const primaryItems =
+    language === "id"
+      ? [
+          "IPK SEMPURNA 4.00 iSTTS · 4x PRAKTIKAN TERBAIK",
+          "NOL HALUSINASI · 100% KODE DAPAT DIAUDIT",
+          "KEMASAN VAKUM NILON BEKU -25°C",
+          "<15ms ENGINE KOMPUTASI SISI KLIEN",
+          "MANUFAKTUR FISIK & LOGIKA DIGITAL",
+          "KEMAMPUAN TRIBAHASA · ID / EN / HSK 4",
+        ]
+      : language === "zh"
+      ? [
+          "iSTTS 满分 4.00 GPA · 4届最佳实训大奖",
+          "数学零幻觉 · 100% 可审计工业级代码",
+          "-25°C 急冻级食品级尼龙包装工程",
+          "<15毫秒 纯浏览器端算法即时推演",
+          "实体工业制造与数字逻辑深度融合",
+          "精通三语 · 印尼语 / 英语 / 汉语HSK 4",
+        ]
+      : [
+          "iSTTS PERFECT 4.00 GPA · 4x BEST PRACTITIONER",
+          "ZERO HALLUCINATIONS · 100% AUDITABLE CODE",
+          "-25°C BLAST-FREEZE NYLON PACKAGING",
+          "<15ms ZERO-LATENCY CLIENT ENGINES",
+          "PHYSICAL MANUFACTURING & DIGITAL LOGIC",
+          "TRILINGUAL FLUENCY · ID / EN / HSK 4",
+        ];
 
-  const secondaryItems = [
-    "NEXT.JS & LARAVEL FULL-STACK SYSTEMS",
-    "150+ PAGE AUTOMATED PRINT PIPELINE",
-    "RELATIONAL SCHEMAS & TRANSACTION LEDGERS",
-    "90+ SKU B2B COMMERCIAL CATALOGS",
-    "STRUCTURED PROMPT CHAINS & PYTHON ENGINES",
-    "SARJANA KOMPUTER [S.KOM] · BUSINESS INFO SYSTEMS",
-  ];
+  const secondaryItems =
+    language === "id"
+      ? [
+          "SISTEM FULL-STACK NEXT.JS & LARAVEL",
+          "PIPELINE PENERBITAN OTOMATIS 150+ HALAMAN",
+          "SKEMA RELASIONAL & BUKU BESAR TRANSAKSI",
+          "KATALOG KOMERSIAL B2B 90+ SKU",
+          "PROMPT CHAINING & ENGINE DATA PYTHON",
+          "SARJANA KOMPUTER [S.KOM] · SISTEM INFORMASI BISNIS",
+        ]
+      : language === "zh"
+      ? [
+          "NEXT.JS 与 LARAVEL 企业级全栈架构",
+          "150+页 个性化长篇出版物自动化流水线",
+          "3NF 关系型数据库范式与事务流水账本",
+          "90+ 款热带冷冻水果 B2B 数字产品目录",
+          "结构化提示词链与 PYTHON 预处理中枢",
+          "理学学士 [S.KOM] · 商业信息系统专业",
+        ]
+      : [
+          "NEXT.JS & LARAVEL FULL-STACK SYSTEMS",
+          "150+ PAGE AUTOMATED PRINT PIPELINE",
+          "RELATIONAL SCHEMAS & TRANSACTION LEDGERS",
+          "90+ SKU B2B COMMERCIAL CATALOGS",
+          "STRUCTURED PROMPT CHAINS & PYTHON ENGINES",
+          "SARJANA KOMPUTER [S.KOM] · BUSINESS INFO SYSTEMS",
+        ];
 
   return (
     <section className="py-12 sm:py-16 relative overflow-hidden bg-transparent select-none">

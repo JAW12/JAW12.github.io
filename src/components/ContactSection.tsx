@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { Mail, MessageSquare, MapPin, Send, ArrowUpRight, Clock, CheckCircle, Copy, Check } from "lucide-react";
+import { Mail, MessageSquare, MapPin, Send, ArrowUpRight, CheckCircle, Copy, Check } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionCosmicBackdrop } from "@/components/SectionCosmicBackdrop";
@@ -391,8 +391,8 @@ export function ContactSection() {
               <ArrowUpRight className="w-4 h-4 text-zinc-400 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
             </a>
 
-            {/* Response Time & Location Glassmorphic Card */}
-            <div className="p-4 sm:p-5 rounded-xl bg-[#0c0c10]/85 backdrop-blur-2xl border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.6)] space-y-3">
+            {/* Location Glassmorphic Card */}
+            <div className="p-4 sm:p-5 rounded-xl bg-[#0c0c10]/85 backdrop-blur-2xl border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-amber-500/10 text-[#d4af37] shrink-0">
                   <MapPin className="w-4 h-4" />
@@ -403,20 +403,6 @@ export function ContactSection() {
                   </span>
                   <span className="text-xs font-mono text-zinc-200 font-medium block truncate">
                     {t.contact.locationValue}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 pt-2.5 border-t border-white/5">
-                <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 shrink-0">
-                  <Clock className="w-4 h-4" />
-                </div>
-                <div className="min-w-0">
-                  <span className="block text-[10px] font-mono uppercase tracking-wider text-emerald-400/80 font-semibold">
-                    {language === "zh" ? "响应时效保障" : language === "id" ? "ESTIMASI RESPON" : "SLA RESPONSE TIME"}
-                  </span>
-                  <span className="text-xs font-mono text-zinc-300 font-medium block truncate">
-                    {t.contact.responseNotice}
                   </span>
                 </div>
               </div>

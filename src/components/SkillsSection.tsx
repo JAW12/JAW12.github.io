@@ -51,6 +51,8 @@ import { SectionCosmicBackdrop } from "@/components/SectionCosmicBackdrop";
 
 interface SkillItem {
   name: string;
+  nameId?: string;
+  nameZh?: string;
   icon?: React.ReactNode;
 }
 
@@ -102,12 +104,12 @@ export function SkillsSection() {
         labelId: "Perkakas & Teknologi Utama",
         labelZh: "核心技术与开发工具",
         skills: [
-          { name: "Next.js (App Router)", icon: <NextjsIcon className="w-3.5 h-3.5 text-white" /> },
-          { name: "TypeScript", icon: <TypeScriptIcon className="w-3.5 h-3.5 text-blue-400" /> },
-          { name: "React.js", icon: <ReactIcon className="w-3.5 h-3.5 text-cyan-400" /> },
-          { name: "Tailwind CSS", icon: <TailwindIcon className="w-3.5 h-3.5 text-cyan-400" /> },
-          { name: "Figma (UI/UX & Systems)", icon: <FigmaIcon className="w-3.5 h-3.5 text-purple-400" /> },
-          { name: "Git & GitHub", icon: <GithubIcon className="w-3.5 h-3.5 text-zinc-300" /> },
+          { name: "Next.js (App Router)", nameId: "Next.js (App Router)", nameZh: "Next.js (App 路由架构)", icon: <NextjsIcon className="w-3.5 h-3.5 text-white" /> },
+          { name: "TypeScript", nameId: "TypeScript", nameZh: "TypeScript", icon: <TypeScriptIcon className="w-3.5 h-3.5 text-blue-400" /> },
+          { name: "React.js", nameId: "React.js", nameZh: "React.js", icon: <ReactIcon className="w-3.5 h-3.5 text-cyan-400" /> },
+          { name: "Tailwind CSS", nameId: "Tailwind CSS", nameZh: "Tailwind CSS", icon: <TailwindIcon className="w-3.5 h-3.5 text-cyan-400" /> },
+          { name: "Figma (UI/UX & Systems)", nameId: "Figma (UI/UX & Sistem)", nameZh: "Figma (UI/UX 与设计系统)", icon: <FigmaIcon className="w-3.5 h-3.5 text-purple-400" /> },
+          { name: "Git & GitHub", nameId: "Git & GitHub", nameZh: "Git & GitHub 代码版本控制", icon: <GithubIcon className="w-3.5 h-3.5 text-zinc-300" /> },
         ],
       },
       disciplineGroup: {
@@ -115,10 +117,10 @@ export function SkillsSection() {
         labelId: "Arsitektur & Rekayasa",
         labelZh: "系统架构与工程规范",
         skills: [
-          { name: "RESTful API Architecture", icon: <Globe className="w-3.5 h-3.5 text-emerald-400" /> },
-          { name: "Client-Side State & Compute", icon: <Cpu className="w-3.5 h-3.5 text-amber-300" /> },
-          { name: "Browser & Web Share APIs", icon: <Share2 className="w-3.5 h-3.5 text-cyan-300" /> },
-          { name: "Responsive UI Standards", icon: <Layout className="w-3.5 h-3.5 text-orange-400" /> },
+          { name: "RESTful API Architecture", nameId: "Arsitektur RESTful API", nameZh: "RESTful API 系统架构", icon: <Globe className="w-3.5 h-3.5 text-emerald-400" /> },
+          { name: "Client-Side State & Compute", nameId: "State & Komputasi Sisi Klien", nameZh: "客户端状态管理与即时计算", icon: <Cpu className="w-3.5 h-3.5 text-amber-300" /> },
+          { name: "Browser & Web Share APIs", nameId: "API Browser & Web Share", nameZh: "浏览器原生能力与 Web Share API", icon: <Share2 className="w-3.5 h-3.5 text-cyan-300" /> },
+          { name: "Responsive UI Standards", nameId: "Standar UI Responsif", nameZh: "跨端响应式 UI 规范", icon: <Layout className="w-3.5 h-3.5 text-orange-400" /> },
         ],
       },
     },
@@ -141,12 +143,12 @@ export function SkillsSection() {
         labelId: "Stack Teknologi & Bahasa",
         labelZh: "核心技术栈与开发语言",
         skills: [
-          { name: "PHP / Laravel Framework", icon: <LaravelIcon className="w-3.5 h-3.5 text-rose-500" /> },
-          { name: "MySQL (3NF Relational DB)", icon: <MysqlIcon className="w-3.5 h-3.5 text-amber-400" /> },
-          { name: "C# (.NET / WinForms)", icon: <CSharpIcon className="w-3.5 h-3.5 text-purple-400" /> },
-          { name: "Java (OOP Architecture)", icon: <JavaIcon className="w-3.5 h-3.5 text-orange-400" /> },
-          { name: "Docker Containerization", icon: <DockerIcon className="w-3.5 h-3.5 text-blue-400" /> },
-          { name: "Linux / Shell Environment", icon: <LinuxIcon className="w-3.5 h-3.5 text-amber-300" /> },
+          { name: "PHP / Laravel Framework", nameId: "PHP / Framework Laravel", nameZh: "PHP / Laravel 框架体系", icon: <LaravelIcon className="w-3.5 h-3.5 text-rose-500" /> },
+          { name: "MySQL (3NF Relational DB)", nameId: "MySQL (DB Relasional 3NF)", nameZh: "MySQL (3NF 关系型数据库)", icon: <MysqlIcon className="w-3.5 h-3.5 text-amber-400" /> },
+          { name: "C# (.NET / WinForms)", nameId: "C# (.NET / WinForms)", nameZh: "C# (.NET / WinForms 桌面应用)", icon: <CSharpIcon className="w-3.5 h-3.5 text-purple-400" /> },
+          { name: "Java (OOP Architecture)", nameId: "Java (Arsitektur OOP)", nameZh: "Java (OOP 面向对象架构)", icon: <JavaIcon className="w-3.5 h-3.5 text-orange-400" /> },
+          { name: "Docker Containerization", nameId: "Kontainerisasi Docker", nameZh: "Docker 容器化部署", icon: <DockerIcon className="w-3.5 h-3.5 text-blue-400" /> },
+          { name: "Linux / Shell Environment", nameId: "Lingkungan Linux / Shell", nameZh: "Linux / Shell 运维环境", icon: <LinuxIcon className="w-3.5 h-3.5 text-amber-300" /> },
         ],
       },
       disciplineGroup: {
@@ -154,10 +156,10 @@ export function SkillsSection() {
         labelId: "Sistem & Pemodelan Data",
         labelZh: "系统设计与数据建模",
         skills: [
-          { name: "ERP & POS Data Modeling", icon: <Building2 className="w-3.5 h-3.5 text-blue-400" /> },
-          { name: "Client-Server Socket Protocols", icon: <Network className="w-3.5 h-3.5 text-indigo-400" /> },
-          { name: "Database Query Profiling", icon: <Database className="w-3.5 h-3.5 text-cyan-400" /> },
-          { name: "Multi-Tier Architecture", icon: <Layers className="w-3.5 h-3.5 text-emerald-400" /> },
+          { name: "ERP & POS Data Modeling", nameId: "Pemodelan Data ERP & POS", nameZh: "ERP 与 POS 核心数据建模", icon: <Building2 className="w-3.5 h-3.5 text-blue-400" /> },
+          { name: "Client-Server Socket Protocols", nameId: "Protokol Soket Client-Server", nameZh: "C/S 架构 Socket 通信协议", icon: <Network className="w-3.5 h-3.5 text-indigo-400" /> },
+          { name: "Database Query Profiling", nameId: "Profiling & Optimasi Kueri DB", nameZh: "数据库慢查询剖析与索引优化", icon: <Database className="w-3.5 h-3.5 text-cyan-400" /> },
+          { name: "Multi-Tier Architecture", nameId: "Arsitektur Sistem Multi-Tier", nameZh: "多层架构与分布式解耦", icon: <Layers className="w-3.5 h-3.5 text-emerald-400" /> },
         ],
       },
     },
@@ -180,11 +182,11 @@ export function SkillsSection() {
         labelId: "Perkakas & Framework Otomasi",
         labelZh: "自动化框架与开发工具",
         skills: [
-          { name: "Python Automation Engines", icon: <PythonIcon className="w-3.5 h-3.5 text-emerald-400" /> },
-          { name: "n8n Visual Automation", icon: <N8nIcon className="w-3.5 h-3.5 text-pink-400" /> },
-          { name: "Multi-Agent Systems & CLI", icon: <Bot className="w-3.5 h-3.5 text-violet-400" /> },
-          { name: "Web Scraping & Extraction", icon: <Search className="w-3.5 h-3.5 text-sky-400" /> },
-          { name: "Webhooks & Integrations", icon: <Workflow className="w-3.5 h-3.5 text-cyan-400" /> },
+          { name: "Python Automation Engines", nameId: "Engine Otomasi Python", nameZh: "Python 自动化工程引擎", icon: <PythonIcon className="w-3.5 h-3.5 text-emerald-400" /> },
+          { name: "n8n Visual Automation", nameId: "Otomasi Visual n8n", nameZh: "n8n 可视化工作流引擎", icon: <N8nIcon className="w-3.5 h-3.5 text-pink-400" /> },
+          { name: "Multi-Agent Systems & CLI", nameId: "Sistem Multi-Agen & CLI", nameZh: "多智能体协同系统与 CLI", icon: <Bot className="w-3.5 h-3.5 text-violet-400" /> },
+          { name: "Web Scraping & Extraction", nameId: "Scraping & Ekstraksi Web", nameZh: "网页爬虫与结构化数据提取", icon: <Search className="w-3.5 h-3.5 text-sky-400" /> },
+          { name: "Webhooks & Integrations", nameId: "Webhook & Integrasi Sistem", nameZh: "Webhooks 与第三方系统集成", icon: <Workflow className="w-3.5 h-3.5 text-cyan-400" /> },
         ],
       },
       disciplineGroup: {
@@ -192,11 +194,11 @@ export function SkillsSection() {
         labelId: "Pipeline AI & Metode Sintesis",
         labelZh: "AI 管线编排与知识合成",
         skills: [
-          { name: "Structured Prompt Engineering", icon: <Terminal className="w-3.5 h-3.5 text-purple-400" /> },
-          { name: "Vector RAG & Knowledge Vaults", icon: <Database className="w-3.5 h-3.5 text-fuchsia-400" /> },
-          { name: "LLM Prompt Chaining", icon: <Code2 className="w-3.5 h-3.5 text-purple-300" /> },
-          { name: "Automated Book Publishing", icon: <Sparkles className="w-3.5 h-3.5 text-amber-300" /> },
-          { name: "AI Research Synthesis", icon: <FileCode className="w-3.5 h-3.5 text-teal-400" /> },
+          { name: "Structured Prompt Engineering", nameId: "Rekayasa Prompt Terstruktur", nameZh: "结构化 Prompt 工程规范", icon: <Terminal className="w-3.5 h-3.5 text-purple-400" /> },
+          { name: "Vector RAG & Knowledge Vaults", nameId: "RAG Vektor & Vault Pengetahuan", nameZh: "向量 RAG 检索与知识库管理", icon: <Database className="w-3.5 h-3.5 text-fuchsia-400" /> },
+          { name: "LLM Prompt Chaining", nameId: "LLM Prompt Chaining Bertingkat", nameZh: "LLM 提示词链与流水线编排", icon: <Code2 className="w-3.5 h-3.5 text-purple-300" /> },
+          { name: "Automated Book Publishing", nameId: "Penerbitan Buku Otomatis", nameZh: "自动化长篇出版物编译管线", icon: <Sparkles className="w-3.5 h-3.5 text-amber-300" /> },
+          { name: "AI Research Synthesis", nameId: "Sintesis Riset Berbasis AI", nameZh: "AI 辅助高阶学术研究合成", icon: <FileCode className="w-3.5 h-3.5 text-teal-400" /> },
         ],
       },
     },
@@ -205,7 +207,7 @@ export function SkillsSection() {
       icon: <Package className="w-5 h-5 text-emerald-400" />,
       accent: "from-emerald-500/20 to-transparent",
       auroraColor: "ijo",
-      auroraBiasGlow: "bg-[radial-gradient(ellipse_at_top_right,rgba(16,185,129,0.60)_0%,rgba(5,150,105,0.35)_45%,transparent_75%)]",
+      auroraBiasGlow: "bg-[radial-gradient(ellipse_at_top_right,rgba(16,185,129,0.60)_0%,rgba(55,150,105,0.35)_45%,transparent_75%)]",
       borderColor: "hover:border-emerald-400/70",
       sheenColor: "via-emerald-400/80",
       title: "Business Operations & Quant",
@@ -219,11 +221,11 @@ export function SkillsSection() {
         labelId: "Operasional & Rantai Pasok Fisik",
         labelZh: "实体供应链与工业运营",
         skills: [
-          { name: "Cold-Chain Logistics (-25°C)", icon: <Snowflake className="w-3.5 h-3.5 text-cyan-300" /> },
-          { name: "Industrial Barrier Packaging", icon: <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> },
-          { name: "Packaging Factory Dielines", icon: <Package className="w-3.5 h-3.5 text-amber-400" /> },
-          { name: "Inventory Ledgers (FIFO)", icon: <Boxes className="w-3.5 h-3.5 text-orange-400" /> },
-          { name: "B2B Sales Invoicing & SOPs", icon: <FileCheck className="w-3.5 h-3.5 text-blue-400" /> },
+          { name: "Cold-Chain Logistics (-25°C)", nameId: "Logistik Rantai Dingin (-25°C)", nameZh: "-25°C 超低温冷链物流", icon: <Snowflake className="w-3.5 h-3.5 text-cyan-300" /> },
+          { name: "Industrial Barrier Packaging", nameId: "Kemasan Pelindung Industri", nameZh: "工业级阻隔复合包装工程", icon: <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> },
+          { name: "Packaging Factory Dielines", nameId: "Dieline Cetak Pabrik Kemasan", nameZh: "包装刀模规范与打样工程", icon: <Package className="w-3.5 h-3.5 text-amber-400" /> },
+          { name: "Inventory Ledgers (FIFO)", nameId: "Buku Besar Inventaris (FIFO)", nameZh: "库存出入账本与先进先出 (FIFO)", icon: <Boxes className="w-3.5 h-3.5 text-orange-400" /> },
+          { name: "B2B Sales Invoicing & SOPs", nameId: "Faktur Penjualan B2B & SOP", nameZh: "B2B 大宗销售开票与 SOP 体系", icon: <FileCheck className="w-3.5 h-3.5 text-blue-400" /> },
         ],
       },
       disciplineGroup: {
@@ -231,11 +233,11 @@ export function SkillsSection() {
         labelId: "Riset Finansial & Regulasi",
         labelZh: "量化金融模型与合规审计",
         skills: [
-          { name: "Quantitative DCA Reconciliation", icon: <TrendingUp className="w-3.5 h-3.5 text-emerald-400" /> },
-          { name: "Risk/Reward (RR) & Drawdowns", icon: <BarChart3 className="w-3.5 h-3.5 text-indigo-400" /> },
-          { name: "Technical Market Analysis", icon: <Compass className="w-3.5 h-3.5 text-purple-400" /> },
-          { name: "Spreadsheet Financial Models", icon: <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-300" /> },
-          { name: "Regulatory Standards (Halal/Kementan)", icon: <Globe className="w-3.5 h-3.5 text-teal-300" /> },
+          { name: "Quantitative DCA Reconciliation", nameId: "Rekonsiliasi DCA Kuantitatif", nameZh: "量化定投对账与资金流水模型", icon: <TrendingUp className="w-3.5 h-3.5 text-emerald-400" /> },
+          { name: "Risk/Reward (RR) & Drawdowns", nameId: "Risk/Reward (RR) & Drawdown", nameZh: "盈亏比 (RR) 模型与回撤控制", icon: <BarChart3 className="w-3.5 h-3.5 text-indigo-400" /> },
+          { name: "Technical Market Analysis", nameId: "Analisis Pasar Teknikal", nameZh: "多周期多资产技术面行情研判", icon: <Compass className="w-3.5 h-3.5 text-purple-400" /> },
+          { name: "Spreadsheet Financial Models", nameId: "Model Finansial Spreadsheet", nameZh: "复杂财务报表与高精模型推演", icon: <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-300" /> },
+          { name: "Regulatory Standards (Halal/Kementan)", nameId: "Standar Regulasi (Halal/Kementan)", nameZh: "行业法规与合规认证 (清真/农业部)", icon: <Globe className="w-3.5 h-3.5 text-teal-300" /> },
         ],
       },
     },
@@ -420,7 +422,13 @@ export function SkillsSection() {
                                 {skill.icon}
                               </span>
                             )}
-                            <span>{skill.name}</span>
+                            <span>
+                              {language === "zh" && skill.nameZh
+                                ? skill.nameZh
+                                : language === "id" && skill.nameId
+                                ? skill.nameId
+                                : skill.name}
+                            </span>
                           </div>
                         ))}
                       </div>
@@ -445,7 +453,13 @@ export function SkillsSection() {
                                 {skill.icon}
                               </span>
                             )}
-                            <span>{skill.name}</span>
+                            <span>
+                              {language === "zh" && skill.nameZh
+                                ? skill.nameZh
+                                : language === "id" && skill.nameId
+                                ? skill.nameId
+                                : skill.name}
+                            </span>
                           </div>
                         ))}
                       </div>

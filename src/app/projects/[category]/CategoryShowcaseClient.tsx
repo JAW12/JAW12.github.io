@@ -15,6 +15,7 @@ import {
   getCategoryShowcaseProjects,
   ProjectItem,
 } from "@/data/projects";
+import { translateTech, translateActionLabel } from "@/data/techDictionary";
 import {
   ArrowLeft,
   ArrowRight,
@@ -506,12 +507,17 @@ function CategoryShowcaseInner({ ecosystemId }: CategoryShowcaseClientProps) {
 
                     {/* Tech Stack Pills */}
                     <div className="flex flex-wrap gap-2 pt-2">
-                      {project.techStack.map((tech) => (
+                      {(language === "zh" && project.techStackZh
+                        ? project.techStackZh
+                        : language === "id" && project.techStackId
+                        ? project.techStackId
+                        : project.techStack
+                      ).map((tech) => (
                         <span
                           key={tech}
                           className="px-3 py-1 rounded bg-white/[0.06] border border-white/10 text-xs font-mono text-zinc-200 font-medium"
                         >
-                          {tech}
+                          {translateTech(tech, language)}
                         </span>
                       ))}
                     </div>
@@ -527,7 +533,13 @@ function CategoryShowcaseInner({ ecosystemId }: CategoryShowcaseClientProps) {
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 hover:border-[#d4af37]/50 text-white hover:text-[#ebdca4] font-mono text-xs uppercase tracking-wider transition-all duration-300 font-semibold"
                           >
-                            <span>{language === "zh" && demo.labelZh ? demo.labelZh : language === "id" && demo.labelId ? demo.labelId : demo.label}</span>
+                            <span>
+                              {language === "zh" && demo.labelZh
+                                ? demo.labelZh
+                                : language === "id" && demo.labelId
+                                ? demo.labelId
+                                : translateActionLabel(demo.label, language)}
+                            </span>
                             <ExternalLink className="w-3.5 h-3.5 text-[#d4af37]" />
                           </a>
                         ))
@@ -539,7 +551,7 @@ function CategoryShowcaseInner({ ecosystemId }: CategoryShowcaseClientProps) {
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 hover:border-[#d4af37]/50 text-white hover:text-[#ebdca4] font-mono text-xs uppercase tracking-wider transition-all duration-300 font-semibold"
                           >
-                            <span>{language === "zh" ? "在线演示" : language === "id" ? "Demo Live" : "Live Demo"}</span>
+                            <span>{language === "zh" ? "在线演示" : language === "id" ? "Demo Langsung" : "Live Demo"}</span>
                             <ExternalLink className="w-3.5 h-3.5 text-[#d4af37]" />
                           </a>
                         )
@@ -553,7 +565,7 @@ function CategoryShowcaseInner({ ecosystemId }: CategoryShowcaseClientProps) {
                           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 hover:border-[#d4af37]/50 text-white hover:text-[#ebdca4] font-mono text-xs uppercase tracking-wider transition-all duration-300 font-semibold"
                         >
                           <GithubIcon className="w-3.5 h-3.5 text-zinc-400" />
-                          <span>{language === "zh" ? "源码仓库" : language === "id" ? "Repositori" : "Repository"}</span>
+                          <span>{language === "zh" ? "GitHub 源码仓库" : language === "id" ? "Repositori GitHub" : "GitHub Repository"}</span>
                         </a>
                       )}
                     </div>

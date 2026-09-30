@@ -248,22 +248,22 @@ export function PdfExportModal({
     {
       key: "includeHighlights",
       label: t.pdfModal?.includeHighlights || "Solusi & Metodologi Eksekusi",
-      desc: language === "zh" ? "核心能力矩阵与3阶段生产交付方法论（架构设计 ➔ 高精度实现 ➔ 生产级交付）。" : language === "id" ? "Pilar kapabilitas dan 3 tahap metodologi rekayasa produksi (Architecture ➔ Implementation ➔ Production Delivery)." : "Core capability pillars and 3-phase engineering delivery methodology.",
+      desc: language === "zh" ? "四大核心工程能力与 3 阶段系统生产交付方法论。" : language === "id" ? "4 pilar kapabilitas dan 3 tahap metodologi rekayasa produksi." : "4 core capability pillars and 3-phase engineering delivery methodology.",
     },
     {
       key: "includeExperience",
       label: t.pdfModal?.includeExperience || "Buku Besar Pengalaman Kerja",
-      desc: language === "zh" ? "6段经过事实核验的职业任职与创业履历 (PT KBT, Sailly, Enevti, QLP 等)。" : language === "id" ? "Buku besar 6 peran profesional & wirausaha dengan tanggung jawab terverifikasi (PT KBT, Sailly, Enevti, QLP, dll)." : "6 factual professional & venture roles with verified responsibilities.",
+      desc: language === "zh" ? "8 段经过事实核验的职业任职、商业运营与校园立法领导力总账。" : language === "id" ? "Buku besar 8 peran profesional, wirausaha & kepemimpinan kampus terverifikasi." : "8 factual professional, venture & campus leadership roles with verified records.",
     },
     {
       key: "includeFeatured",
       label: t.pdfModal?.includeFeatured || "Studi Kasus Proyek Unggulan",
-      desc: language === "zh" ? "核心工程系统与 20+ 项真实项目归档总账 (2010–2026)。" : language === "id" ? "Sistem unggulan dan tabel lengkap 20+ proyek nyata (2010–2026)." : "Flagship systems and full ledger of 20+ real projects (2010–2026).",
+      desc: language === "zh" ? "5 大旗舰系统案例与 28+ 项真实项目全景总账 (2010–2026)。" : language === "id" ? "5 studi kasus sistem unggulan dan tabel lengkap 28+ proyek nyata (2010–2026)." : "5 flagship case studies and full ledger of 28+ real projects (2010–2026).",
     },
     {
       key: "includeSkills",
       label: t.pdfModal?.includeSkills || "Matriks Keahlian 3-Tier",
-      desc: language === "zh" ? "按3层实证标准分类的6大核心技能架构矩阵。" : language === "id" ? "Matriks 6 pilar keahlian dengan pembagian 3 level pembuktian empiris." : "6-pillar matrix categorized into 3 verifiable proof tiers.",
+      desc: language === "zh" ? "按 3 层实证标准分类的 4 大核心技能架构矩阵。" : language === "id" ? "Matriks 4 pilar keahlian dengan pembagian 3 level pembuktian empiris." : "4-pillar matrix categorized into 3 verifiable proof tiers.",
     },
     {
       key: "includeCredentials",

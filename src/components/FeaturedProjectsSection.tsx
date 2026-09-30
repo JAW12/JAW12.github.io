@@ -11,6 +11,7 @@ import {
   comprehensiveCategoryProjects,
   ProjectItem,
 } from "@/data/projects";
+import { translateTech } from "@/data/techDictionary";
 import {
   Sparkles,
   ExternalLink,
@@ -24,6 +25,7 @@ import {
 import Link from "next/link";
 import { SectionCosmicBackdrop } from "@/components/SectionCosmicBackdrop";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { GithubIcon } from "@/components/icons";
 
 const projectAssetCaptions: Record<string, { en: string; id: string; zh: string }[]> = {
   "secret-of-life": [
@@ -723,12 +725,17 @@ export function FeaturedProjectsSection() {
 
                     {/* Tech Stack Chips */}
                     <div className="flex flex-wrap gap-2 pt-1">
-                      {project.techStack.map((tech) => (
+                      {(language === "zh" && project.techStackZh
+                        ? project.techStackZh
+                        : language === "id" && project.techStackId
+                        ? project.techStackId
+                        : project.techStack
+                      ).map((tech) => (
                         <span
                           key={tech}
                           className="px-3 py-1 rounded bg-white/[0.06] border border-white/10 text-xs font-mono text-zinc-200 font-medium"
                         >
-                          {tech}
+                          {translateTech(tech, language)}
                         </span>
                       ))}
                     </div>
@@ -755,7 +762,8 @@ export function FeaturedProjectsSection() {
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 hover:border-[#d4af37]/50 text-white hover:text-[#ebdca4] font-mono text-xs uppercase tracking-wider transition-all duration-300 font-semibold"
                           >
-                            <span>{language === "zh" ? "源码仓库" : language === "id" ? "KODE SUMBER" : "SOURCE CODE"}</span>
+                            <GithubIcon className="w-3.5 h-3.5 text-zinc-400" />
+                            <span>{language === "zh" ? "GitHub 源码仓库" : language === "id" ? "REPOSITORI GITHUB" : "GITHUB REPOSITORY"}</span>
                             <ExternalLink className="w-3.5 h-3.5 text-[#d4af37]" />
                           </a>
                         )}

@@ -38,6 +38,8 @@ export interface ProjectItem {
   client?: string;
   clientZh?: string;
   techStack: string[];
+  techStackId?: string[];
+  techStackZh?: string[];
   description: string;
   descriptionId: string;
   descriptionZh?: string;
@@ -62,7 +64,7 @@ export const flagshipProjects: ProjectItem[] = [
     tagline: "Automated 150+ Page Personalized Book Manuscript & Luxury Layout Publishing Pipeline via Hermes AI Orchestration",
     taglineId: "Pipeline Otomasi Naskah Buku Personal 150+ Halaman & Tata Letak Buku Mewah via Orkestrasi Hermes AI",
     taglineZh: "基于 Hermes 智能体编排的 150+ 页个性化长篇书籍手稿与精装排版全自动出版管线",
-    year: "2024 – 2026",
+    year: "2025 – 2026",
     category: "ai",
     role: "Lead Systems Architect & Product Engineer",
     roleId: "Arsitek Sistem & Rekayasa Produk",
@@ -76,6 +78,22 @@ export const flagshipProjects: ProjectItem[] = [
       "Canva Typesetting",
       "Google Flow Visuals",
       "Obsidian Vault Integration",
+    ],
+    techStackId: [
+      "Engine Data Python",
+      "Orkestrator AI Hermes",
+      "LLM Prompt Chaining",
+      "Tata Letak Canva",
+      "Visual Google Flow",
+      "Integrasi Vault Obsidian",
+    ],
+    techStackZh: [
+      "Python 数据引擎",
+      "Hermes 智能体编排",
+      "LLM 提示词链",
+      "Canva 视觉排版",
+      "Google Flow 艺术插画",
+      "Obsidian 知识库集成",
     ],
     description:
       "An end-to-end automated luxury publishing and intelligence workflow transforming raw personal profile data into comprehensive 150+ page customized luxury hardcover books. Combines custom Python preprocessing engines, Hermes-orchestrated multi-pass LLM prompt chaining for deterministic chapter drafting, Canva visual typesetting templates, and Google Flow quote graphics.",
@@ -162,7 +180,7 @@ export const flagshipProjects: ProjectItem[] = [
     tagline: "Deterministic In-Browser Interpersonal Compatibility Engine, AI-Assisted Engineering & Automated QRIS Monetization",
     taglineId: "Engine Kompatibilitas Hubungan Sisi Klien Sub-Detik, Pengembangan AI-Assisted & Monetisasi QRIS Otomatis",
     taglineZh: "毫秒级客户端人际契合度算法推演引擎、AI 辅助研发管线与 QRIS 自动化支付变现中台",
-    year: "2024 – 2026",
+    year: "2025 – 2026",
     category: "software",
     role: "Sole Creator, Full-Stack Software Engineer & Algorithm Architect",
     roleId: "Kreator Tunggal, Software Engineer Full-Stack & Arsitek Algoritma",
@@ -179,6 +197,28 @@ export const flagshipProjects: ProjectItem[] = [
       "Automated Webhooks",
       "Reseller PIN Auth & Campaign Engine",
       "HTML5 Canvas 2D Share Cards",
+    ],
+    techStackId: [
+      "AI-Assisted Development",
+      "Next.js / Node.js & Express",
+      "TypeScript & JavaScript",
+      "Prisma ORM & PostgreSQL",
+      "Engine Komputasi Browser",
+      "Gateway Pembayaran QRIS Mayar",
+      "Webhook Otomatis",
+      "Autentikasi PIN Reseller & Kampanye",
+      "Kartu Share HTML5 Canvas 2D",
+    ],
+    techStackZh: [
+      "AI 辅助研发管线",
+      "Next.js / Node.js & Express",
+      "TypeScript & JavaScript",
+      "Prisma ORM & PostgreSQL",
+      "浏览器本地计算引擎",
+      "Mayar QRIS 聚合支付",
+      "自动化 Webhook",
+      "分销商 PIN 鉴权与推广中台",
+      "HTML5 Canvas 2D 分享卡片",
     ],
     description:
       "A viral relationship compatibility and personality synergy assessment platform built via modern AI-assisted software engineering across 4 architectural generations (V1–V4). Executes deterministic proprietary compatibility and personality synergy algorithms entirely client-side in under 15ms for zero-cost serverless computation. Features automated QRIS micropayments (Rp 21.000 instant module unlock), dynamic 10+ page PDF analytical dossiers (Rp 189.000), a dual Gen-Z and Adult/Career synergy mode, and an automated reseller voucher & campaign tracking system.",
@@ -272,6 +312,20 @@ export const flagshipProjects: ProjectItem[] = [
       "Kementan & Halal Compliance",
       "WhatsApp Wholesale Funnel",
       "Gemini AI Product Renders",
+    ],
+    techStackId: [
+      "Platform Web B2B",
+      "Logistik Rantai Dingin (-18°C)",
+      "Kepatuhan Kementan & Halal",
+      "Corong Grosir WhatsApp",
+      "Render Produk Gemini AI",
+    ],
+    techStackZh: [
+      "B2B 数字化门户",
+      "-18°C 恒温冷链物流",
+      "农业部与清真合规资质",
+      "WhatsApp 批发直采漏斗",
+      "Gemini AI 产品渲染",
     ],
     description:
       "Specialized commercial product line and dedicated B2B showcase operating under PT. Karya Buah Tropis, focusing on export-grade vacuum-sealed jackfruit. Backed by the parent entity's industrial infrastructure, it highlights Halal certification, Ministry of Agriculture (Kementan) licensing, -18°C cold-chain logistics, and direct WhatsApp B2B negotiation funnels.",
@@ -369,6 +423,22 @@ export const flagshipProjects: ProjectItem[] = [
       "Tailwind CSS",
       "Quant Analytics",
     ],
+    techStackId: [
+      "PHP",
+      "Framework Laravel",
+      "DB Relasional MySQL",
+      "Grafik JavaScript",
+      "Tailwind CSS",
+      "Analitik Kuantitatif",
+    ],
+    techStackZh: [
+      "PHP",
+      "Laravel 框架体系",
+      "MySQL 关系型数据库",
+      "JavaScript 动态图表",
+      "Tailwind CSS",
+      "量化模型算法",
+    ],
     description:
       "Comprehensive cryptocurrency portfolio management and trading journal system developed as an undergraduate thesis at iSTTS. Features multi-coin holding balance tracking, dollar-cost averaging (DCA) price tracking, floating PnL, trading risk analytics, win-rate metrics, and drawdown curve visualization.",
     descriptionId:
@@ -439,6 +509,7 @@ export const flagshipProjects: ProjectItem[] = [
         detailZh: "盈亏比指标评估与量化资金回撤曲线模型 (论文满分A)",
       },
     ],
+    githubUrl: "https://github.com/JAW12/TA_CatatCrypto",
   },
   {
     id: "nasi-goreng-janok",
@@ -462,6 +533,22 @@ export const flagshipProjects: ProjectItem[] = [
       "WordPress Engine",
       "Franchise Operations SOP",
       "Financial BEP Models",
+    ],
+    techStackId: [
+      "CorelDRAW Vector Master",
+      "Adobe Photoshop",
+      "Kemasan Pangan Industri",
+      "Engine WordPress",
+      "SOP Operasional Waralaba",
+      "Model Finansial BEP",
+    ],
+    techStackZh: [
+      "CorelDRAW 矢量全案",
+      "Adobe Photoshop",
+      "工业食品包装工程",
+      "WordPress 门户引擎",
+      "连锁加盟运营 SOP",
+      "财务 BEP 回本模型",
     ],
     description:
       "End-to-end brand ecosystem, industrial food packaging, and franchise expansion operations for Nasi Goreng Jan'Ok—scaling across 26 franchised outlets in East Java. Engineered greaseproof interlocking takeaway carton dielines, designed 95-day BEP investment prospectuses, authored standardized kitchen SOPs, and developed the WordPress franchise directory portal.",
@@ -640,40 +727,40 @@ export const categoryEcosystems: CategoryEcosystemItem[] = [
         id: "knowledge-base-sparring",
         title: "Local Knowledge Base, Sparring & Retrieval Intelligence",
         titleId: "Knowledge Base Lokal, Sparring AI & Intelijen Retrieval",
-        titleZh: "本地私有知识库、AI 对抗性思维对练与智能检索体系",
+        titleZh: "本地知识库、AI 对抗性思维对练与智能检索体系",
         year: "2024 – 2026",
         role: "Knowledge Systems Architect",
         roleId: "Arsitek Sistem Pengetahuan & Riset AI",
         roleZh: "知识库架构师与认知建模研究员",
         badge: "Second Brain",
         badgeZh: "第二大脑",
-        techStack: ["Hermes AI CLI", "Markdown Graph Structure", "Multi-Agent Sparring", "Obsidian Vaults", "Deterministic Storage"],
+        techStack: ["Hermes AI CLI", "Cloud LLMs (Inference)", "Markdown Graph Structure", "Multi-Agent Sparring", "Obsidian Vaults"],
         summary:
-          "Engineered an offline-first knowledge retrieval and dialectical reasoning framework with Obsidian bidirectional graph linking and multi-agent sparring modes.",
+          "Engineered a hybrid knowledge retrieval and dialectical reasoning framework combining local Obsidian bidirectional markdown graphs with Cloud LLM-powered multi-agent sparring.",
         summaryId:
-          "Membangun sistem retrieval pengetahuan lokal dan sparring AI dialektika terstruktur berbasis jaringan graf Markdown Obsidian dua arah dan repositori aman.",
+          "Membangun sistem retrieval pengetahuan hybrid dan sparring AI dialektika terstruktur memadukan repositori Markdown Obsidian lokal dengan kemampuan penalaran Cloud LLM.",
         summaryZh:
-          "构建离线优先的本地知识中枢与思维对抗对练框架，融合 Obsidian 双向知识图谱与多智能体反思推演机制。",
+          "构建混合式知识中枢与思维对抗对练框架，融合 Obsidian 本地双向知识图谱与云端大模型多智能体反思推演机制。",
       },
       {
         id: "satu-ayat-ai",
-        title: "Satu Ayat Dari Tuhan: AI-Powered Bible Verse & Daily Reflection Web Platform",
-        titleId: "Satu Ayat Dari Tuhan: Platform Web Rekomendasi Ayat Alkitab & Refleksi Rohani Berbasis AI",
-        titleZh: "Satu Ayat Dari Tuhan: 基于 AI 的圣经金句推荐与灵修反思 Web 平台",
-        year: "2025",
-        role: "Full-Stack Developer & Prompt Engineer",
-        roleId: "Pengembang Full-Stack & Prompt Engineer",
-        roleZh: "全栈开发工程师与提示词架构师",
-        badge: "Spiritual AI Web App",
-        badgeZh: "灵修科技应用",
-        techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "LLM Prompt Chaining", "Semantic Search", "Bible API"],
+        title: "Satu Ayat Dari Tuhan: AI Prompt Framework, Custom Gems & Devotional Content Workflow",
+        titleId: "Satu Ayat Dari Tuhan: Framework Prompt AI, Custom Gems & Workflow Konten Renungan",
+        titleZh: "Satu Ayat Dari Tuhan: AI 提示词框架、Custom Gems 与灵修内容创作工作流",
+        year: "2024 – 2025",
+        role: "Prompt Engineer & AI Workflow Architect",
+        roleId: "Prompt Engineer & Arsitek Workflow AI",
+        roleZh: "提示词架构师与 AI 内容工作流设计师",
+        badge: "AI Workflow & Content Framework",
+        badgeZh: "AI 工作流与内容框架",
+        techStack: ["Google Gemini (Custom Gems)", "Structured Prompt Framework", "Workflow Automation", "Content Creation Pipeline", "Audience Engagement Strategy"],
         summary:
-          "Engineered a tranquil spiritual web application delivering context-aware Bible verse recommendations and daily inspirational reflections tailored to user emotion states.",
+          "Designed a specialized prompt engineering framework, custom Google Gemini Gems, and streamlined workflow to rapidly transform personal daily devotions into engaging, audience-ready content drafts.",
         summaryId:
-          "Mengembangkan aplikasi web rohani kontemplatif yang menghadirkan refleksi ayat Alkitab kontekstual dan kartu inspirasi harian berdasarkan kondisi hati pengguna.",
+          "Merancang framework rekayasa prompt khusus, Custom Gems (Gemini), dan alur kerja terstruktur untuk mempercepat perenungan harian pribadi menjadi draf konten publik yang relevan dan menyentuh audiens.",
         summaryZh:
-          "打造极简静谧的现代圣经灵修 Web 应用，基于用户实时情绪状态智能推荐相契合的圣经金句与心灵反思卡片。",
-        liveUrl: "https://satuayat.my.id",
+          "设计专用提示词工程框架、Custom Gemini Gems 与高效工作流，将个人每日灵修反思快速转化为契合受众心理的高质量内容草稿。",
+        liveUrl: "https://www.instagram.com/satuayatdarituhan/",
       },
       {
         id: "suno-ai-music-production",
@@ -728,7 +815,7 @@ export const categoryEcosystems: CategoryEcosystemItem[] = [
         title: "CocokGa Architecture & Interactive Modules (V1 – V4)",
         titleId: "Arsitektur & Modul Interaktif CocokGa (V1 – V4)",
         titleZh: "CocokGa 架构与交互式测算模块 (V1 – V4 全面演进)",
-        year: "2024 – 2026",
+        year: "2025 – 2026",
         role: "Sole Full-Stack Architect",
         roleId: "Arsitek Full-Stack Mandiri",
         roleZh: "独立全栈架构师",
@@ -998,6 +1085,7 @@ export const categoryEcosystems: CategoryEcosystemItem[] = [
           "Merancang sistem operasi personal multi-generasi di Notion (Universe V1/V2/V3) yang mengintegrasikan matriks self-discovery & Ikigai, manifestasi audio, cascading target 4 tingkat, kebiasaan harian, pembukuan arus kas, dan jurnal trading crypto terstruktur.",
         summaryZh:
           "基于 Notion 构建多代际进化的个人全景操作系统 (Universe V1/V2/V3)，深度融合自我认知与 Ikigai 心理矩阵、有声愿景显化、四级目标分解、自律日常追踪、收支流水追踪与机构级加密量化交易日志体系。",
+        liveUrl: "https://jem-angkasa.notion.site/Universe-V3-Template-19b1add6b60c80cfa828ff0237bed248",
       },
       {
         id: "algorithmic-forward-testing",
@@ -1026,6 +1114,7 @@ export const categoryEcosystems: CategoryEcosystemItem[] = [
           "Undergraduate thesis (Grade A) featuring weighted DCA cost tracking, floating PnL, win-rate metrics, risk-reward ratios, and drawdown curves.",
         summaryId:
           "Skripsi S1 iSTTS (Nilai A Sempurna) dengan kalkulasi rata-rata harga beli (DCA), unrealized PnL, win rate, dan kurva drawdown.",
+        githubUrl: "https://github.com/JAW12/TA_CatatCrypto",
       },
       {
         id: "about-me-numerology",
@@ -1382,7 +1471,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
       id: "knowledge-base-sparring",
       title: "Local Knowledge Base, Sparring & Retrieval Intelligence",
       titleId: "Knowledge Base Lokal, Sparring AI & Intelijen Retrieval",
-      titleZh: "本地私有知识库、AI 对抗性思维对练与智能检索体系",
+      titleZh: "本地知识库、AI 对抗性思维对练与智能检索体系",
       tagline: "Adversarial AI Dialectics, Multi-Perspective Reflection & Structured Markdown Knowledge Vaults",
       taglineId: "Dialektika AI Adversarial, Refleksi Multi-Sudut Pandang & Repositori Pengetahuan Markdown",
       taglineZh: "对抗性 AI 辩证思考、多维视角深度反思与 Obsidian 结构化 Markdown 知识库图谱",
@@ -1392,33 +1481,33 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
       roleId: "Arsitek Sistem Pengetahuan & Riset AI",
       roleZh: "知识库架构师与认知建模研究员",
       client: "Personal Research & Cognitive Modeling Architecture",
-      clientZh: "个人前沿认知建模与第二大脑私有知识中枢",
-      techStack: ["Hermes AI CLI", "Markdown Graph Structure", "Multi-Agent Sparring", "Obsidian Core", "Deterministic File Vaults"],
+      clientZh: "个人前沿认知建模与第二大脑知识中枢",
+      techStack: ["Hermes AI CLI", "Cloud LLMs (Inference)", "Markdown Graph Structure", "Multi-Agent Sparring", "Obsidian Core", "Deterministic File Vaults"],
       description:
-        "Engineered an offline-first knowledge retrieval and dialectical reasoning framework designed to sharpen complex ideas through structured adversarial AI debate. Organizes insights into interlinked markdown graph nodes, challenging hypotheses before system execution.",
+        "Engineered a hybrid knowledge retrieval and dialectical reasoning framework designed to sharpen complex ideas through structured adversarial AI debate. Organizes research into local interlinked markdown graph nodes in Obsidian vaults, while orchestrating multi-perspective sparring and reasoning via Cloud LLM models to stress-test hypotheses.",
       descriptionId:
-        "Membangun kerangka kerja retrieval pengetahuan dan penalaran dialektika AI untuk menguji dan mematangkan ide-ide kompleks melalui simulasi debat terstruktur. Menyusun wawasan dalam node Markdown yang saling terhubung untuk memvalidasi hipotesis riset.",
+        "Membangun kerangka kerja retrieval pengetahuan hybrid dan penalaran dialektika AI untuk menguji dan mematangkan ide-ide kompleks melalui simulasi debat terstruktur. Mengorganisasi riset dalam node Markdown lokal di vault Obsidian, serta mengorkestrasi sparring multi-sudut pandang berbasis Cloud LLM untuk memvalidasi hipotesis.",
       descriptionZh:
-        "构建离线优先的本地私有知识中枢与辩证思维对练框架。通过结构化对抗性 AI 辩论深度打磨复杂架构与商业决策，将提炼的洞见无缝编织入 Obsidian 双向链接知识图谱，在系统执行前实现严苛的反脆弱推演与假设验证。",
+        "构建混合式知识中枢与辩证思维对练框架。在本地 Obsidian 知识库中组织结构化 Markdown 双向图谱，并通过云端大模型驱动多智能体对抗性辩论与思维对练，在系统执行前实现严苛的反脆弱推演与假设验证。",
       highlights: [
-        "Structured bi-directional markdown knowledge networks enabling fluid cross-domain knowledge synthesis.",
-        "Configured adversarial multi-agent sparring roles to stress-test business strategies and technical architectures.",
-        "Guaranteed 100% data privacy and offline access through local filesystem-backed vault storage.",
+        "Structured bi-directional markdown knowledge networks in Obsidian enabling fluid cross-domain knowledge synthesis.",
+        "Configured adversarial multi-agent sparring roles powered by Cloud LLMs to stress-test business strategies and technical architectures.",
+        "Hybrid Architecture: Combined local filesystem markdown vault storage with high-capacity Cloud LLM reasoning pipelines.",
       ],
       highlightsId: [
-        "Menyusun jaringan pengetahuan Markdown dua arah untuk sintesis wawasan lintas disiplin yang terhubung erat.",
-        "Mengonfigurasi peran sparring multi-agen untuk menguji ketahanan strategi bisnis dan arsitektur teknis.",
-        "Menjamin privasi data 100% dan akses offline melalui repositori sistem berkas lokal.",
+        "Menyusun jaringan pengetahuan Markdown dua arah di Obsidian untuk sintesis wawasan lintas disiplin yang terhubung erat.",
+        "Mengonfigurasi peran sparring multi-agen berbasis Cloud LLM untuk menguji ketahanan strategi bisnis dan arsitektur teknis.",
+        "Arsitektur Hybrid: Memadukan penyimpanan vault sistem berkas Markdown lokal dengan pipeline penalaran Cloud LLM berkapasitas tinggi.",
       ],
       highlightsZh: [
-        "构建双向链接 Markdown 知识网络，实现跨领域高密度的知识碰撞与融合。",
-        "配置多角色对抗性 AI 陪练模式，在系统落地前压力测试商业策略与技术架构的抗脆弱性。",
-        "基于纯本地文件系统架构，提供 100% 绝对隐私保障与无网完全可用性。",
+        "在 Obsidian 中构建双向链接 Markdown 知识网络，实现跨领域高密度的知识碰撞与融合。",
+        "配置由云端大模型驱动的多角色对抗性 AI 陪练模式，压力测试商业策略与技术架构的抗脆弱性。",
+        "混合架构设计：将本地文件系统 Markdown 存储与云端大模型高阶推理管线高效整合。",
       ],
       metrics: [
-        { label: "Data Privacy", labelId: "Privasi Data", labelZh: "数据隐私性", value: "100% Local Storage", valueId: "100% Lokal", valueZh: "100% 本地存储" },
+        { label: "Architecture", labelId: "Arsitektur", labelZh: "系统架构", value: "Local Vault + Cloud LLM", valueId: "Vault Lokal + Cloud LLM", valueZh: "本地 Vault + 云端大模型" },
         { label: "Sparring Modes", labelId: "Mode Debat", labelZh: "思维对练模式", value: "Adversarial & Synthesis", valueId: "Adversarial & Sintesis", valueZh: "对抗性辩论与综合归纳" },
-        { label: "Vault Architecture", labelId: "Arsitektur Vault", labelZh: "知识库图谱", value: "Bi-Directional Graph", valueId: "Grafik Dua Arah", valueZh: "双向网状知识图谱" }
+        { label: "Vault Structure", labelId: "Struktur Vault", labelZh: "知识库图谱", value: "Bi-Directional Graph", valueId: "Grafik Dua Arah", valueZh: "双向网状知识图谱" }
       ],
       images: [
         "/assets/projects/ai-automation/ai-sparring.png",
@@ -1428,45 +1517,45 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
     },
     {
       id: "satu-ayat-ai",
-      title: "Satu Ayat Dari Tuhan: AI-Powered Bible Verse & Daily Reflection Web Platform",
-      titleId: "Satu Ayat Dari Tuhan: Platform Web Rekomendasi Ayat Alkitab & Refleksi Rohani Berbasis AI",
-      titleZh: "Satu Ayat Dari Tuhan: 基于 AI 的圣经金句推荐与灵修反思 Web 平台",
-      tagline: "Context-Aware Bible Reflections, Semantic Scripture Embeddings & Mindful Spiritual UI",
-      taglineId: "Refleksi Kontekstual Ayat Alkitab, Pencarian Semantik AI & Antarmuka Rohani Kontemplatif",
-      taglineZh: "情境感知圣经金句反思、语义检索与极简现代灵修界面",
-      year: "2025",
+      title: "Satu Ayat Dari Tuhan: AI Prompt Framework, Custom Gems & Devotional Content Workflow",
+      titleId: "Satu Ayat Dari Tuhan: Framework Prompt AI, Custom Gems & Workflow Konten Renungan",
+      titleZh: "Satu Ayat Dari Tuhan: AI 提示词框架、Custom Gems 与灵修内容创作工作流",
+      tagline: "Custom Gemini Gems, Structured Prompt Chaining & Automated Devotional Content Pipeline",
+      taglineId: "Custom Gems (Gemini), Alur Prompt Terstruktur & Pipeline Otomasi Konten Renungan Harian",
+      taglineZh: "Custom Gemini Gems、结构化提示词链与自动化灵修内容生成管线",
+      year: "2024 – 2025",
       category: "ai",
-      role: "Full-Stack Developer & Prompt Engineer",
-      roleId: "Pengembang Full-Stack & Prompt Engineer",
-      roleZh: "全栈开发工程师与提示词架构师",
-      client: "Satu Ayat Dari Tuhan (Independent Spiritual Tech Project)",
-      clientZh: "Satu Ayat Dari Tuhan (独立基督教灵修科技项目)",
-      techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "LLM Prompt Chaining", "Semantic Search", "Bible API"],
+      role: "Prompt Engineer & AI Workflow Architect",
+      roleId: "Prompt Engineer & Arsitek Workflow AI",
+      roleZh: "提示词架构师与 AI 内容工作流设计师",
+      client: "Satu Ayat Dari Tuhan (Personal Devotional Content Project)",
+      clientZh: "Satu Ayat Dari Tuhan (个人灵修与内容创作实验项目)",
+      techStack: ["Google Gemini (Custom Gems)", "Structured Prompt Engineering", "Few-Shot Prompt Chaining", "Content Pipeline Automation", "Editorial Curation", "Audience Engagement Strategy"],
       description:
-        "A mindful spiritual web application that delivers contextually relevant Bible verses and uplifting Christian reflections tailored to users' emotional states and life questions. Combines empathetic LLM prompt engineering with a tranquil, typography-first user interface.",
+        "Architected an end-to-end AI prompt framework and custom Google Gemini Gems workflow tailored to spiritual reflections. Converts raw daily devotional notes into polished, empathetic, and audience-resonant content drafts at scale, reducing drafting turnaround while preserving theological depth and personal tone.",
       descriptionId:
-        "Aplikasi web rohani modern yang menghadirkan rekomendasi ayat Alkitab kontekstual dan refleksi mendalam berdasarkan kondisi hati atau pergumulan hidup pengguna. Memadukan rekayasa prompt AI yang empatik dengan antarmuka berbasis tipografi yang teduh dan bebas distraksi.",
+        "Membangun framework rekayasa prompt AI menyeluruh dan workflow Custom Gems (Gemini) khusus untuk konten perenungan rohani. Mengubah catatan renungan harian pribadi menjadi draf konten yang matang, empatik, dan mudah diterima audiens secara cepat, memangkas waktu penulisan tanpa mengurangi kedalaman pesan dan orisinalitas.",
       descriptionZh:
-        "一款专注心灵静修的现代圣经 Web 应用程序，根据用户的当前情绪状态或人生感悟，智能推荐契合情境的圣经金句与灵修反思。深度结合共情式大模型提示词工程与静谧优雅的极简排版界面。",
+        "构建全流程 AI 提示词框架与专用 Custom Gemini Gems 工作流。将每日个人灵修笔记高效转化为文字精炼、富有共情力且极易被受众接纳的内容草稿，在大幅缩短创作周期的同时严密保留神学沉淀与个人真诚笔触。",
       highlights: [
-        "Empathetic Scripture Prompting: Crafted prompt chaining architecture mapping nuanced human emotions to tailored Bible verses.",
-        "Distraction-Free Contemplative UI: Designed clean, serene typography-first aesthetic fostering peace across desktop and mobile.",
-        "Instant Reflection Pipeline: Optimized client-side rendering delivering immediate scripture reflections and daily inspirational cards.",
+        "Custom Gemini Gems Architecture: Engineered specialized AI Gems with strict persona calibration, spiritual tone guidelines, and audience engagement parameters.",
+        "Multi-Stage Prompt Framework: Designed structured prompt chaining to extract core theological messages, craft relatable hooks, and structure carousel-ready copy.",
+        "Accelerated Drafting Workflow: Streamlined the daily creation cycle from raw contemplation to finalized publishing drafts with consistent emotional resonance.",
       ],
       highlightsId: [
-        "Arsitektur Prompt Alkitab Empatik: Merancang alur prompt AI bertingkat yang memetakan spektrum emosi manusia ke ayat-ayat Alkitab yang menguatkan.",
-        "Antarmuka Kontemplatif Tenang: Mendesain tampilan berbasis tipografi elegan yang nyaman dibaca untuk perenungan di mobile maupun desktop.",
-        "Kompilasi Refleksi Instan: Mengoptimalkan rendering sisi klien untuk menyajikan rekomendasi ayat dan kartu inspirasi harian seketika.",
+        "Arsitektur Custom Gemini Gems: Merancang Gems AI terdedikasi dengan kalibrasi persona, panduan gaya bahasa rohani, dan parameter keterlibatan audiens yang terarah.",
+        "Framework Prompt Bertingkat: Menyusun alur prompt chaining terstruktur untuk mengekstrak pesan inti, merancang hook yang relevan, dan menyusun draf konten carousel yang siap pakai.",
+        "Workflow Penulisan Cepat: Mempercepat siklus produksi harian dari renungan mentah menjadi draf publikasi siap rilis dengan resonansi emosional yang konsisten.",
       ],
       highlightsZh: [
-        "共情式圣经提示工程：原创设计多阶段提示词链，精准将复杂人类情绪映射至对应的圣经智慧与抚慰金句。",
-        "专注沉浸式极简排版：打造优雅宁静的排版界面，在桌面端与移动端均呈现出极具美感的阅读反思体验。",
-        "瞬时反思生成管线：优化前端渲染机制，实现毫秒级圣经金句检索与每日灵修卡片呈现。",
+        "定制 Gemini Gems 架构：配置专用 AI Gems 预设，精准校准人设语气、灵修文风规范与受众共鸣参数。",
+        "多阶段提示词框架：设计结构化提示词链，从灵修灵感中提炼核心要点、打造吸睛前言并生成图文轮播草稿。",
+        "高效内容产出工作流：极大加速从日常默想笔记到多平台分发草稿的创作周期，确保内容的一致共鸣与深度。",
       ],
       metrics: [
-        { label: "Reflection Latency", labelId: "Latensi Refleksi", labelZh: "反思响应耗时", value: "< 1.5s Streaming", valueId: "< 1.5d Streaming", valueZh: "< 1.5秒 流式响应" },
-        { label: "Scripture Source", labelId: "Sumber Kitab", labelZh: "灵修经文源", value: "Holy Bible (TB / KJV)", valueId: "Alkitab (TB / KJV)", valueZh: "圣经经文 (TB / KJV)" },
-        { label: "UI Focus", labelId: "Fokus Desain", labelZh: "界面体验", value: "Zero-Distraction Calm", valueId: "Bebas Distraksi & Tenang", valueZh: "极简沉浸零干扰" }
+        { label: "Workflow Efficiency", labelId: "Efisiensi Workflow", labelZh: "创作效率提升", value: "3x Faster Drafting", valueId: "3x Draf Lebih Cepat", valueZh: "草稿产出提速 3 倍" },
+        { label: "Framework Type", labelId: "Tipe Framework", labelZh: "框架形态", value: "Prompt & Custom Gems", valueId: "Prompt & Custom Gems", valueZh: "提示词与 Custom Gems" },
+        { label: "Content Output", labelId: "Output Konten", labelZh: "内容输出形式", value: "Daily Devotional Drafts", valueId: "Draf Renungan Harian", valueZh: "每日灵修图文草稿" }
       ],
       images: [
         "/assets/projects/ai-automation/satu-ayat/1.png",
@@ -1480,7 +1569,15 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "/assets/projects/ai-automation/satu-ayat/9.png",
         "/assets/projects/ai-automation/satu-ayat/10.png",
       ],
-      liveUrl: "https://satuayat.my.id",
+      liveUrl: "https://www.instagram.com/satuayatdarituhan/",
+      demoLinks: [
+        {
+          label: "Instagram @satuayatdarituhan",
+          labelId: "Instagram @satuayatdarituhan",
+          labelZh: "Instagram @satuayatdarituhan",
+          url: "https://www.instagram.com/satuayatdarituhan/",
+        },
+      ],
     },
     {
       id: "suno-ai-music-production",
@@ -1653,150 +1750,6 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "/assets/projects/software/Untitled 41.png"
       ],
       githubUrl: "https://github.com/JAW12/HTML-CSS-JS-Website-Tic-Tac-Toe-April-2022"
-    },
-    {
-      id: "battle-of-honor-game",
-      title: "Battle of Honor: Strategic Turn-Based Game Engine & Rule Balancing Patch",
-      titleId: "Battle of Honor: Engine Game Strategi Turn-Based & Patch Penyeimbangan",
-      titleZh: "Battle of Honor: 战棋回合制策略游戏引擎与核心数值平衡补丁 (CV Tri Mitra Dewata 商业外包)",
-      tagline: "Commercial Contract: Turn-Based State Machine, Dynamite vs Bomb Rule Balancing, Piece Counter & Audio System",
-      taglineId: "Kontrak Komersial: State Machine Turn-Based, Penyeimbangan Aturan Dinamit vs Bom, Penghitung Bidak & Kontrol Audio",
-      taglineZh: "商业外包合约：回合制有限状态机、炸药对决炸弹核心胜负平衡算法、棋盘实时计子与音频静音系统",
-      year: "2023",
-      category: "software",
-      role: "Lead Game Logic Programmer & Systems Specialist",
-      roleId: "Programmer Logika Game Utama & Spesialis Sistem",
-      roleZh: "主程序逻辑工程师与游戏数值平衡专家",
-      client: "CV Tri Mitra Dewata (Silva Berlina & Yongki)",
-      clientZh: "CV Tri Mitra Dewata (Silva Berlina & Yongki 委托)",
-      techStack: ["Game Logic Programming", "Turn-Based State Machine", "Rule Balancing", "Audio System Toggle", "Registration Sanitization", "Regression Testing"],
-      description:
-        "Contracted commercial freelance game development for CV Tri Mitra Dewata on the strategic turn-based board game 'Battle of Honor'. Refactored piece counter displays to accurately render single-unit states, sanitized player registration forms, reprogrammed dynamite explosion mechanics to balance exclusively against soldiers and bombs, balanced dynamite-versus-bomb draw rules, engineered turn-skip and surrender state machines, and integrated in-game audio mute controls.",
-      descriptionId:
-        "Pekerjaan freelance pengembangan game komersial untuk CV Tri Mitra Dewata pada game strategi papan turn-based 'Battle of Honor'. Memperbaiki tampilan jumlah bidak tunggal, menyederhanakan formulir registrasi awal, memperbarui logika ledakan dinamit agar seimbang saat berhadapan dengan prajurit dan bom, menyesuaikan aturan imbang dinamit vs bom, mengimplementasikan fungsi skip dan surrender turn-based, serta menambahkan fitur mute audio dalam game.",
-      descriptionZh:
-        "为 CV Tri Mitra Dewata 承接的商业回合制战棋策略游戏《Battle of Honor》核心玩法与规则平衡外包研发。系统重构了棋盘单子（即使为1）的实时计子渲染、净化用户初始注册流程、深度重构'炸药 (Dynamite)'仅在对决士兵与炸弹时的爆炸触发条件、平衡炸药与炸弹对决判平核心逻辑、实现跳过回合 (Skip) 与投降 (Surrender) 有限状态机，并开发了全局游戏静音音效控制组件。",
-      highlights: [
-        "Game Rule Re-engineering: Reprogrammed dynamite explosion logic ensuring fair competitive balance against soldiers and bombs.",
-        "Turn State Machine: Engineered robust skip-turn and surrender state machines preventing game desynchronization.",
-        "Piece Counter Accuracy: Refactored board piece rendering to accurately reflect unit quantities in real-time.",
-        "Audio Toggle System: Built seamless in-game audio mute controls without interrupting background gameplay threads.",
-        "Client SPK Compliance: Successfully completed all 6 contractual milestones on schedule with full regression test sign-off.",
-      ],
-      highlightsId: [
-        "Rekayasa Ulang Aturan Game: Memprogram ulang logika ledakan dinamit untuk menjaga keseimbangan kompetitif saat melawan prajurit dan bom.",
-        "State Machine Giliran: Membangun logika giliran skip dan surrender yang stabil tanpa risiko desinkronisasi alur game.",
-        "Akurasi Penghitung Bidak: Memperbaiki kalkulasi dan tampilan jumlah bidak pada papan secara real-time.",
-        "Sistem Mute Audio: Mengintegrasikan fitur mute suara di dalam permainan tanpa mengganggu jalannya gameplay.",
-        "Kepatuhan SPK Klien: Menyelesaikan seluruh 6 poin surat perintah kerja sesuai tenggat waktu dan lolos uji regresi.",
-      ],
-      highlightsZh: [
-        "游戏核心数值重构：重新编写炸药爆炸判定逻辑，确保其仅针对士兵和炸弹生效并实现完美的数值平衡性。",
-        "回合制状态机系统：构建稳健的回合跳过 (Skip) 与认输投降 (Surrender) 状态流转机制，杜绝游戏逻辑异常。",
-        "精准棋子计数器：重构棋盘渲染层逻辑，确保任意单子数量实时精确高亮呈现。",
-        "游戏全局静音系统：开发无缝的游戏内音频静音控制功能，平滑控制背景音效与打击音效。",
-        "合同交付完美履约：按期高质量交付全部6项 SPK 商业开发任务，通过严格的回归测试验收。",
-      ],
-      metrics: [
-        { label: "Contract Milestones", labelId: "Milestone Kontrak", labelZh: "合同研发里程碑", value: "6/6 Fully Delivered", valueId: "6/6 Selesai Lengkap", valueZh: "6/6 阶段全量交付" },
-        { label: "Turn Logic", labelId: "Logika Giliran", labelZh: "回合流转机制", value: "Skip & Surrender Engine", valueId: "Engine Skip & Surrender", valueZh: "跳过与投降机制引擎" },
-        { label: "Testing Standard", labelId: "Standar Pengujian", labelZh: "测试验收标准", value: "100% Full Regression Pass", valueId: "100% Lolos Uji Regresi", valueZh: "100% 全量回归测试通过" }
-      ],
-      images: [],
-    },
-    {
-      id: "nextjs-trpc-prisma-freelance",
-      title: "Next.js, Prisma ORM & tRPC Backend API & Data Persistence Suite",
-      titleId: "Backend API & Arsitektur Persistensi Data Next.js, Prisma ORM & tRPC",
-      titleZh: "Next.js + Prisma ORM + tRPC 高性能端到端类型安全后端架构 (商业外包)",
-      tagline: "Commercial Contract: Type-Safe Backend API, Prisma ORM Schema & User Data Persistence Pipeline",
-      taglineId: "Kontrak Komersial: API Backend Type-Safe, Skema ORM Prisma & Pipeline Persistensi Data Pengguna",
-      taglineZh: "商业外包合约：端到端强类型安全 API 路由、Prisma ORM 数据库建模与用户数据持久化系统",
-      year: "2023",
-      category: "software",
-      role: "Full-Stack Backend Engineer",
-      roleId: "Pengembang Backend Full-Stack",
-      roleZh: "全栈后端架构工程师",
-      client: "Patrick Hartono (Commercial Freelance)",
-      clientZh: "Patrick Hartono (商业外包项目)",
-      techStack: ["Next.js", "TypeScript", "tRPC", "Prisma ORM", "MySQL / PostgreSQL", "Zod Validation", "RESTful API"],
-      description:
-        "Engineered a type-safe backend API and persistent user data management architecture for client Patrick Hartono using Next.js, Prisma ORM, and tRPC. Built strongly-typed database models, automated migration scripts, type-safe API routers with Zod schema validation, and optimized CRUD repository pipelines ensuring zero runtime type mismatch.",
-      descriptionId:
-        "Membangun API backend type-safe dan arsitektur penyimpanan data pengguna untuk klien Patrick Hartono menggunakan Next.js, Prisma ORM, dan tRPC. Merancang model database relasional, skrip migrasi otomatis, router API dengan validasi skema Zod, dan alur CRUD optimal yang mencegah terjadinya type mismatch pada runtime.",
-      descriptionZh:
-        "为客户 Patrick Hartono 独立研发的全流程端到端类型安全后端 API 与用户持久化存储架构。基于 Next.js、Prisma ORM 与 tRPC 技术栈构建强类型数据模型与自动化迁移流水线，借助 Zod 模式校验实现全链路强类型 API 路由，打造高内聚、低耦合的 CRUD 仓储层，从根本上杜绝运行时类型错误。",
-      highlights: [
-        "End-to-End Type Safety: Integrated tRPC with Next.js and Prisma, providing automatic type inference from database schema to API consumer.",
-        "Zod Schema Validation: Enforced strict input sanitization and runtime schema validation across all mutation endpoints.",
-        "Prisma ORM Modeling: Architected normalized database relational tables with indexed foreign keys for high-performance querying.",
-        "Commercial Delivery: Successfully delivered on schedule with official invoice settlement and client sign-off.",
-      ],
-      highlightsId: [
-        "Type Safety End-to-End: Mengintegrasikan tRPC dengan Next.js dan Prisma untuk inferensi tipe otomatis dari database ke klien.",
-        "Validasi Skema Zod: Menerapkan sanitasi input ketat dan validasi skema runtime pada seluruh endpoint mutasi.",
-        "Pemodelan ORM Prisma: Merancang tabel database relasional ternormalisasi dengan indeks foreign key untuk kueri cepat.",
-        "Pengiriman Komersial: Menyelesaikan proyek tepat waktu dengan pelunasan faktur resmi dan persetujuan klien.",
-      ],
-      highlightsZh: [
-        "端到端强类型安全：将 tRPC、Next.js 与 Prisma ORM 深度结合，实现从数据库层到前端调用层的全自动类型推导。",
-        "Zod 严格模式校验：对全部 Mutation 接口与查询参数执行严格的输入过滤与运行时类型校验。",
-        "Prisma 规范化建模：设计高度范式化的关系型数据表并建立外键索引，大幅提升复杂查询检索性能。",
-        "商业外包圆满交付：按期高质量交付全部开发成果，开具正式结算发票并获客户完工验收确认。",
-      ],
-      metrics: [
-        { label: "Type Safety", labelId: "Keamanan Tipe", labelZh: "类型安全保障", value: "100% End-to-End Type-Safe", valueId: "100% Type-Safe End-to-End", valueZh: "100% 端到端全链路类型安全" },
-        { label: "ORM Layer", labelId: "Layer ORM", labelZh: "数据层架构", value: "Prisma 3NF Normalized", valueId: "Prisma 3NF Relasional", valueZh: "Prisma 3NF 关系范式" },
-        { label: "Validation Engine", labelId: "Engine Validasi", labelZh: "运行时校验", value: "Zod Schema Guard", valueId: "Validasi Zod Schema", valueZh: "Zod 模式守卫" }
-      ],
-      images: [],
-    },
-    {
-      id: "laravel-rbac-inertia-freelance",
-      title: "Multi-Tenant Role-Based Access Control (RBAC) & Auth Engine (Projects.co.id)",
-      titleId: "Engine Autentikasi & Role-Based Access Control (RBAC) Multi-Tenant (Projects.co.id)",
-      titleZh: "多租户 RBAC 权限管理系统与 Inertia.js 认证中间件 (Projects.co.id 商业外包)",
-      tagline: "Commercial Contract: Granular Permission Matrix, Multi-Role Middleware & Secure Session Auth Pipeline",
-      taglineId: "Kontrak Komersial: Matriks Izin Granular, Middleware Multi-Role & Pipeline Autentikasi Sesi Aman",
-      taglineZh: "商业外包合约：细粒度权限矩阵配置、多角色路由拦截中间件与企业级安全会话认证架构",
-      year: "2023",
-      category: "software",
-      role: "Backend Security & Architecture Freelancer",
-      roleId: "Freelancer Rekayasa Keamanan & Arsitektur Backend",
-      roleZh: "后端安全与权限架构工程师",
-      client: "Projects.co.id Client Contract",
-      clientZh: "Projects.co.id 平台客户外包合约",
-      techStack: ["PHP", "Laravel", "Inertia.js", "RBAC Middleware", "MySQL", "Authentication Security", "Session Storage"],
-      description:
-        "Architected a custom Role-Based Access Control (RBAC) and granular permission middleware engine for Laravel & Inertia.js client on Projects.co.id. Implemented dynamic role assignments, multi-level route protection, customizable permission matrices, and auditable user access controls with zero privilege escalation vulnerabilities.",
-      descriptionId:
-        "Merancang engine Role-Based Access Control (RBAC) dan middleware izin granular kustom untuk klien Laravel & Inertia.js pada Projects.co.id. Mengimplementasikan penetapan peran dinamis, proteksi rute bertingkat, matriks izin fleksibel, dan kontrol akses pengguna yang dapat diaudit tanpa kerentanan eskalasi hak akses.",
-      descriptionZh:
-        "在 Projects.co.id 承接的 Laravel 与 Inertia.js 企业级多租户基于角色的权限控制 (RBAC) 核心中间件架构。系统实现了动态角色与权限矩阵分配、多级端点路由拦截保护、操作审计追踪与细粒度视图层权限指令，彻底杜绝越权访问与权限提升安全隐患。",
-      highlights: [
-        "Granular RBAC Architecture: Designed flexible role and permission schema supporting dynamic permission bindings per user.",
-        "Custom Middleware Pipeline: Intercepted and validated request authorizations before reaching controller actions.",
-        "Inertia.js Frontend Binding: Synchronized user permission states seamlessly to Inertia.js client components.",
-        "Commercial Delivery: Successfully delivered on Projects.co.id with 100% test coverage and client rating.",
-      ],
-      highlightsId: [
-        "Arsitektur RBAC Granular: Merancang skema peran dan izin fleksibel yang mendukung pengikatan izin dinamis per pengguna.",
-        "Pipeline Middleware Kustom: Mengintersepsi dan memvalidasi otorisasi permintaan sebelum mencapai controller.",
-        "Integrasi Frontend Inertia.js: Menyinkronkan status izin pengguna secara seamless ke komponen klien Inertia.js.",
-        "Pengiriman Komersial: Berhasil diselesaikan di Projects.co.id dengan cakupan pengujian lengkap.",
-      ],
-      highlightsZh: [
-        "细粒度 RBAC 权限架构：设计高扩展性的角色-权限范式化数据库结构，支持按用户动态绑定个性化权限点。",
-        "专有安全中间件管线：在请求到达控制器核心逻辑前进行毫秒级权限拦截与严密身份鉴权校验。",
-        "Inertia.js 视图层无缝同步：将服务端权限上下文以轻量方式直接注入 Inertia.js 前端组件供条件渲染控制。",
-        "商业外包高质量交付：在 Projects.co.id 平台圆满结项并获得客户高满意度评价。",
-      ],
-      metrics: [
-        { label: "Access Control", labelId: "Kontrol Akses", labelZh: "权限控制模型", value: "Granular Multi-Tenant RBAC", valueId: "RBAC Multi-Tenant Granular", valueZh: "多租户细粒度 RBAC" },
-        { label: "Middleware Pipeline", labelId: "Pipeline Middleware", labelZh: "中间件安全拦截", value: "Multi-Role Guard", valueId: "Guard Multi-Role", valueZh: "多角色守卫拦截" },
-        { label: "Platform Stack", labelId: "Stack Platform", labelZh: "技术架构栈", value: "Laravel + Inertia + Vue", valueId: "Laravel + Inertia + Vue", valueZh: "Laravel + Inertia + Vue 架构" }
-      ],
-      images: [],
     },
     {
       id: "qlp-backend",
@@ -2401,77 +2354,6 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
       ]
     },
     {
-      id: "mobile-computing-suite",
-      title: "Java Android Mobile Computing Suite (Chat, News, Tokopedia Clone, Connect 4)",
-      titleId: "Suite Aplikasi Mobile Computing Java Android (Chat, Portal Berita, E-Commerce, Connect 4)",
-      titleZh: "Java Android 原生移动计算应用套件 (即时聊天、新闻门户、电商原型、四子棋对弈)",
-      tagline: "Native Android Architecture: Socket Networking, JSON News Feed Ingestion & 2D Matrix Game Engine",
-      taglineId: "Arsitektur Android Native: Jaringan Socket, Integrasi Feed Berita JSON & Engine Game Matriks",
-      taglineZh: "原生 Android 开发体系：Socket 通信、JSON 资讯聚合、复杂布局与四子棋双人对弈矩阵",
-      year: "2020",
-      category: "web",
-      role: "Android Native Developer",
-      roleId: "Pengembang Android Native",
-      roleZh: "Android 原生应用开发工程师",
-      client: "iSTTS Mobile Computing (Grade A)",
-      clientZh: "iSTTS 移动计算工程实践 (Grade A)",
-      techStack: ["Java Native Android", "Android SDK", "Socket Networking", "JSON Parsing", "RecyclerView", "XML Layouts"],
-      description:
-        "Comprehensive suite of 4 native Java Android mobile applications engineered during undergraduate studies at iSTTS: (1) Be Like Chatting (Socket messaging), (2) News Portal Reader (JSON feed parsing & web view), (3) Tokopedia-like E-Commerce Catalog (complex nested layouts & cart), and (4) Connect Four Board Game (2D matrix win-detection engine).",
-      descriptionId:
-        "Rangkaian 4 aplikasi mobile Android Java native komprehensif yang dibangun selama studi di iSTTS: (1) Be Like Chatting (pesan socket), (2) News Portal Reader (parsing feed JSON & webview), (3) Katalog Tokopedia-like (tata letak kompleks & keranjang), dan (4) Game Papan Connect Four (engine deteksi kemenangan matriks 2D).",
-      descriptionZh:
-        "iSTTS 移动计算课程开发的 4 套 Java Android 原生应用合集：(1) Be Like Chatting 即时通信应用 (Socket 消息传输), (2) 新闻资讯门户阅读器 (RESTful JSON 异步解析与 WebView 渲染), (3) 类 Tokopedia 移动电商原型 (复杂嵌套布局与加车结算), (4) Connect Four 四子棋对弈 (2D 棋盘落子重力与四连胜向量判定)。",
-      highlights: [
-        "Built 4 production-grade native Android applications across social, media, e-commerce, and gaming domains.",
-        "Implemented asynchronous JSON network parsing, socket listeners, and responsive XML view hierarchies.",
-        "Engineered Connect Four gravity disc dropping physics and 4-in-a-row diagonal/orthogonal win logic."
-      ],
-      highlightsId: [
-        "Membangun 4 aplikasi Android native fungsional di ranah sosial, media, e-commerce, dan game.",
-        "Penerapan parsing jaringan JSON asinkron, listener socket, dan hierarki tampilan XML responsif.",
-        "Engine fisika gravitasi koin Connect Four dan deteksi kemenangan 4 bidak segaris."
-      ],
-      highlightsZh: [
-        "涵盖社交即时通信、媒体资讯、电商购物与棋盘博弈四大领域的原生 Android 应用。",
-        "实现异步 JSON 网络请求解析、Socket 监听机制与高效 XML 布局渲染。",
-        "自主研发四子棋重力落子动画与横/竖/斜四连胜状态判定引擎。"
-      ],
-      metrics: [
-        { label: "Academic Evaluation", labelId: "Evaluasi Akademik", labelZh: "学术评审等级", value: "Grade A Honors", valueId: "Nilai A Sempurna", valueZh: "最高满分 A 评定" },
-        { label: "App Suite Count", labelId: "Jumlah Aplikasi", labelZh: "涵盖独立应用数", value: "4 Native Apps", valueId: "4 Aplikasi Native", valueZh: "4 款原生移动应用" },
-        { label: "Framework", labelId: "Framework Mobile", labelZh: "移动原生架构", value: "Java Android SDK", valueId: "Java Android SDK", valueZh: "Java Android SDK 原生开发" }
-      ],
-      images: [],
-      githubUrl: "https://github.com/JAW12/Java-Android-Application-Sederhana-Belajar-Membuat-Aplikasi-Android-untuk-Pemula-Oktober-2020",
-      blueprintFlow: [
-        {
-          step: "Socket Messaging & JSON Feed",
-          stepId: "Pesan Socket & Feed JSON",
-          stepZh: "Socket 通信与 JSON 异步解析",
-          detail: "Real-time packet transmission and structured REST API serialization",
-          detailId: "Pengiriman paket real-time dan serialisasi REST API terstruktur",
-          detailZh: "实时数据包收发与 REST API 结构化反序列化"
-        },
-        {
-          step: "Nested XML Layouts & Adapters",
-          stepId: "Tata Letak XML & Adapter",
-          stepZh: "嵌套布局与高效适配器",
-          detail: "Custom RecyclerView viewholders with optimized view recycling",
-          detailId: "Viewholder RecyclerView kustom dengan daur ulang memori efisien",
-          detailZh: "自定义 RecyclerView ViewHolder 实现内存极低占用渲染"
-        },
-        {
-          step: "2D Matrix Board Mechanics",
-          stepId: "Mekanika Papan Matriks 2D",
-          stepZh: "2D 矩阵棋盘判定引擎",
-          detail: "Column-gravity disc stacking and 4-in-a-row win state evaluation",
-          detailId: "Penumpukan koin berbasis gravitasi dan evaluasi kemenangan 4 koin",
-          detailZh: "基于列重力的落子堆叠与四向四连胜向量扫描判定"
-        }
-      ]
-    },
-    {
       id: "squeecourse-lms",
       title: "SqueeCourse Online Learning & Course Management System",
       titleId: "Sistem Manajemen Kursus & Pembelajaran Online SqueeCourse",
@@ -2505,7 +2387,8 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
       images: [
         "/assets/projects/squeecourse/squeecourse_logo.png",
         "/assets/projects/squeecourse/squeecourse_banner.jpg"
-      ]
+      ],
+      githubUrl: "https://github.com/JAW12/FAI_SqueeCourse",
     },
     {
       id: "car-dealership-web",
@@ -2754,7 +2637,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         "/assets/projects/software/Untitled 31.png",
         "/assets/projects/software/Untitled 32.png"
       ],
-      githubUrl: "https://github.com/JAW12/PROYEK_GAME_SPACE_SHOOTER",
+      githubUrl: "https://github.com/JAW12/PBO",
       blueprintFlow: [
         {
           step: "OOP Entity Hierarchy",
@@ -3115,7 +2998,9 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Storage Standard", labelId: "Standar Suhu", labelZh: "冷链温控标准", value: "-18°C Cold Chain Standard", valueId: "Standar Rantai Dingin -18°C", valueZh: "-18°C 恒温工业冷链标准" }
       ],
       liveUrl: "https://www.instagram.com/gudangbuahbeku/",
+      githubUrl: "https://github.com/JAW12/KP_KARYA_BUAH_TROPIS",
       demoLinks: [
+        { label: "GitHub Repository (KP)", labelId: "Repositori GitHub (KP)", url: "https://github.com/JAW12/KP_KARYA_BUAH_TROPIS" },
         { label: "Instagram Official", labelId: "Instagram Resmi", url: "https://www.instagram.com/gudangbuahbeku/" },
         { label: "Tokopedia Storefront", labelId: "Toko Tokopedia", url: "https://www.tokopedia.com/durmedbuahbeku" },
         { label: "Product Video Showcase", labelId: "Video Produk Pilihan", url: "https://youtu.be/rWxuPuyaEYo" },
@@ -3400,10 +3285,32 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
         { label: "Core Modules", labelId: "Modul Utama", labelZh: "核心架构模块", value: "Journal, Ikigai & Finance", valueId: "Jurnal, Ikigai & Finansial", valueZh: "日程管理 · Ikigai · 个人财务" },
         { label: "Public Releases", labelId: "Template Publik", labelZh: "公开发布版本", value: "Live Notion Templates", valueId: "Template Notion Publik", valueZh: "全套 Notion 公开模板" }
       ],
-      liveUrl: "https://jem-angkasa.notion.site/Universe-V3-Template-19b1add6b60c80cfa828ff0237bed248?source=copy_link",
+      liveUrl: "https://jem-angkasa.notion.site/Universe-V3-Template-19b1add6b60c80cfa828ff0237bed248",
       demoLinks: [
-        { label: "Universe V3 Template (Live)", labelId: "Template Universe V3 (Live)", url: "https://jem-angkasa.notion.site/Universe-V3-Template-19b1add6b60c80cfa828ff0237bed248?source=copy_link" },
-        { label: "Universe V2 Template (Live)", labelId: "Template Universe V2 (Live)", url: "https://jem-angkasa.notion.site/Universe-V2-Template-12988f341a5c48768e18ad20b4841fa6?pvs=73" }
+        {
+          label: "Universe V3 Template",
+          labelId: "Template Universe V3",
+          labelZh: "Universe V3 模板",
+          url: "https://jem-angkasa.notion.site/Universe-V3-Template-19b1add6b60c80cfa828ff0237bed248"
+        },
+        {
+          label: "Universe V2 Template",
+          labelId: "Template Universe V2",
+          labelZh: "Universe V2 模板",
+          url: "https://jem-angkasa.notion.site/Universe-V2-Template-12988f341a5c48768e18ad20b4841fa6?pvs=25"
+        },
+        {
+          label: "Universe V1 Template",
+          labelId: "Template Universe V1",
+          labelZh: "Universe V1 模板",
+          url: "https://jem-angkasa.notion.site/Universe-V1-Template-b14929f6b12f4549906945060db75ea7?pvs=25"
+        },
+        {
+          label: "Trading Journal Template",
+          labelId: "Template Trading Journal",
+          labelZh: "量化交易日志模板",
+          url: "https://jem-angkasa.notion.site/Trading-Journal-Template-22534daeb989485aab99edbbe08340f4"
+        }
       ],
       images: [
         "/assets/projects/software/notion-templates-hub.png",
@@ -4119,13 +4026,13 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
     },
     {
       id: "istts-daily-vlog",
-      title: "iSTTS Student Life Cinematic Daily Vlog",
-      titleId: "Vlog Sinematik Keseharian Mahasiswa iSTTS",
-      titleZh: "iSTTS 大学生活日常纪实与胶片质感微纪录短片",
-      tagline: "Cinematic Color Grade, Ambient Soundscapes & Campus Life Narrative Pacing",
-      taglineId: "Pewarnaan Sinematik, Tata Suara Ambien & Ritme Narasi Kehidupan Kampus",
-      taglineZh: "电影级调色、沉浸式环境音效与青春校园叙事节奏",
-      year: "2019",
+      title: "COVID-19 Era: Cinematic Daily Routine & Remote Study Vlog (iSTTS)",
+      titleId: "Vlog Sinematik Keseharian & Kuliah Online Era Pandemi COVID-19 (iSTTS)",
+      titleZh: "iSTTS 疫情居家网课时期个人日常与微纪录短片 (COVID-19)",
+      tagline: "Cinematic Color Grade, Ambient Soundscapes & COVID-19 Pandemic Daily Routine Narrative",
+      taglineId: "Pewarnaan Sinematik, Tata Suara Ambien & Rutinitas Keseharian Era Pandemi COVID-19",
+      taglineZh: "电影级调色、环境音效与疫情居家网课时期的真实生活节奏",
+      year: "2020",
       category: "design",
       role: "Cinematographer, Director & Video Editor",
       roleId: "Sinematografer, Sutradara & Editor Video",
@@ -4134,25 +4041,25 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
       clientZh: "iSTTS 影视创意创作工作坊",
       techStack: ["Adobe Premiere Pro", "Lumetri Color", "DSLR Cinematography", "B-Roll Storytelling", "Audio Mixing"],
       description:
-        "Cinematic daily vlog capturing the rhythm of student life at iSTTS: commute routes, lectures, creative studio sessions, and peer collaboration. Features warm filmic color grading, dynamic transitions, and natural ambient audio layering.",
+        "A cinematic personal vlog documenting daily life routines, remote online university study, and personal projects during the COVID-19 pandemic. Showcases contemplative B-roll storytelling, warm filmic color grading, rhythmic soundtrack pacing, and rich ambient audio layering from home.",
       descriptionId:
-        "Vlog harian sinematik yang menangkap dinamika kehidupan mahasiswa di iSTTS: perjalanan ke kampus, suasana kuliah, sesi studio kreatif, dan kerja kelompok. Menampilkan grading warna filmis yang hangat, transisi dinamis, dan layering audio ambien alami.",
+        "Vlog personal sinematik yang mendokumentasikan rutinitas kehidupan harian, kuliah online dari rumah, dan proyek pribadi selama masa pandemi COVID-19. Menampilkan penceritaan visual berbasis B-roll kontemplatif, grading warna filmis yang hangat, ritme musik dinamis, dan layering audio ambien suasana rumah.",
       descriptionZh:
-        "以电影级视听语言纪录 iSTTS 大学校园日常的微纪录 Vlog：生动捕捉穿梭通勤、阶梯教室听讲、创意设计工坊实践与同学团队协作。全篇采用暖调胶片色彩方案、无缝转场剪辑与沉浸式现场环境音分层。",
+        "一部记录 COVID-19 疫情居家隔离与远程网课时期真实生活节奏的电影感微纪录 Vlog。生动记录居家学习、个人探索与日常作息，融合沉浸式氛围镜头、暖调胶片色彩方案与音画节奏剪辑。",
       highlights: [
-        "Crafted dynamic narrative flow combining smooth handheld B-roll with rhythmic music pacing.",
-        "Applied tailored Lumetri Color curves achieving a nostalgic warm film aesthetic.",
-        "Mixed ambient foley with background melodies for immersive spatial immersion."
+        "Contemplative Pandemic Narrative: Captured the authentic rhythm of daily life and online remote study during COVID-19.",
+        "Cinematic Color Grading: Applied tailored Lumetri Color curves achieving a warm, nostalgic film aesthetic.",
+        "Rhythmic B-Roll & Foley Layering: Synced handheld domestic B-roll with dynamic music and rich ambient soundscapes."
       ],
       highlightsId: [
-        "Membangun alur narasi dinamis memadukan b-roll genggam yang stabil dengan ketukan musik yang pas.",
-        "Menerapkan grading kurva Lumetri Color khusus untuk menciptakan estetika film hangat yang berkesan.",
-        "Memadukan suara ambien sekitar dengan melodi musik latar untuk menghadirkan suasana yang hidup."
+        "Narasi Masa Pandemi Kontemplatif: Menangkap ritme autentik keseharian dan kuliah online dari rumah selama pandemi COVID-19.",
+        "Grading Warna Sinematik: Menerapkan kurva Lumetri Color khusus untuk menciptakan estetika filmis hangat yang nostalgik.",
+        "Layering B-Roll & Foley Dinamis: Menyelaraskan footage B-roll genggam dengan ketukan musik serta suasana ambien audio yang hidup."
       ],
       highlightsZh: [
-        "将流畅的手持特写镜头与背景音乐鼓点节奏严丝合缝卡点剪辑。",
-        "独立调校 Lumetri Color 曲线与胶片颗粒，呈现极具质感的暖调人文色调。",
-        "精细混合校园环境白噪音与轻快配乐，营造身临其境的空间沉浸感。"
+        "疫情日常真实叙事：纪实还原疫情居家网课期间的自律作息、专注学习与内心独白。",
+        "电影感专业校色：独立调校 Lumetri Color 曲线与胶片颗粒，呈现极具质感的人文暖色调。",
+        "声画同步与环境拟音：将居家特写镜头与背景音乐节奏严丝合缝卡点，融合生活环境白噪音。"
       ],
       metrics: [
         { label: "Resolution", labelId: "Resolusi Video", labelZh: "视频画质", value: "1080p 60 FPS Cinematic", valueId: "1080p 60 FPS Sinematik", valueZh: "1080p 60帧电影感画质" },
@@ -4527,8 +4434,7 @@ export const comprehensiveCategoryProjects: Record<string, ProjectItem[]> = {
       ],
       images: [
         "/assets/projects/design/big-chicken-box.jpg",
-        "/assets/projects/design/big-chicken-frozen.png",
-        "/assets/projects/design/Packaging_Ayam_Bumbu_Desember_2012.png"
+        "/assets/projects/design/big-chicken-frozen.png"
       ],
       blueprintFlow: [
         {

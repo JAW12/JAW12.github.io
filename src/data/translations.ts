@@ -233,6 +233,7 @@ export interface TranslationContent {
     name: string;
     tagline: string;
     downloadCv: string;
+    downloadPortfolio: string;
     availabilityStatus: string;
     navTitle: string;
     navHome: string;
@@ -579,7 +580,8 @@ export const translations: Record<Language, TranslationContent> = {
     footer: {
       name: "Jem Angkasa Wijaya, S.Kom.",
       tagline: "Bridging business operations with resilient web systems and AI workflows.",
-      downloadCv: "Download Portfolio (PDF)",
+      downloadCv: "Download CV (PDF)",
+      downloadPortfolio: "Download Portfolio (PDF)",
       availabilityStatus: "Open for Full-time Roles & Strategic Consulting",
       navTitle: "NAVIGATION",
       navHome: "Home / Overview",
@@ -929,7 +931,8 @@ export const translations: Record<Language, TranslationContent> = {
     footer: {
       name: "Jem Angkasa Wijaya, S.Kom.",
       tagline: "Menjembatani operasional bisnis dengan sistem web andal dan alur kerja AI.",
-      downloadCv: "Unduh Portofolio (PDF)",
+      downloadCv: "Unduh CV (PDF)",
+      downloadPortfolio: "Unduh Portofolio (PDF)",
       availabilityStatus: "Terbuka untuk Posisi Penuh & Konsultasi Strategis",
       navTitle: "NAVIGASI",
       navHome: "Beranda / Ikhtisar",
@@ -1279,7 +1282,8 @@ export const translations: Record<Language, TranslationContent> = {
     footer: {
       name: "Jem Angkasa Wijaya (林永安)",
       tagline: "将实际商业运作与现代全栈 Web 架构及 AI 自动化深度融合。",
-      downloadCv: "下载作品集 (PDF)",
+      downloadCv: "下载 CV (PDF)",
+      downloadPortfolio: "下载作品集 (PDF)",
       availabilityStatus: "开放全职职位与战略系统架构咨询",
       navTitle: "全站导航",
       navHome: "首页 / 个人履历概览",
