@@ -14,11 +14,6 @@ import { Footer } from "@/components/Footer";
 import dynamic from "next/dynamic";
 import { PdfExportOptions } from "@/components/PdfExportModal";
 
-const PdfExportModal = dynamic(
-  () => import("@/components/PdfExportModal").then((mod) => mod.PdfExportModal),
-  { ssr: false }
-);
-
 const RecruiterCheatSheetModal = dynamic(
   () => import("@/components/RecruiterCheatSheetModal").then((mod) => mod.RecruiterCheatSheetModal),
   { ssr: false }
@@ -36,9 +31,8 @@ import { MouseSpotlight } from "@/components/MouseSpotlight";
 import { CosmicAtmosphere } from "@/components/CosmicAtmosphere";
 
 export default function Home() {
-  const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
   const [isCheatSheetOpen, setIsCheatSheetOpen] = useState(false);
-  const [exportOptions, setExportOptions] = useState<PdfExportOptions>({
+  const [exportOptions] = useState<PdfExportOptions>({
     track: "all",
     includeHero: true,
     includeAbout: true,
@@ -49,6 +43,10 @@ export default function Home() {
     includeCredentials: true,
     includeContact: true,
   });
+
+  const handleDirectPrint = () => {
+    window.print();
+  };
 
   // Global 'C' hotkey for Recruiter Cheat Sheet
   React.useEffect(() => {
@@ -80,13 +78,13 @@ export default function Home() {
           {/* Screen Only Interactive Website */}
         <div className="print-hidden">
           <Navbar
-            onOpenPdfModal={() => setIsPdfModalOpen(true)}
+            onOpenPdfModal={handleDirectPrint}
             onOpenCheatSheet={() => setIsCheatSheetOpen(true)}
           />
           <main>
             {/* 1. Hero */}
             <HeroSection
-              onOpenPdfModal={() => setIsPdfModalOpen(true)}
+              onOpenPdfModal={handleDirectPrint}
               onOpenCheatSheet={() => setIsCheatSheetOpen(true)}
             />
 
@@ -111,20 +109,10 @@ export default function Home() {
             {/* 9. Contacts */}
             <ContactSection />
           </main>
-          <Footer onOpenPdfModal={() => setIsPdfModalOpen(true)} />
+          <Footer onOpenPdfModal={handleDirectPrint} />
 
           {/* Floating Luxury Back to Top & Reading Progress Capsule */}
           <FloatingScrollProgress />
-
-          {/* Notion-Style Granular PDF Exporter Modal */}
-          {isPdfModalOpen && (
-            <PdfExportModal
-              isOpen={isPdfModalOpen}
-              onClose={() => setIsPdfModalOpen(false)}
-              exportOptions={exportOptions}
-              setExportOptions={setExportOptions}
-            />
-          )}
 
           {/* Recruiter Cheat Sheet Modal */}
           {isCheatSheetOpen && (
@@ -133,14 +121,19 @@ export default function Home() {
               onClose={() => setIsCheatSheetOpen(false)}
               onOpenPdfModal={() => {
                 setIsCheatSheetOpen(false);
-                setIsPdfModalOpen(true);
+                setTimeout(() => {
+                  handleDirectPrint();
+                }, 150);
               }}
             />
           )}
         </div>
 
-        {/* Dedicated Print Only Document Container */}
-        <PrintableDocument exportOptions={exportOptions} />
+        {/* Dedicated Print Only Document Container — hidden on screen, visible only when printing */}
+        <div className="hidden print:block">
+          <PrintableDocument exportOptions={exportOptions} />
+        </div>
+
 
       </div>
       </PageTransitionProvider>

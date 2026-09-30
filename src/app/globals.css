@@ -101,29 +101,41 @@ body {
     height: auto !important;
     margin: 0 !important;
     padding: 0 !important;
-    background-color: #09090b !important;
+    background-color: #08090d !important;
     color: #f4f4f5 !important;
     font-size: 10pt;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Hide screen-only interactive UI */
+  /* Hide screen-only interactive UI, portals, modals, and overlays completely */
   .no-print,
-  .print-hidden {
+  .print-hidden,
+  [role="dialog"],
+  [aria-modal="true"],
+  .fixed.inset-0:not(.printable-document-container) {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
 
-  /* Show print container exclusively */
+  /* Show print container exclusively — flex column so slides stack perfectly */
   .printable-document-container {
-    display: block !important;
+    display: flex !important;
+    flex-direction: column !important;
     width: 297mm !important;
     margin: 0 auto !important;
     padding: 0 !important;
-    background-color: #09090b !important;
+    background-color: #08090d !important;
     color: #f4f4f5 !important;
   }
 
-  /* Discrete Landscape Slide Page (Exactly 297mm x 210mm) */
+  /*
+   * Discrete Landscape Slide Page (Exactly 297mm x 210mm)
+   * IMPORTANT: Do NOT add padding here — SlideWrapper sets
+   * padding: 6mm 10mm via inline style. Adding it here causes
+   * double-padding and wasted whitespace.
+   */
   .print-landscape-page {
     display: flex !important;
     flex-direction: column !important;
@@ -139,9 +151,8 @@ body {
     box-sizing: border-box !important;
     overflow: hidden !important;
     position: relative !important;
-    background-color: #09090b !important;
+    background-color: #08090d !important;
     color: #f4f4f5 !important;
-    padding: 10mm 12mm !important;
   }
 
   .print-landscape-page:last-child {
@@ -153,7 +164,26 @@ body {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
+
+  /* Ensure images render with correct colors in print */
+  img {
+    max-width: 100% !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Freeze all animations — clean, sharp PDF output */
+  .animate-pulse,
+  .animate-spin,
+  .animate-marquee,
+  .animate-marquee-fast,
+  .animate-marquee-slow,
+  [class*="animate-"] {
+    animation: none !important;
+    transition: none !important;
+  }
 }
+
 
 /* Infinite Marquee Animation */
 @keyframes marquee {

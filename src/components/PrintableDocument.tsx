@@ -23,8 +23,43 @@ import {
   Package,
   CheckCircle2,
   Share2,
+  Building2,
+  Network,
+  Database,
+  Layers,
+  Bot,
+  Search,
+  Workflow,
+  Terminal,
+  Code2,
+  Sparkles,
+  FileCode,
+  Snowflake,
+  ShieldCheck,
+  Boxes,
+  FileCheck,
+  TrendingUp,
+  BarChart3,
+  Compass,
+  FileSpreadsheet,
+  Wrench,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
+import {
+  NextjsIcon,
+  ReactIcon,
+  TypeScriptIcon,
+  TailwindIcon,
+  LaravelIcon,
+  MysqlIcon,
+  CSharpIcon,
+  JavaIcon,
+  PythonIcon,
+  DockerIcon,
+  LinuxIcon,
+  FigmaIcon,
+  N8nIcon,
+} from "@/components/TechIcons";
 
 interface PrintableDocumentProps {
   exportOptions: PdfExportOptions;
@@ -214,27 +249,57 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
     return language === "zh" ? item.subtitleZh : language === "id" ? item.subtitleId : item.subtitleEn;
   };
 
-  // Smart Chunking configuration for Showcase slides:
+  const getActionLabel = (type: "email" | "whatsapp" | "linkedin" | "github" | "portfolio") => {
+    if (language === "zh") {
+      switch (type) {
+        case "email": return "发送邮件 ↗";
+        case "whatsapp": return "即时通讯 ↗";
+        case "linkedin": return "查看领英 ↗";
+        case "github": return "查看仓库 ↗";
+        case "portfolio": return "访问网站 ↗";
+      }
+    }
+    if (language === "id") {
+      switch (type) {
+        case "email": return "Kirim Email ↗";
+        case "whatsapp": return "Chat WhatsApp ↗";
+        case "linkedin": return "Lihat Profil ↗";
+        case "github": return "Buka Repository ↗";
+        case "portfolio": return "Kunjungi Web ↗";
+      }
+    }
+    switch (type) {
+      case "email": return "Send Email ↗";
+      case "whatsapp": return "WhatsApp Chat ↗";
+      case "linkedin": return "View Profile ↗";
+      case "github": return "View GitHub ↗";
+      case "portfolio": return "Visit Website ↗";
+    }
+  };
+
+  // Smart Chunking configuration for Showcase slides (Max 3 cards per page for full detail & zero truncation):
   const categoryChunkConfigs: Record<string, number[]> = {
-    ai: [4, 3],
-    software: [6, 6, 7],
-    business: [6],
-    data: [4, 3],
-    design: [6, 5, 5],
+    ai: [3, 3],
+    software: [3, 3, 3, 3, 3, 3],
+    business: [3, 2],
+    data: [3, 3],
+    design: [3, 3, 3, 3, 3],
   };
 
   const chunkProjects = (catKey: string, projects: ProjectItem[]) => {
-    const sizes = categoryChunkConfigs[catKey] || [6];
+    const flagshipIds = flagshipProjects.map((f) => f.id);
+    const nonFlagshipProjects = projects.filter((p) => !flagshipIds.includes(p.id));
+    const sizes = categoryChunkConfigs[catKey] || [3];
     const chunks: ProjectItem[][] = [];
     let curIdx = 0;
     for (const size of sizes) {
-      if (curIdx < projects.length) {
-        chunks.push(projects.slice(curIdx, curIdx + size));
+      if (curIdx < nonFlagshipProjects.length) {
+        chunks.push(nonFlagshipProjects.slice(curIdx, curIdx + size));
         curIdx += size;
       }
     }
-    if (curIdx < projects.length) {
-      chunks.push(projects.slice(curIdx));
+    if (curIdx < nonFlagshipProjects.length) {
+      chunks.push(nonFlagshipProjects.slice(curIdx));
     }
     return chunks;
   };
@@ -411,17 +476,16 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
 
       <div className="relative z-10 flex flex-col h-full justify-between overflow-hidden">
         <HeaderBar sectionTitle={sectionTitle} categoryBadge={categoryBadge} currentPage={currentPage} />
-        <div className="flex-1 flex flex-col justify-center overflow-hidden min-h-0">{children}</div>
+        <div className="flex-1 flex flex-col justify-between overflow-hidden min-h-0">{children}</div>
         <FooterBar />
       </div>
     </div>
   );
 
-  // Universal Balanced Showcase Card Component with Taller 4:3 Image Ratio & Rich Deliverables
+  // Universal Balanced Showcase Card Component with Taller 4:3 Image Ratio & Rich Full Content (Zero Ellipsis)
   const ShowcaseCard = ({
     proj,
     accentColor = "amber",
-    isDense = false,
   }: {
     proj: ProjectItem;
     accentColor?: "purple" | "emerald" | "amber" | "rose" | "cyan";
@@ -467,11 +531,11 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
 
     return (
       <div
-        className={`p-3 rounded-xl bg-[#0e0f14]/95 border ${c.border} flex flex-col justify-between shadow-md hover:border-white/20 transition-all h-full`}
+        className={`p-3.5 rounded-xl bg-[#0e0f14]/95 border ${c.border} flex flex-col justify-between shadow-md hover:border-white/20 transition-all h-full`}
       >
         <div className="space-y-1.5">
           {hasImage && firstImage ? (
-            <div className={`w-full ${isDense ? "h-26" : "h-36"} rounded-lg overflow-hidden bg-zinc-950 border border-zinc-800/80 relative shadow-inner`}>
+            <div className="w-full rounded-lg overflow-hidden bg-zinc-950 border border-zinc-800/80 relative shadow-inner aspect-[4/3] max-h-[165px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={firstImage} alt={getTitle(proj)} className="w-full h-full object-cover" />
               <div className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded bg-black/85 backdrop-blur-sm text-[9px] font-mono text-zinc-300 border border-zinc-700 font-bold">
@@ -491,25 +555,25 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
 
           <div>
             {hasImage && (
-              <div className={`text-[10px] font-mono ${c.text} font-bold tracking-wide uppercase line-clamp-1`}>
+              <div className={`text-[9.5px] font-mono ${c.text} font-bold tracking-wide uppercase`}>
                 {getRole(proj)}
               </div>
             )}
-            <h3 className="text-[13px] font-bold text-white line-clamp-1 mt-0.5 tracking-tight">
+            <h3 className="text-[13px] font-bold text-white mt-0.5 tracking-tight leading-snug">
               {getTitle(proj)}
             </h3>
           </div>
 
-          <p className={`text-[10.5px] text-zinc-300 ${isDense ? "line-clamp-2" : "line-clamp-3"} leading-relaxed font-light`}>
+          <p className="text-[10px] text-zinc-300 leading-relaxed font-light">
             {getDescription(proj)}
           </p>
 
-          {/* Render 1-2 Key Highlights for 3-item / 4-item grids to fill space with valuable context */}
-          {!isDense && highlightsList && highlightsList.length > 0 && (
-            <div className="space-y-0.5 pt-0.5">
-              {highlightsList.slice(0, 1).map((hl, i) => (
-                <div key={i} className="flex items-start space-x-1.5 text-[9.5px] text-zinc-300 line-clamp-1">
-                  <span className={`${c.text} font-bold`}>✓</span>
+          {/* Render Key Highlights fully without truncation */}
+          {highlightsList && highlightsList.length > 0 && (
+            <div className="space-y-1 pt-0.5">
+              {highlightsList.slice(0, 2).map((hl, i) => (
+                <div key={i} className="flex items-start space-x-1.5 text-[9px] text-zinc-300 leading-tight">
+                  <span className={`${c.text} font-bold mt-0.5 shrink-0`}>✓</span>
                   <span>{hl}</span>
                 </div>
               ))}
@@ -519,7 +583,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
 
         <div className="space-y-1.5 pt-1.5 border-t border-zinc-800/80 mt-1.5">
           <div className="flex flex-wrap gap-1">
-            {getTechStack(proj).slice(0, isDense ? 3 : 5).map((tech) => (
+            {getTechStack(proj).slice(0, 5).map((tech) => (
               <span
                 key={tech}
                 className="px-1.5 py-0.2 rounded bg-zinc-950 text-zinc-300 text-[8.5px] font-mono border border-zinc-800"
@@ -530,7 +594,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
           </div>
 
           <div className="flex items-center justify-between text-[9px] font-mono text-zinc-400 pt-0.5">
-            <span className="line-clamp-1 text-zinc-400">{getClient(proj) || "Commercial / Open-Source"}</span>
+            <span className="text-zinc-400">{getClient(proj) || "Commercial / Open-Source"}</span>
             <div className="flex items-center space-x-2 shrink-0">
               {proj.githubUrl && (
                 <a
@@ -740,20 +804,20 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
             {/* Left Column: Core Philosophy Quote & Vitrine Metadata (5 cols) */}
             <div className="col-span-5 flex flex-col justify-between space-y-2.5">
               {/* Core Philosophy Quote Block */}
-              <div className="p-3.5 rounded-xl bg-gradient-to-br from-amber-500/10 via-zinc-900/90 to-zinc-950 border border-amber-400/30 shadow-md relative flex flex-col justify-between flex-1">
+              <div className="p-5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-zinc-900/90 to-zinc-950 border border-amber-400/40 shadow-lg relative flex flex-col justify-between flex-1">
                 <div>
-                  <div className="flex items-center space-x-1.5 text-amber-400 font-mono text-[10px] uppercase tracking-widest mb-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-                    <span>{language === "zh" ? "核心工程哲学" : language === "id" ? "FILOSOFI SISTEM & REKAYASA" : "CORE ENGINEERING PHILOSOPHY"}</span>
+                  <div className="flex items-center space-x-2 text-amber-400 font-mono text-[10.5px] uppercase tracking-widest mb-2.5">
+                    <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                    <span className="font-semibold">{language === "zh" ? "核心工程哲学" : language === "id" ? "FILOSOFI SISTEM & REKAYASA" : "CORE ENGINEERING PHILOSOPHY"}</span>
                   </div>
-                  <blockquote className="font-serif text-[13.5px] italic text-zinc-100 font-light leading-relaxed border-l-2 border-amber-400/80 pl-3 py-0.5">
+                  <blockquote className="font-serif text-[17.5px] italic text-amber-50 font-light leading-relaxed border-l-3 border-amber-400 pl-4 py-1">
                     &ldquo;{t.about.quote || "A good system is straightforward: it resolves real operational friction without creating new headaches for the people running it."}&rdquo;
                   </blockquote>
                 </div>
 
-                <div className="mt-2 pt-1.5 border-t border-amber-400/20 flex items-center justify-between text-[10px] font-mono text-zinc-400">
-                  <span className="text-amber-400 font-medium">JEM ANGKASA WIJAYA</span>
-                  <span>SURABAYA, ID</span>
+                <div className="mt-3 pt-2.5 border-t border-amber-400/25 flex items-center justify-between text-[10.5px] font-mono text-zinc-400">
+                  <span className="text-amber-400 font-semibold tracking-wide">JEM ANGKASA WIJAYA</span>
+                  <span className="text-zinc-400">SURABAYA, ID</span>
                 </div>
               </div>
 
@@ -846,183 +910,223 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
             </p>
           </div>
 
-          {/* Grid of TOC Cards (4 cols x 2 rows) */}
-          <div className="grid grid-cols-4 gap-2.5 flex-1 items-stretch">
+          {/* Grid of TOC Cards (4 cols x 2 rows) - Rich & Balanced */}
+          <div className="grid grid-cols-4 gap-3.5 flex-1 items-stretch py-1">
             {/* Section 1: Intro */}
-            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-zinc-800 flex flex-col justify-between shadow-sm">
-              <div className="space-y-1">
-                <div className="text-[9.5px] font-mono font-bold text-amber-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
-                  01 · INTRODUCTION
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col justify-between shadow-md">
+              <div className="space-y-1.5">
+                <div className="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-wider pb-1.5 border-b border-zinc-800 flex justify-between items-center">
+                  <span>01 · INTRODUCTION</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
                 </div>
-                <div className="space-y-0.5 text-[10.5px] font-mono">
-                  <div className="flex justify-between text-zinc-300">
+                <div className="space-y-1 text-[11px] font-mono">
+                  <div className="flex justify-between text-zinc-300 py-0.5 border-b border-zinc-800/40">
                     <span>Executive Cover Spread</span>
                     <span className="text-amber-400 font-bold">P. {String(slideHero).padStart(2, "0")}</span>
                   </div>
-                  <div className="flex justify-between text-zinc-300">
+                  <div className="flex justify-between text-zinc-300 py-0.5 border-b border-zinc-800/40">
                     <span>About & Philosophy</span>
                     <span className="text-amber-400 font-bold">P. {String(slideAbout).padStart(2, "0")}</span>
                   </div>
-                  <div className="flex justify-between text-zinc-300">
+                  <div className="flex justify-between text-zinc-300 py-0.5">
                     <span>Table of Contents</span>
                     <span className="text-amber-400 font-bold">P. {String(slideIndex).padStart(2, "0")}</span>
                   </div>
                 </div>
               </div>
+              <div className="pt-2 border-t border-zinc-800/80 text-[9px] font-mono text-zinc-500 flex justify-between items-center">
+                <span className="uppercase tracking-wider">Executive Overview</span>
+                <span className="px-1.5 py-0.5 rounded bg-zinc-950 text-zinc-400 border border-zinc-800">3 Pages</span>
+              </div>
             </div>
 
             {/* Section 2: AI & Automation */}
-            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-purple-500/30 flex flex-col justify-between shadow-sm">
-              <div className="space-y-1">
-                <div className="text-[9.5px] font-mono font-bold text-purple-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
-                  02 · AI & AUTOMATION
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-purple-500/30 flex flex-col justify-between shadow-md">
+              <div className="space-y-1.5">
+                <div className="text-[10px] font-mono font-bold text-purple-400 uppercase tracking-wider pb-1.5 border-b border-zinc-800 flex justify-between items-center">
+                  <span>02 · AI & AUTOMATION</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
                 </div>
-                <div className="space-y-0.5 text-[10.5px] font-mono">
-                  <div className="flex justify-between text-zinc-300">
+                <div className="space-y-1 text-[11px] font-mono">
+                  <div className="flex justify-between text-zinc-300 py-0.5 border-b border-zinc-800/40">
                     <span>Flagship: The Secret of Life</span>
                     <span className="text-purple-400 font-bold">P. {String(slideAiFlagship).padStart(2, "0")}</span>
                   </div>
                   {slideAiShowcase.map((pNum, idx) => (
-                    <div key={pNum} className="flex justify-between text-zinc-300">
+                    <div key={pNum} className="flex justify-between text-zinc-300 py-0.5">
                       <span>Showcase Part {idx + 1}/{slideAiShowcase.length}</span>
                       <span className="text-purple-400 font-bold">P. {String(pNum).padStart(2, "0")}</span>
                     </div>
                   ))}
                 </div>
               </div>
+              <div className="pt-2 border-t border-zinc-800/80 text-[9px] font-mono text-zinc-500 flex justify-between items-center">
+                <span className="uppercase tracking-wider">Hermes & Generative AI</span>
+                <span className="px-1.5 py-0.5 rounded bg-zinc-950 text-purple-400 border border-purple-500/30">3 Pages</span>
+              </div>
             </div>
 
             {/* Section 3: Software Development */}
-            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-emerald-500/30 flex flex-col justify-between shadow-sm">
-              <div className="space-y-1">
-                <div className="text-[9.5px] font-mono font-bold text-emerald-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
-                  03 · SOFTWARE DEV
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-emerald-500/30 flex flex-col justify-between shadow-md">
+              <div className="space-y-1.5">
+                <div className="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider pb-1.5 border-b border-zinc-800 flex justify-between items-center">
+                  <span>03 · SOFTWARE DEV</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                 </div>
-                <div className="space-y-0.5 text-[10.5px] font-mono">
-                  <div className="flex justify-between text-zinc-300">
+                <div className="space-y-1 text-[11px] font-mono">
+                  <div className="flex justify-between text-zinc-300 py-0.5 border-b border-zinc-800/40">
                     <span>Flagship: CocokGa</span>
                     <span className="text-emerald-400 font-bold">P. {String(slideSoftwareFlagship).padStart(2, "0")}</span>
                   </div>
                   {slideSoftwareShowcase.map((pNum, idx) => (
-                    <div key={pNum} className="flex justify-between text-zinc-300">
+                    <div key={pNum} className="flex justify-between text-zinc-300 py-0.5">
                       <span>Showcase Part {idx + 1}/{slideSoftwareShowcase.length}</span>
                       <span className="text-emerald-400 font-bold">P. {String(pNum).padStart(2, "0")}</span>
                     </div>
                   ))}
                 </div>
               </div>
+              <div className="pt-2 border-t border-zinc-800/80 text-[9px] font-mono text-zinc-500 flex justify-between items-center">
+                <span className="uppercase tracking-wider">Full-Stack & Systems</span>
+                <span className="px-1.5 py-0.5 rounded bg-zinc-950 text-emerald-400 border border-emerald-500/30">7 Pages</span>
+              </div>
             </div>
 
             {/* Section 4: Business Operations */}
-            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-amber-500/30 flex flex-col justify-between shadow-sm">
-              <div className="space-y-1">
-                <div className="text-[9.5px] font-mono font-bold text-amber-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
-                  04 · BUSINESS OPS
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-amber-500/30 flex flex-col justify-between shadow-md">
+              <div className="space-y-1.5">
+                <div className="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-wider pb-1.5 border-b border-zinc-800 flex justify-between items-center">
+                  <span>04 · BUSINESS OPS</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
                 </div>
-                <div className="space-y-0.5 text-[10.5px] font-mono">
-                  <div className="flex justify-between text-zinc-300">
+                <div className="space-y-1 text-[11px] font-mono">
+                  <div className="flex justify-between text-zinc-300 py-0.5 border-b border-zinc-800/40">
                     <span>Flagship: Nangka Premium</span>
                     <span className="text-amber-400 font-bold">P. {String(slideBusinessFlagship).padStart(2, "0")}</span>
                   </div>
-                  {slideBusinessShowcase.map((pNum) => (
-                    <div key={pNum} className="flex justify-between text-zinc-300">
-                      <span>Showcase (6 Systems)</span>
+                  {slideBusinessShowcase.map((pNum, idx) => (
+                    <div key={pNum} className="flex justify-between text-zinc-300 py-0.5">
+                      <span>Showcase Part {idx + 1}/{slideBusinessShowcase.length}</span>
                       <span className="text-amber-400 font-bold">P. {String(pNum).padStart(2, "0")}</span>
                     </div>
                   ))}
                 </div>
               </div>
+              <div className="pt-2 border-t border-zinc-800/80 text-[9px] font-mono text-zinc-500 flex justify-between items-center">
+                <span className="uppercase tracking-wider">Cold-Chain & Startups</span>
+                <span className="px-1.5 py-0.5 rounded bg-zinc-950 text-amber-400 border border-amber-500/30">3 Pages</span>
+              </div>
             </div>
 
             {/* Section 5: Market Research & Data Analysis */}
-            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-rose-500/30 flex flex-col justify-between shadow-sm">
-              <div className="space-y-1">
-                <div className="text-[9.5px] font-mono font-bold text-rose-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
-                  05 · MARKET RESEARCH & DATA
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-rose-500/30 flex flex-col justify-between shadow-md">
+              <div className="space-y-1.5">
+                <div className="text-[10px] font-mono font-bold text-rose-400 uppercase tracking-wider pb-1.5 border-b border-zinc-800 flex justify-between items-center">
+                  <span>05 · DATA & QUANT</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
                 </div>
-                <div className="space-y-0.5 text-[10.5px] font-mono">
-                  <div className="flex justify-between text-zinc-300">
+                <div className="space-y-1 text-[11px] font-mono">
+                  <div className="flex justify-between text-zinc-300 py-0.5 border-b border-zinc-800/40">
                     <span>Flagship: CatatCrypto</span>
                     <span className="text-rose-400 font-bold">P. {String(slideDataFlagship).padStart(2, "0")}</span>
                   </div>
                   {slideDataShowcase.map((pNum, idx) => (
-                    <div key={pNum} className="flex justify-between text-zinc-300">
+                    <div key={pNum} className="flex justify-between text-zinc-300 py-0.5">
                       <span>Showcase Part {idx + 1}/{slideDataShowcase.length}</span>
                       <span className="text-rose-400 font-bold">P. {String(pNum).padStart(2, "0")}</span>
                     </div>
                   ))}
                 </div>
               </div>
+              <div className="pt-2 border-t border-zinc-800/80 text-[9px] font-mono text-zinc-500 flex justify-between items-center">
+                <span className="uppercase tracking-wider">Quant Models & Portfolios</span>
+                <span className="px-1.5 py-0.5 rounded bg-zinc-950 text-rose-400 border border-rose-500/30">3 Pages</span>
+              </div>
             </div>
 
             {/* Section 6: Brand & Multimedia */}
-            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-purple-500/30 flex flex-col justify-between shadow-sm">
-              <div className="space-y-1">
-                <div className="text-[9.5px] font-mono font-bold text-purple-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
-                  06 · BRAND & MULTIMEDIA
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-purple-500/30 flex flex-col justify-between shadow-md">
+              <div className="space-y-1.5">
+                <div className="text-[10px] font-mono font-bold text-purple-400 uppercase tracking-wider pb-1.5 border-b border-zinc-800 flex justify-between items-center">
+                  <span>06 · BRAND & MULTIMEDIA</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
                 </div>
-                <div className="space-y-0.5 text-[10.5px] font-mono">
-                  <div className="flex justify-between text-zinc-300">
+                <div className="space-y-1 text-[11px] font-mono">
+                  <div className="flex justify-between text-zinc-300 py-0.5 border-b border-zinc-800/40">
                     <span>Flagship: Jan&apos;Ok (26 Outlets)</span>
                     <span className="text-purple-400 font-bold">P. {String(slideDesignFlagship).padStart(2, "0")}</span>
                   </div>
                   {slideDesignShowcase.map((pNum, idx) => (
-                    <div key={pNum} className="flex justify-between text-zinc-300">
+                    <div key={pNum} className="flex justify-between text-zinc-300 py-0.5">
                       <span>Showcase Part {idx + 1}/{slideDesignShowcase.length}</span>
                       <span className="text-purple-400 font-bold">P. {String(pNum).padStart(2, "0")}</span>
                     </div>
                   ))}
                 </div>
               </div>
+              <div className="pt-2 border-t border-zinc-800/80 text-[9px] font-mono text-zinc-500 flex justify-between items-center">
+                <span className="uppercase tracking-wider">Industrial Dielines & Video</span>
+                <span className="px-1.5 py-0.5 rounded bg-zinc-950 text-purple-400 border border-purple-500/30">6 Pages</span>
+              </div>
             </div>
 
             {/* Section 7: Career & Skills */}
-            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-sky-500/30 flex flex-col justify-between shadow-sm">
-              <div className="space-y-1">
-                <div className="text-[9.5px] font-mono font-bold text-sky-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
-                  07 · CAREER & SKILLS
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-sky-500/30 flex flex-col justify-between shadow-md">
+              <div className="space-y-1.5">
+                <div className="text-[10px] font-mono font-bold text-sky-400 uppercase tracking-wider pb-1.5 border-b border-zinc-800 flex justify-between items-center">
+                  <span>07 · CAREER & SKILLS</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
                 </div>
-                <div className="space-y-0.5 text-[10.5px] font-mono">
-                  <div className="flex justify-between text-zinc-300">
+                <div className="space-y-1 text-[11px] font-mono">
+                  <div className="flex justify-between text-zinc-300 py-0.5 border-b border-zinc-800/40">
                     <span>Career Timeline (1/2)</span>
                     <span className="text-sky-400 font-bold">P. {String(slideExp1).padStart(2, "0")}</span>
                   </div>
-                  <div className="flex justify-between text-zinc-300">
+                  <div className="flex justify-between text-zinc-300 py-0.5 border-b border-zinc-800/40">
                     <span>Career Timeline (2/2)</span>
                     <span className="text-sky-400 font-bold">P. {String(slideExp2).padStart(2, "0")}</span>
                   </div>
-                  <div className="flex justify-between text-zinc-300">
+                  <div className="flex justify-between text-zinc-300 py-0.5">
                     <span>4 Engineering Pillars</span>
                     <span className="text-sky-400 font-bold">P. {String(slideSkills).padStart(2, "0")}</span>
                   </div>
                 </div>
               </div>
+              <div className="pt-2 border-t border-zinc-800/80 text-[9px] font-mono text-zinc-500 flex justify-between items-center">
+                <span className="uppercase tracking-wider">Track Record & Matrix</span>
+                <span className="px-1.5 py-0.5 rounded bg-zinc-950 text-sky-400 border border-sky-500/30">3 Pages</span>
+              </div>
             </div>
 
             {/* Section 8: Credentials & Closing */}
-            <div className="p-2.5 rounded-lg bg-zinc-900/80 border border-zinc-700 flex flex-col justify-between shadow-sm">
-              <div className="space-y-1">
-                <div className="text-[9.5px] font-mono font-bold text-amber-400 uppercase tracking-wider pb-1 border-b border-zinc-800">
-                  08 · CREDENTIALS & CLOSING
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-zinc-700 flex flex-col justify-between shadow-md">
+              <div className="space-y-1.5">
+                <div className="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-wider pb-1.5 border-b border-zinc-800 flex justify-between items-center">
+                  <span>08 · CREDENTIALS & CLOSING</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
                 </div>
-                <div className="space-y-0.5 text-[10.5px] font-mono">
-                  <div className="flex justify-between text-zinc-300">
+                <div className="space-y-1 text-[11px] font-mono">
+                  <div className="flex justify-between text-zinc-300 py-0.5 border-b border-zinc-800/40">
                     <span>Formal Education & Awards</span>
                     <span className="text-amber-400 font-bold">P. {String(slideCred1).padStart(2, "0")}</span>
                   </div>
-                  <div className="flex justify-between text-zinc-300">
+                  <div className="flex justify-between text-zinc-300 py-0.5 border-b border-zinc-800/40">
                     <span>Leadership & Organizations</span>
                     <span className="text-amber-400 font-bold">P. {String(slideCred2).padStart(2, "0")}</span>
                   </div>
-                  <div className="flex justify-between text-zinc-300">
+                  <div className="flex justify-between text-zinc-300 py-0.5 border-b border-zinc-800/40">
                     <span>Certifications & Trilingual</span>
                     <span className="text-amber-400 font-bold">P. {String(slideCred3).padStart(2, "0")}</span>
                   </div>
-                  <div className="flex justify-between text-zinc-300">
+                  <div className="flex justify-between text-zinc-300 py-0.5">
                     <span>Contact & Direct Closing</span>
                     <span className="text-amber-400 font-bold">P. {String(slideContact).padStart(2, "0")}</span>
                   </div>
                 </div>
+              </div>
+              <div className="pt-2 border-t border-zinc-800/80 text-[9px] font-mono text-zinc-500 flex justify-between items-center">
+                <span className="uppercase tracking-wider">Degrees & Outreach</span>
+                <span className="px-1.5 py-0.5 rounded bg-zinc-950 text-amber-400 border border-amber-400/30">4 Pages</span>
               </div>
             </div>
           </div>
@@ -1109,27 +1213,31 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               </div>
 
               {/* Right: Dual Visual Previews */}
-              <div className="col-span-5 flex flex-col space-y-2.5">
-                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={p.images?.[0] || "/assets/projects/secret-of-life/white_desk.png"}
-                    alt="The Secret of Life Cover"
-                    className="w-full h-34 object-cover"
-                  />
-                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+              <div className="col-span-5 flex flex-col space-y-3 h-full max-h-[610px] justify-between">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md h-[290px] max-h-[290px] flex flex-col">
+                  <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.images?.[0] || "/assets/projects/secret-of-life/white_desk.png"}
+                      alt="The Secret of Life Cover"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800 shrink-0">
                     {getAssetCaption("secret-of-life", 0)}
                   </div>
                 </div>
 
-                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={p.images?.[4] || p.images?.[1] || "/assets/projects/hermes/hermes_command_center.png"}
-                    alt="Hermes Orchestrator CLI"
-                    className="w-full h-34 object-cover"
-                  />
-                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md h-[290px] max-h-[290px] flex flex-col">
+                  <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.images?.[4] || p.images?.[1] || "/assets/projects/hermes/hermes_command_center.png"}
+                      alt="Hermes Orchestrator CLI"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800 shrink-0">
                     {getAssetCaption("secret-of-life", 1)}
                   </div>
                 </div>
@@ -1138,6 +1246,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
           </SlideWrapper>
         );
       })()}
+
 
       {/* =========================================================================
           SLIDES 05-06: AI SHOWCASE (CHUNKED BALANCED 4 + 3)
@@ -1155,9 +1264,9 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               <p className="text-[10.5px] text-zinc-400 font-mono">{getCategorySubtitle("ai")}</p>
             </div>
 
-            <div className={`grid ${chunk.length === 4 ? "grid-cols-2 gap-3" : "grid-cols-3 gap-3"} flex-1 items-stretch`}>
+            <div className={`grid ${chunk.length <= 2 ? "grid-cols-2 gap-4" : "grid-cols-3 gap-3.5"} flex-1 items-stretch`}>
               {chunk.map((proj) => (
-                <ShowcaseCard key={proj.id} proj={proj} accentColor="purple" isDense={chunk.length >= 6} />
+                <ShowcaseCard key={proj.id} proj={proj} accentColor="purple" />
               ))}
             </div>
           </div>
@@ -1244,27 +1353,31 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               </div>
 
               {/* Right: Dual Visual Previews */}
-              <div className="col-span-5 flex flex-col space-y-2.5">
-                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={p.images?.[0] || "/assets/projects/cocokga/result.png"}
-                    alt="CocokGa Analysis Breakdown"
-                    className="w-full h-34 object-cover"
-                  />
-                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+              <div className="col-span-5 flex flex-col space-y-3 h-full max-h-[610px] justify-between">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md h-[290px] max-h-[290px] flex flex-col">
+                  <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.images?.[0] || "/assets/projects/cocokga/result.png"}
+                      alt="CocokGa Analysis Breakdown"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800 shrink-0">
                     {getAssetCaption("cocokga", 0)}
                   </div>
                 </div>
 
-                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={p.images?.[1] || "/assets/projects/cocokga/hero.png"}
-                    alt="Arcade Mode Scoring Engine"
-                    className="w-full h-34 object-cover"
-                  />
-                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md h-[290px] max-h-[290px] flex flex-col">
+                  <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.images?.[1] || "/assets/projects/cocokga/hero.png"}
+                      alt="Arcade Mode Scoring Engine"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800 shrink-0">
                     {getAssetCaption("cocokga", 1)}
                   </div>
                 </div>
@@ -1273,6 +1386,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
           </SlideWrapper>
         );
       })()}
+
 
       {/* =========================================================================
           SLIDES 08-10: SOFTWARE DEV SHOWCASE (CHUNKED 6 + 6 + 7)
@@ -1290,9 +1404,9 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               <p className="text-[10.5px] text-zinc-400 font-mono">{getCategorySubtitle("software")}</p>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 flex-1 items-stretch">
+            <div className={`grid ${chunk.length <= 2 ? "grid-cols-2 gap-4" : "grid-cols-3 gap-3.5"} flex-1 items-stretch`}>
               {chunk.map((proj) => (
-                <ShowcaseCard key={proj.id} proj={proj} accentColor="emerald" isDense={true} />
+                <ShowcaseCard key={proj.id} proj={proj} accentColor="emerald" />
               ))}
             </div>
           </div>
@@ -1379,27 +1493,31 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               </div>
 
               {/* Right: Dual Visual Previews */}
-              <div className="col-span-5 flex flex-col space-y-2.5">
-                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={p.images?.[0] || "/assets/projects/nangka-premium/single_front.png"}
-                    alt="Nangka Packaging Render"
-                    className="w-full h-34 object-cover"
-                  />
-                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+              <div className="col-span-5 flex flex-col space-y-3 h-full max-h-[610px] justify-between">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md h-[290px] max-h-[290px] flex flex-col">
+                  <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.images?.[0] || "/assets/projects/nangka-premium/single_front.png"}
+                      alt="Nangka Packaging Render"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800 shrink-0">
                     {getAssetCaption("nangka-premium", 0)}
                   </div>
                 </div>
 
-                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={p.images?.[1] || "/assets/projects/nangka-premium/nangka_hero.png"}
-                    alt="PT. Karya Buah Tropis Showcase"
-                    className="w-full h-34 object-cover"
-                  />
-                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md h-[290px] max-h-[290px] flex flex-col">
+                  <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.images?.[1] || "/assets/projects/nangka-premium/nangka_hero.png"}
+                      alt="PT. Karya Buah Tropis Showcase"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800 shrink-0">
                     {getAssetCaption("nangka-premium", 1)}
                   </div>
                 </div>
@@ -1425,9 +1543,9 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               <p className="text-[10.5px] text-zinc-400 font-mono">{getCategorySubtitle("business")}</p>
             </div>
 
-            <div className="grid grid-cols-3 gap-2.5 flex-1 items-stretch">
+            <div className={`grid ${chunk.length <= 2 ? "grid-cols-2 gap-4" : "grid-cols-3 gap-3.5"} flex-1 items-stretch`}>
               {chunk.map((proj) => (
-                <ShowcaseCard key={proj.id} proj={proj} accentColor="amber" isDense={true} />
+                <ShowcaseCard key={proj.id} proj={proj} accentColor="amber" />
               ))}
             </div>
           </div>
@@ -1514,27 +1632,31 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               </div>
 
               {/* Right: Dual Visual Previews */}
-              <div className="col-span-5 flex flex-col space-y-2.5">
-                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={p.images?.[0] || "/assets/projects/catatcrypto/dashboard.png"}
-                    alt="CatatCrypto Dashboard"
-                    className="w-full h-34 object-cover"
-                  />
-                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+              <div className="col-span-5 flex flex-col space-y-3 h-full max-h-[610px] justify-between">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md h-[290px] max-h-[290px] flex flex-col">
+                  <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.images?.[0] || "/assets/projects/catatcrypto/dashboard.png"}
+                      alt="CatatCrypto Dashboard"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800 shrink-0">
                     {getAssetCaption("catatcrypto", 0)}
                   </div>
                 </div>
 
-                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={p.images?.[1] || "/assets/projects/catatcrypto/ta.png"}
-                    alt="Technical Analytics Suite"
-                    className="w-full h-34 object-cover"
-                  />
-                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md h-[290px] max-h-[290px] flex flex-col">
+                  <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.images?.[1] || "/assets/projects/catatcrypto/ta.png"}
+                      alt="Technical Analytics Suite"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800 shrink-0">
                     {getAssetCaption("catatcrypto", 1)}
                   </div>
                 </div>
@@ -1560,9 +1682,9 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               <p className="text-[10.5px] text-zinc-400 font-mono">{getCategorySubtitle("data")}</p>
             </div>
 
-            <div className={`grid ${chunk.length === 4 ? "grid-cols-2 gap-3" : "grid-cols-3 gap-3"} flex-1 items-stretch`}>
+            <div className={`grid ${chunk.length <= 2 ? "grid-cols-2 gap-4" : "grid-cols-3 gap-3.5"} flex-1 items-stretch`}>
               {chunk.map((proj) => (
-                <ShowcaseCard key={proj.id} proj={proj} accentColor="rose" isDense={chunk.length >= 6} />
+                <ShowcaseCard key={proj.id} proj={proj} accentColor="rose" />
               ))}
             </div>
           </div>
@@ -1649,27 +1771,31 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               </div>
 
               {/* Right: Dual Visual Previews */}
-              <div className="col-span-5 flex flex-col space-y-2.5">
-                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={p.images?.[0] || "/assets/projects/branding/janok_packaging.png"}
-                    alt="Packaging Box Dieline"
-                    className="w-full h-34 object-cover"
-                  />
-                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+              <div className="col-span-5 flex flex-col space-y-3 h-full max-h-[610px] justify-between">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md h-[290px] max-h-[290px] flex flex-col">
+                  <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.images?.[0] || "/assets/projects/branding/janok_packaging.png"}
+                      alt="Packaging Box Dieline"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800 shrink-0">
                     {getAssetCaption("jan-ok", 0)}
                   </div>
                 </div>
 
-                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={p.images?.[1] || "/assets/projects/branding/janok_brochure.png"}
-                    alt="Franchise Brochure"
-                    className="w-full h-34 object-cover"
-                  />
-                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800">
+                <div className="rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 shadow-md h-[290px] max-h-[290px] flex flex-col">
+                  <div className="relative flex-1 min-h-0 w-full bg-zinc-950 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.images?.[1] || "/assets/projects/branding/janok_brochure.png"}
+                      alt="Franchise Brochure"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-1.5 bg-zinc-950 text-[9px] font-mono text-zinc-400 border-t border-zinc-800 shrink-0">
                     {getAssetCaption("jan-ok", 1)}
                   </div>
                 </div>
@@ -1695,9 +1821,9 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               <p className="text-[10.5px] text-zinc-400 font-mono">{getCategorySubtitle("design")}</p>
             </div>
 
-            <div className={`grid ${chunk.length <= 4 ? "grid-cols-2 gap-3" : "grid-cols-3 gap-2.5"} flex-1 items-stretch`}>
+            <div className={`grid ${chunk.length <= 2 ? "grid-cols-2 gap-4" : "grid-cols-3 gap-3.5"} flex-1 items-stretch`}>
               {chunk.map((proj) => (
-                <ShowcaseCard key={proj.id} proj={proj} accentColor="purple" isDense={chunk.length >= 6} />
+                <ShowcaseCard key={proj.id} proj={proj} accentColor="purple" />
               ))}
             </div>
           </div>
@@ -1718,38 +1844,40 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
             </p>
           </div>
 
-          <div className="relative pl-5 border-l-2 border-amber-400/50 space-y-2.5 flex-1 flex flex-col justify-around my-auto">
+          <div className="relative pl-6 border-l-2 border-amber-400/50 flex-1 flex flex-col justify-between py-1 gap-3">
             {experiencesData.slice(0, 3).map((exp, idx) => (
-              <div key={idx} className="relative group">
+              <div key={idx} className="relative group flex-1 flex flex-col">
                 {/* Timeline Node Icon */}
-                <div className="absolute -left-[27px] top-1 w-3.5 h-3.5 rounded-full bg-[#0c0d12] border-2 border-amber-400 flex items-center justify-center shadow-md">
+                <div className="absolute -left-[31px] top-3.5 w-3.5 h-3.5 rounded-full bg-[#0c0d12] border-2 border-amber-400 flex items-center justify-center shadow-md">
                   <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 shadow-sm space-y-1">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <span className="px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-400 font-mono text-[9.5px] font-semibold border border-amber-400/30">
-                        {getExpPeriod(exp)}
-                      </span>
-                      <h3 className="text-xs font-bold text-white">
-                        {getExpRole(exp)}
-                      </h3>
+                <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800 shadow-md space-y-1.5 flex-1 flex flex-col justify-between">
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <span className="px-2.5 py-0.5 rounded-full bg-amber-400/10 text-amber-400 font-mono text-[9.5px] font-semibold border border-amber-400/30">
+                          {getExpPeriod(exp)}
+                        </span>
+                        <h3 className="text-[13px] font-bold text-white">
+                          {getExpRole(exp)}
+                        </h3>
+                      </div>
+                      <div className="text-[10px] font-mono text-zinc-400">
+                        <span className="text-amber-300 font-medium">
+                          {getExpCompany(exp)}
+                        </span>
+                        <span className="mx-1.5 text-zinc-600">·</span>
+                        <span>{exp.location}</span>
+                      </div>
                     </div>
-                    <div className="text-[9.5px] font-mono text-zinc-400">
-                      <span className="text-amber-300 font-medium">
-                        {getExpCompany(exp)}
-                      </span>
-                      <span className="mx-1 text-zinc-600">·</span>
-                      <span>{exp.location}</span>
-                    </div>
+
+                    <p className="text-[11px] text-zinc-300 font-light leading-relaxed">
+                      {getExpDescription(exp)}
+                    </p>
                   </div>
 
-                  <p className="text-[10.5px] text-zinc-300 font-light leading-relaxed">
-                    {getExpDescription(exp)}
-                  </p>
-
-                  <div className="space-y-0.5 pt-1 border-t border-zinc-800/80">
+                  <div className="space-y-1 pt-1 border-t border-zinc-800/80">
                     {getExpBullets(exp).map((pt, pIdx) => (
                       <div key={pIdx} className="flex items-start space-x-1.5 text-[10px] text-zinc-300 leading-snug">
                         <span className="text-amber-400 font-bold">•</span>
@@ -1761,7 +1889,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   {getExpTags(exp).length > 0 && (
                     <div className="flex flex-wrap gap-1 pt-1">
                       {getExpTags(exp).map((tag) => (
-                        <span key={tag} className="px-1.5 py-0.2 rounded bg-zinc-950 text-zinc-400 text-[8px] font-mono border border-zinc-800">
+                        <span key={tag} className="px-2 py-0.5 rounded bg-zinc-950 text-zinc-400 text-[8.5px] font-mono border border-zinc-800">
                           {tag}
                         </span>
                       ))}
@@ -1788,38 +1916,40 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
             </p>
           </div>
 
-          <div className="relative pl-5 border-l-2 border-amber-400/50 space-y-2.5 flex-1 flex flex-col justify-around my-auto">
+          <div className="relative pl-6 border-l-2 border-amber-400/50 flex-1 flex flex-col justify-between py-1 gap-3">
             {experiencesData.slice(3, 6).map((exp, idx) => (
-              <div key={idx} className="relative group">
+              <div key={idx} className="relative group flex-1 flex flex-col">
                 {/* Timeline Node Icon */}
-                <div className="absolute -left-[27px] top-1 w-3.5 h-3.5 rounded-full bg-[#0c0d12] border-2 border-amber-400 flex items-center justify-center shadow-md">
+                <div className="absolute -left-[31px] top-3.5 w-3.5 h-3.5 rounded-full bg-[#0c0d12] border-2 border-amber-400 flex items-center justify-center shadow-md">
                   <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 shadow-sm space-y-1">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <span className="px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-400 font-mono text-[9.5px] font-semibold border border-amber-400/30">
-                        {getExpPeriod(exp)}
-                      </span>
-                      <h3 className="text-xs font-bold text-white">
-                        {getExpRole(exp)}
-                      </h3>
+                <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800 shadow-md space-y-1.5 flex-1 flex flex-col justify-between">
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <span className="px-2.5 py-0.5 rounded-full bg-amber-400/10 text-amber-400 font-mono text-[9.5px] font-semibold border border-amber-400/30">
+                          {getExpPeriod(exp)}
+                        </span>
+                        <h3 className="text-[13px] font-bold text-white">
+                          {getExpRole(exp)}
+                        </h3>
+                      </div>
+                      <div className="text-[10px] font-mono text-zinc-400">
+                        <span className="text-amber-300 font-medium">
+                          {getExpCompany(exp)}
+                        </span>
+                        <span className="mx-1.5 text-zinc-600">·</span>
+                        <span>{exp.location}</span>
+                      </div>
                     </div>
-                    <div className="text-[9.5px] font-mono text-zinc-400">
-                      <span className="text-amber-300 font-medium">
-                        {getExpCompany(exp)}
-                      </span>
-                      <span className="mx-1 text-zinc-600">·</span>
-                      <span>{exp.location}</span>
-                    </div>
+
+                    <p className="text-[11px] text-zinc-300 font-light leading-relaxed">
+                      {getExpDescription(exp)}
+                    </p>
                   </div>
 
-                  <p className="text-[10.5px] text-zinc-300 font-light leading-relaxed">
-                    {getExpDescription(exp)}
-                  </p>
-
-                  <div className="space-y-0.5 pt-1 border-t border-zinc-800/80">
+                  <div className="space-y-1 pt-1 border-t border-zinc-800/80">
                     {getExpBullets(exp).map((pt, pIdx) => (
                       <div key={pIdx} className="flex items-start space-x-1.5 text-[10px] text-zinc-300 leading-snug">
                         <span className="text-amber-400 font-bold">•</span>
@@ -1831,7 +1961,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   {getExpTags(exp).length > 0 && (
                     <div className="flex flex-wrap gap-1 pt-1">
                       {getExpTags(exp).map((tag) => (
-                        <span key={tag} className="px-1.5 py-0.2 rounded bg-zinc-950 text-zinc-400 text-[8px] font-mono border border-zinc-800">
+                        <span key={tag} className="px-2 py-0.5 rounded bg-zinc-950 text-zinc-400 text-[8.5px] font-mono border border-zinc-800">
                           {tag}
                         </span>
                       ))}
@@ -1845,214 +1975,238 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
       </SlideWrapper>
 
       {/* =========================================================================
-          SLIDE 22: SKILLS SECTION (4 PILLARS - DIRECT STACK & DISCIPLINES)
+          SLIDE 22: SKILLS SECTION (4 PILLARS - MIRRORING WEBSITE SKILLS SECTION)
       ========================================================================= */}
-      <SlideWrapper sectionTitle="Core Technical Capabilities (4 Pillars)" currentPage={slideSkills}>
-        <div className="flex flex-col justify-between h-full py-0.5 space-y-2">
-          {/* Header matching web Chapter Style */}
-          <div className="flex items-baseline justify-between border-b border-zinc-800/80 pb-1.5">
-            <div className="flex items-baseline gap-2">
-              <span className="font-serif text-xl text-amber-400 font-light">/</span>
-              <h2 className="font-serif text-xl font-normal text-white uppercase tracking-tight">
-                SKILLS
-              </h2>
-              <span className="text-xs font-mono text-zinc-400 ml-2">
-                Tools, Stacks & Systems Architecture
-              </span>
+      {(() => {
+        const skillsPillars = [
+          {
+            id: "fullstack-web",
+            icon: <Layout className="w-4 h-4 text-amber-400" />,
+            accentBorder: "border-amber-400/40",
+            sheenColor: "via-amber-400/80",
+            dotColor: "bg-amber-400",
+            badgeNumber: "01",
+            badgeClass: "text-amber-400 bg-amber-400/10 border-amber-400/30",
+            title: language === "zh" ? "Web 前端系统架构" : language === "id" ? "Arsitektur Web & Frontend" : "Web & Frontend Architecture",
+            description: language === "zh" ? "现代组件工程、响应式状态管理、客户端即时计算与高性能 Web 体系。" : language === "id" ? "Framework modern, manajemen state reaktif, komputasi sisi klien, dan aplikasi web responsif." : "Modern component frameworks, reactive state management, client-side compute, and responsive web applications.",
+            toolLabel: language === "zh" ? "核心技术与开发工具" : language === "id" ? "Perkakas & Teknologi Utama" : "Technologies & Core Tools",
+            tools: [
+              { name: language === "zh" ? "Next.js (App 路由)" : "Next.js (App Router)", icon: <NextjsIcon className="w-3 h-3 text-white" /> },
+              { name: "TypeScript", icon: <TypeScriptIcon className="w-3 h-3 text-blue-400" /> },
+              { name: "React.js", icon: <ReactIcon className="w-3 h-3 text-cyan-400" /> },
+              { name: "Tailwind CSS", icon: <TailwindIcon className="w-3 h-3 text-cyan-400" /> },
+              { name: language === "zh" ? "Figma (UI/UX 与系统)" : language === "id" ? "Figma (UI/UX & Sistem)" : "Figma (UI/UX & Systems)", icon: <FigmaIcon className="w-3 h-3 text-purple-400" /> },
+              { name: language === "zh" ? "Git & GitHub 版本控制" : "Git & GitHub", icon: <GithubIcon className="w-3 h-3 text-zinc-300" /> },
+            ],
+            disciplineLabel: language === "zh" ? "系统架构与工程规范" : language === "id" ? "Arsitektur & Rekayasa" : "Architecture & Disciplines",
+            disciplines: [
+              { name: language === "zh" ? "RESTful API 系统架构" : language === "id" ? "Arsitektur RESTful API" : "RESTful API Architecture", icon: <Globe className="w-3 h-3 text-emerald-400" /> },
+              { name: language === "zh" ? "客户端状态与即时计算" : language === "id" ? "State & Komputasi Sisi Klien" : "Client-Side State & Compute", icon: <Cpu className="w-3 h-3 text-amber-300" /> },
+              { name: language === "zh" ? "浏览器原生能力与 Web Share" : language === "id" ? "API Browser & Web Share" : "Browser & Web Share APIs", icon: <Share2 className="w-3 h-3 text-cyan-300" /> },
+              { name: language === "zh" ? "跨端响应式 UI 规范" : language === "id" ? "Standar UI Responsif" : "Responsive UI Standards", icon: <Layout className="w-3 h-3 text-orange-400" /> },
+            ],
+          },
+          {
+            id: "backend-systems",
+            icon: <Server className="w-4 h-4 text-cyan-400" />,
+            accentBorder: "border-cyan-400/40",
+            sheenColor: "via-cyan-400/80",
+            dotColor: "bg-cyan-400",
+            badgeNumber: "02",
+            badgeClass: "text-cyan-400 bg-cyan-400/10 border-cyan-400/30",
+            title: language === "zh" ? "后端架构与企业级系统" : language === "id" ? "Sistem Backend & Enterprise" : "Backend & Enterprise Systems",
+            description: language === "zh" ? "关系型数据建模、多层事务后端、核心算法与企业级服务器基础设施。" : language === "id" ? "Pemodelan data relasional, backend transaksional multi-tier, algoritma, dan arsitektur server." : "Relational data modeling, multi-tier transactional backends, algorithms, and server infrastructure.",
+            toolLabel: language === "zh" ? "核心技术栈与开发语言" : language === "id" ? "Stack Teknologi & Bahasa" : "Technologies & Stack",
+            tools: [
+              { name: language === "zh" ? "PHP / Laravel 框架体系" : language === "id" ? "PHP / Framework Laravel" : "PHP / Laravel Framework", icon: <LaravelIcon className="w-3 h-3 text-rose-500" /> },
+              { name: language === "zh" ? "MySQL (3NF 关系型数据库)" : language === "id" ? "MySQL (DB Relasional 3NF)" : "MySQL (3NF Relational DB)", icon: <MysqlIcon className="w-3 h-3 text-amber-400" /> },
+              { name: language === "zh" ? "C# (.NET / WinForms 桌面)" : "C# (.NET / WinForms)", icon: <CSharpIcon className="w-3 h-3 text-purple-400" /> },
+              { name: language === "zh" ? "Java (OOP 面向对象架构)" : language === "id" ? "Java (Arsitektur OOP)" : "Java (OOP Architecture)", icon: <JavaIcon className="w-3 h-3 text-orange-400" /> },
+              { name: language === "zh" ? "Docker 容器化部署" : language === "id" ? "Kontainerisasi Docker" : "Docker Containerization", icon: <DockerIcon className="w-3 h-3 text-blue-400" /> },
+              { name: language === "zh" ? "Linux / Shell 运维环境" : language === "id" ? "Lingkungan Linux / Shell" : "Linux / Shell Environment", icon: <LinuxIcon className="w-3 h-3 text-amber-300" /> },
+            ],
+            disciplineLabel: language === "zh" ? "系统设计与数据建模" : language === "id" ? "Sistem & Pemodelan Data" : "Systems & Architecture",
+            disciplines: [
+              { name: language === "zh" ? "ERP 与 POS 核心数据建模" : language === "id" ? "Pemodelan Data ERP & POS" : "ERP & POS Data Modeling", icon: <Building2 className="w-3 h-3 text-blue-400" /> },
+              { name: language === "zh" ? "C/S 架构 Socket 通信协议" : language === "id" ? "Protokol Soket Client-Server" : "Client-Server Socket Protocols", icon: <Network className="w-3 h-3 text-indigo-400" /> },
+              { name: language === "zh" ? "数据库慢查询剖析与索引优化" : language === "id" ? "Profiling & Optimasi Kueri DB" : "Database Query Profiling", icon: <Database className="w-3 h-3 text-cyan-400" /> },
+              { name: language === "zh" ? "多层架构与分布式解耦" : language === "id" ? "Arsitektur Sistem Multi-Tier" : "Multi-Tier Architecture", icon: <Layers className="w-3 h-3 text-emerald-400" /> },
+            ],
+          },
+          {
+            id: "ai-automation",
+            icon: <Cpu className="w-4 h-4 text-purple-400" />,
+            accentBorder: "border-purple-400/40",
+            sheenColor: "via-purple-400/80",
+            dotColor: "bg-purple-400",
+            badgeNumber: "03",
+            badgeClass: "text-purple-400 bg-purple-400/10 border-purple-400/30",
+            title: language === "zh" ? "AI 智能自动化管线" : language === "id" ? "Alur Kerja AI & Otomasi" : "AI Workflows & Automation",
+            description: language === "zh" ? "确定性编译引擎、结构化 Prompt 调优、本地向量 RAG 检索与端到端自动化流程。" : language === "id" ? "Engine kompilasi deterministik, rekayasa prompt terstruktur, RAG lokal, dan alur kerja otomatis." : "Deterministic compiling engines, structured prompt engineering, local RAG, and automated workflows.",
+            toolLabel: language === "zh" ? "自动化框架与开发工具" : language === "id" ? "Perkakas & Framework Otomasi" : "Frameworks & Automation Tools",
+            tools: [
+              { name: language === "zh" ? "Python 自动化工程引擎" : language === "id" ? "Engine Otomasi Python" : "Python Automation Engines", icon: <PythonIcon className="w-3 h-3 text-emerald-400" /> },
+              { name: language === "zh" ? "n8n 可视化工作流引擎" : language === "id" ? "Otomasi Visual n8n" : "n8n Visual Automation", icon: <N8nIcon className="w-3 h-3 text-pink-400" /> },
+              { name: language === "zh" ? "多智能体协同系统与 CLI" : language === "id" ? "Sistem Multi-Agen & CLI" : "Multi-Agent Systems & CLI", icon: <Bot className="w-3 h-3 text-violet-400" /> },
+              { name: language === "zh" ? "网页爬虫与结构化数据提取" : language === "id" ? "Scraping & Ekstraksi Web" : "Web Scraping & Extraction", icon: <Search className="w-3 h-3 text-sky-400" /> },
+              { name: language === "zh" ? "Webhooks 与系统集成" : language === "id" ? "Webhook & Integrasi Sistem" : "Webhooks & Integrations", icon: <Workflow className="w-3 h-3 text-cyan-400" /> },
+            ],
+            disciplineLabel: language === "zh" ? "AI 管线编排与知识合成" : language === "id" ? "Pipeline AI & Metode Sintesis" : "AI Pipelines & Synthesis Methods",
+            disciplines: [
+              { name: language === "zh" ? "结构化 Prompt 工程规范" : language === "id" ? "Rekayasa Prompt Terstruktur" : "Structured Prompt Engineering", icon: <Terminal className="w-3 h-3 text-purple-400" /> },
+              { name: language === "zh" ? "向量 RAG 检索与知识库" : language === "id" ? "RAG Vektor & Vault Pengetahuan" : "Vector RAG & Knowledge Vaults", icon: <Database className="w-3 h-3 text-fuchsia-400" /> },
+              { name: language === "zh" ? "LLM 提示词链流水线" : language === "id" ? "LLM Prompt Chaining" : "LLM Prompt Chaining", icon: <Code2 className="w-3 h-3 text-purple-300" /> },
+              { name: language === "zh" ? "自动化长篇出版物编译" : language === "id" ? "Penerbitan Buku Otomatis" : "Automated Book Publishing", icon: <Sparkles className="w-3 h-3 text-amber-300" /> },
+              { name: language === "zh" ? "AI 辅助高阶学术研究合成" : language === "id" ? "Sintesis Riset Berbasis AI" : "AI Research Synthesis", icon: <FileCode className="w-3 h-3 text-teal-400" /> },
+            ],
+          },
+          {
+            id: "business-operations",
+            icon: <Package className="w-4 h-4 text-emerald-400" />,
+            accentBorder: "border-emerald-400/40",
+            sheenColor: "via-emerald-400/80",
+            dotColor: "bg-emerald-400",
+            badgeNumber: "04",
+            badgeClass: "text-emerald-400 bg-emerald-400/10 border-emerald-400/30",
+            title: language === "zh" ? "商业运营与量化研究" : language === "id" ? "Operasional Bisnis & Finansial" : "Business Operations & Quant",
+            description: language === "zh" ? "B2B商业供应链流水线、量化金融投资组合核算、-25°C极低温冷链与工业包装合规体系。" : language === "id" ? "Alur kerja komersial B2B, buku besar portofolio kuantitatif, logistik rantai dingin -25°C, dan kepatuhan standar industri." : "B2B commercial workflows, quantitative portfolio ledgers, -25°C cold chain, and packaging compliance.",
+            toolLabel: language === "zh" ? "实体供应链与工业运营" : language === "id" ? "Operasional & Rantai Pasok Fisik" : "Operations & Physical Supply Chain",
+            tools: [
+              { name: language === "zh" ? "-25°C 超低温冷链物流" : language === "id" ? "Logistik Rantai Dingin (-25°C)" : "Cold-Chain Logistics (-25°C)", icon: <Snowflake className="w-3 h-3 text-cyan-300" /> },
+              { name: language === "zh" ? "工业级阻隔复合包装" : language === "id" ? "Kemasan Pelindung Industri" : "Industrial Barrier Packaging", icon: <ShieldCheck className="w-3 h-3 text-emerald-400" /> },
+              { name: language === "zh" ? "包装刀模规范与打样" : language === "id" ? "Dieline Cetak Pabrik Kemasan" : "Packaging Factory Dielines", icon: <Package className="w-3 h-3 text-amber-400" /> },
+              { name: language === "zh" ? "库存账本 (FIFO)" : language === "id" ? "Buku Besar Inventaris (FIFO)" : "Inventory Ledgers (FIFO)", icon: <Boxes className="w-3 h-3 text-orange-400" /> },
+              { name: language === "zh" ? "B2B 销售开票与 SOP 体系" : language === "id" ? "Faktur Penjualan B2B & SOP" : "B2B Sales Invoicing & SOPs", icon: <FileCheck className="w-3 h-3 text-blue-400" /> },
+            ],
+            disciplineLabel: language === "zh" ? "量化金融模型与合规审计" : language === "id" ? "Riset Finansial & Regulasi" : "Quantitative Finance & Compliance",
+            disciplines: [
+              { name: language === "zh" ? "量化定投对账模型" : language === "id" ? "Rekonsiliasi DCA Kuantitatif" : "Quantitative DCA Reconciliation", icon: <TrendingUp className="w-3 h-3 text-emerald-400" /> },
+              { name: language === "zh" ? "盈亏比 (RR) 与回撤控制" : language === "id" ? "Risk/Reward (RR) & Drawdowns" : "Risk/Reward (RR) & Drawdowns", icon: <BarChart3 className="w-3 h-3 text-indigo-400" /> },
+              { name: language === "zh" ? "多周期技术面行情研判" : language === "id" ? "Analisis Pasar Teknikal" : "Technical Market Analysis", icon: <Compass className="w-3 h-3 text-purple-400" /> },
+              { name: language === "zh" ? "复杂财务报表模型" : language === "id" ? "Model Finansial Spreadsheet" : "Spreadsheet Financial Models", icon: <FileSpreadsheet className="w-3 h-3 text-emerald-300" /> },
+              { name: language === "zh" ? "行业法规与认证 (Halal/Kementan)" : language === "id" ? "Standar Regulasi (Halal/Kementan)" : "Regulatory Standards (Halal/Kementan)", icon: <Globe className="w-3 h-3 text-teal-300" /> },
+            ],
+          },
+        ];
+
+        return (
+          <SlideWrapper sectionTitle="Core Technical Capabilities (4 Pillars)" currentPage={slideSkills}>
+            <div className="flex flex-col h-full py-0.5 space-y-2">
+              {/* Header matching web Chapter Style */}
+              <div className="flex items-baseline justify-between border-b border-zinc-800/80 pb-1.5">
+                <div className="space-y-1">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#d4af37]/10 border border-[#d4af37]/30 text-[9.5px] font-mono uppercase tracking-widest text-[#ebdca4]">
+                    <Wrench className="w-3 h-3 text-[#d4af37]" />
+                    <span>
+                      {language === "zh"
+                        ? "核心技能与技术工具链"
+                        : language === "id"
+                        ? "KEAHLIAN & PERKAKAS TEKNIS"
+                        : "SKILLS & TECHNICAL TOOLS"}
+                    </span>
+                  </div>
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="font-serif text-2xl font-light text-[#d4af37] leading-none select-none">
+                      /
+                    </span>
+                    <h2 className="font-serif text-xl font-normal text-white uppercase tracking-tight leading-none">
+                      SKILLS & TOOLS
+                    </h2>
+                    <span className="text-[10px] font-mono text-zinc-400 ml-2">
+                      {language === "zh"
+                        ? "核心工程栈与跨学科实践：涵盖全栈 Web、企业后端、AI 自动化流程与实体供应链"
+                        : language === "id"
+                        ? "Teknologi inti & rekayasa: web full-stack, data backend enterprise, otomasi AI & rantai pasok"
+                        : "Core technologies & disciplines across full-stack software, data systems, AI workflows & operations"}
+                    </span>
+                  </div>
+                </div>
+                <div className="text-right font-mono text-[10px] shrink-0">
+                  <span className="text-zinc-500">05 / 06 </span>
+                  <span className="text-amber-400 font-semibold">{t.common.chapterIndex || "CHAPTER"}</span>
+                </div>
+              </div>
+
+              {/* 4 Clean Scannable Pillar Cards — flex-1 grid fills remaining height */}
+              <div className="grid grid-cols-2 gap-3.5 flex-1 min-h-0">
+                {skillsPillars.map((pillar) => (
+                  <div
+                    key={pillar.id}
+                    className={`relative rounded-2xl bg-zinc-900/90 border ${pillar.accentBorder} p-4 flex flex-col gap-3 shadow-md overflow-hidden`}
+                  >
+                    {/* Top Specular Hairline Sheen */}
+                    <div
+                      className={`absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent ${pillar.sheenColor} to-transparent pointer-events-none`}
+                    />
+
+                    {/* Pillar Header */}
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between pb-1.5 border-b border-zinc-800">
+                        <div className="flex items-center space-x-2">
+                          <div className="p-1.5 rounded-lg bg-zinc-950 border border-zinc-800 shadow-inner">
+                            {pillar.icon}
+                          </div>
+                          <h3 className="font-serif text-[13.5px] font-medium text-white tracking-tight">
+                            {pillar.title}
+                          </h3>
+                        </div>
+                        <span className={`px-2 py-0.5 rounded font-mono text-[8.5px] font-bold border ${pillar.badgeClass}`}>
+                          PILLAR {pillar.badgeNumber}
+                        </span>
+                      </div>
+                      <p className="text-[10.5px] text-zinc-300 font-light leading-snug">
+                        {pillar.description}
+                      </p>
+                    </div>
+
+                    {/* Subgroup 1: Technologies & Tools */}
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-1.5">
+                        <span className={`w-1.5 h-1.5 rounded-full ${pillar.dotColor}`} />
+                        <span className="text-[8.5px] font-mono uppercase tracking-wider text-zinc-300 font-semibold">
+                          {pillar.toolLabel}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {pillar.tools.map((tool, tIdx) => (
+                          <div
+                            key={tIdx}
+                            className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-zinc-950/80 border border-zinc-800 text-[9px] font-mono text-zinc-200 shadow-sm"
+                          >
+                            <span className="shrink-0">{tool.icon}</span>
+                            <span>{tool.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Subgroup 2: Disciplines */}
+                    <div className="space-y-1.5 pt-2 border-t border-zinc-800/70">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-zinc-500" />
+                        <span className="text-[8.5px] font-mono uppercase tracking-wider text-zinc-400 font-semibold">
+                          {pillar.disciplineLabel}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {pillar.disciplines.map((disc, dIdx) => (
+                          <div
+                            key={dIdx}
+                            className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-zinc-950/40 border border-zinc-800/80 text-[9px] font-mono text-zinc-300"
+                          >
+                            <span className="shrink-0">{disc.icon}</span>
+                            <span>{disc.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="text-right font-mono text-[10px]">
-              <span className="text-zinc-500">04 / 06 </span>
-              <span className="text-amber-400 font-semibold">{t.common.chapterIndex || "CHAPTER"}</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3.5 flex-1 items-stretch my-auto">
-            {/* Pillar 1: Web & Frontend */}
-            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-amber-400/30 flex flex-col justify-between shadow-sm">
-              <div className="space-y-1">
-                <div className="flex items-center justify-between pb-1 border-b border-zinc-800">
-                  <div className="flex items-center space-x-1.5 text-amber-400 font-mono text-[11px] uppercase font-bold">
-                    <Layout className="w-4 h-4 text-amber-400" />
-                    <span>Web & Frontend Architecture</span>
-                  </div>
-                  <span className="px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 font-mono text-[8.5px] font-bold border border-amber-400/30">
-                    PILLAR 01
-                  </span>
-                </div>
-                <p className="text-[10px] text-zinc-300 font-light leading-relaxed">
-                  {language === "zh" ? "现代组件驱动架构、响应式状态管理、客户端瞬时计算与高保真交互体验。" : language === "id" ? "Framework modern, manajemen state reaktif, komputasi sisi klien, dan aplikasi web responsif." : "Modern component frameworks, reactive state management, client-side compute, and responsive web applications."}
-                </p>
-              </div>
-
-              <div className="space-y-2 pt-2 border-t border-zinc-800/80">
-                <div className="space-y-1">
-                  <span className="text-[8.5px] font-mono text-zinc-400 uppercase tracking-wider font-semibold block">
-                    TECHNOLOGIES & CORE TOOLS
-                  </span>
-                  <div className="flex flex-wrap gap-1">
-                    {["Next.js (App Router)", "TypeScript", "React.js", "Tailwind CSS", "Figma (UI/UX)", "Git & GitHub"].map((tool) => (
-                      <span key={tool} className="px-2 py-0.5 rounded bg-zinc-950 text-zinc-200 text-[9.5px] font-mono border border-zinc-800">
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <span className="text-[8.5px] font-mono text-amber-400/90 uppercase tracking-wider font-semibold block">
-                    ARCHITECTURE & DISCIPLINES
-                  </span>
-                  <div className="flex flex-wrap gap-1">
-                    {["RESTful API Architecture", "Client-Side State & Compute", "Browser & Web Share APIs", "Responsive UI Standards"].map((disc) => (
-                      <span key={disc} className="px-2 py-0.5 rounded bg-amber-400/5 text-amber-300 text-[9.5px] font-mono border border-amber-400/20">
-                        {disc}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Pillar 2: Backend & Enterprise */}
-            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-sky-400/30 flex flex-col justify-between shadow-sm">
-              <div className="space-y-1">
-                <div className="flex items-center justify-between pb-1 border-b border-zinc-800">
-                  <div className="flex items-center space-x-1.5 text-sky-400 font-mono text-[11px] uppercase font-bold">
-                    <Server className="w-4 h-4 text-sky-400" />
-                    <span>Backend & Enterprise Systems</span>
-                  </div>
-                  <span className="px-2 py-0.5 rounded bg-sky-400/10 text-sky-400 font-mono text-[8.5px] font-bold border border-sky-400/30">
-                    PILLAR 02
-                  </span>
-                </div>
-                <p className="text-[10px] text-zinc-300 font-light leading-relaxed">
-                  {language === "zh" ? "关系型数据建模、多层事务后端、离散数学算法优化与企业级高可靠服务架构。" : language === "id" ? "Pemodelan data relasional, backend transaksional multi-tier, algoritma, dan arsitektur server." : "Relational data modeling, multi-tier transactional backends, algorithms, and server infrastructure."}
-                </p>
-              </div>
-
-              <div className="space-y-2 pt-2 border-t border-zinc-800/80">
-                <div className="space-y-1">
-                  <span className="text-[8.5px] font-mono text-zinc-400 uppercase tracking-wider font-semibold block">
-                    TECHNOLOGIES & STACK
-                  </span>
-                  <div className="flex flex-wrap gap-1">
-                    {["PHP / Laravel Framework", "MySQL (3NF Relational DB)", "C# (.NET / WinForms)", "Java (OOP)", "Docker Containerization"].map((tool) => (
-                      <span key={tool} className="px-2 py-0.5 rounded bg-zinc-950 text-zinc-200 text-[9.5px] font-mono border border-zinc-800">
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <span className="text-[8.5px] font-mono text-sky-400/90 uppercase tracking-wider font-semibold block">
-                    ARCHITECTURE & DISCIPLINES
-                  </span>
-                  <div className="flex flex-wrap gap-1">
-                    {["ERP & POS Data Modeling", "Client-Server Sockets", "Query Profiling & Indexing", "Multi-Tier Architecture"].map((disc) => (
-                      <span key={disc} className="px-2 py-0.5 rounded bg-sky-400/5 text-sky-300 text-[9.5px] font-mono border border-sky-400/20">
-                        {disc}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Pillar 3: AI Workflows & Automation */}
-            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-purple-400/30 flex flex-col justify-between shadow-sm">
-              <div className="space-y-1">
-                <div className="flex items-center justify-between pb-1 border-b border-zinc-800">
-                  <div className="flex items-center space-x-1.5 text-purple-400 font-mono text-[11px] uppercase font-bold">
-                    <Cpu className="w-4 h-4 text-purple-400" />
-                    <span>AI Workflows & Automation</span>
-                  </div>
-                  <span className="px-2 py-0.5 rounded bg-purple-400/10 text-purple-400 font-mono text-[8.5px] font-bold border border-purple-400/30">
-                    PILLAR 03
-                  </span>
-                </div>
-                <p className="text-[10px] text-zinc-300 font-light leading-relaxed">
-                  {language === "zh" ? "确定性大模型编译引擎、结构化提示词工程、本地 RAG 知识库与自动化事件流水线。" : language === "id" ? "Deterministic compiling engines, structured prompt engineering, local RAG, dan automated workflows." : "Deterministic compiling engines, structured prompt engineering, local RAG, and automated workflows."}
-                </p>
-              </div>
-
-              <div className="space-y-2 pt-2 border-t border-zinc-800/80">
-                <div className="space-y-1">
-                  <span className="text-[8.5px] font-mono text-zinc-400 uppercase tracking-wider font-semibold block">
-                    FRAMEWORKS & TOOLS
-                  </span>
-                  <div className="flex flex-wrap gap-1">
-                    {["Python Automation", "n8n Workflow Engine", "Multi-Agent Systems & CLI", "Web Scraping (Playwright)"].map((tool) => (
-                      <span key={tool} className="px-2 py-0.5 rounded bg-zinc-950 text-zinc-200 text-[9.5px] font-mono border border-zinc-800">
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <span className="text-[8.5px] font-mono text-purple-400/90 uppercase tracking-wider font-semibold block">
-                    AI PIPELINES & METHODS
-                  </span>
-                  <div className="flex flex-wrap gap-1">
-                    {["Structured Prompting", "Vector RAG & Knowledge Vaults", "LLM Multi-Pass Chaining", "Automated Publishing Pipeline"].map((disc) => (
-                      <span key={disc} className="px-2 py-0.5 rounded bg-purple-400/5 text-purple-300 text-[9.5px] font-mono border border-purple-400/20">
-                        {disc}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Pillar 4: Business Ops & Quant */}
-            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-emerald-400/30 flex flex-col justify-between shadow-sm">
-              <div className="space-y-1">
-                <div className="flex items-center justify-between pb-1 border-b border-zinc-800">
-                  <div className="flex items-center space-x-1.5 text-emerald-400 font-mono text-[11px] uppercase font-bold">
-                    <Package className="w-4 h-4 text-emerald-400" />
-                    <span>Business Operations & Quant</span>
-                  </div>
-                  <span className="px-2 py-0.5 rounded bg-emerald-400/10 text-emerald-400 font-mono text-[8.5px] font-bold border border-emerald-400/30">
-                    PILLAR 04
-                  </span>
-                </div>
-                <p className="text-[10px] text-zinc-300 font-light leading-relaxed">
-                  {language === "zh" ? "B2B 大宗批发商业流程、量化投资账本核算、-25°C 低温冷链物流与食品级包装合规。" : language === "id" ? "B2B commercial workflows, quantitative portfolio ledgers, -25°C cold chain, dan packaging compliance." : "B2B commercial workflows, quantitative portfolio ledgers, -25°C cold chain, and packaging compliance."}
-                </p>
-              </div>
-
-              <div className="space-y-2 pt-2 border-t border-zinc-800/80">
-                <div className="space-y-1">
-                  <span className="text-[8.5px] font-mono text-zinc-400 uppercase tracking-wider font-semibold block">
-                    SUPPLY CHAIN & OPS
-                  </span>
-                  <div className="flex flex-wrap gap-1">
-                    {["Cold-Chain Logistics (-25°C)", "Industrial Barrier Packaging", "Factory Die-Cut Dielines", "FIFO Inventory Ledgers"].map((tool) => (
-                      <span key={tool} className="px-2 py-0.5 rounded bg-zinc-950 text-zinc-200 text-[9.5px] font-mono border border-zinc-800">
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <span className="text-[8.5px] font-mono text-emerald-400/90 uppercase tracking-wider font-semibold block">
-                    QUANT FINANCE & COMPLIANCE
-                  </span>
-                  <div className="flex flex-wrap gap-1">
-                    {["Quantitative DCA Reconciliation", "Risk/Reward (RR) & Drawdown", "Multi-Timeframe Charting", "Halal & Kementan Compliance"].map((disc) => (
-                      <span key={disc} className="px-2 py-0.5 rounded bg-emerald-400/5 text-emerald-300 text-[9.5px] font-mono border border-emerald-400/20">
-                        {disc}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </SlideWrapper>
+          </SlideWrapper>
+        );
+      })()}
 
       {/* =========================================================================
           SLIDE 23: CREDENTIALS PART 1 - FORMAL EDUCATION & EXCELLENCE HONORS
@@ -2068,22 +2222,22 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-3.5 flex-1 items-stretch my-auto">
+          <div className="grid grid-cols-2 gap-4 flex-1 items-stretch py-1">
             {/* Degree 1: iSTTS Bachelor */}
-            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-amber-400/30 flex flex-col justify-between space-y-2 shadow-sm">
+            <div className="p-4 rounded-xl bg-zinc-900/90 border border-amber-400/30 flex flex-col justify-between space-y-2 shadow-md h-full">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 font-mono text-[9.5px] font-bold border border-amber-400/30">
+                  <span className="px-2.5 py-0.5 rounded bg-amber-400/10 text-amber-400 font-mono text-[9.5px] font-bold border border-amber-400/30">
                     {educationData[0]?.honors || "HONORS: VERY SATISFACTORY (PERFECT 4.00 GPA)"}
                   </span>
                   <span className="text-[10px] font-mono text-zinc-400 font-semibold">{educationData[0]?.period}</span>
                 </div>
 
                 <div>
-                  <h3 className="text-[14px] font-bold text-white mt-0.5">
+                  <h3 className="text-[14.5px] font-bold text-white mt-0.5">
                     {getEduDegree(educationData[0])}
                   </h3>
-                  <div className="text-[11px] text-amber-300 font-mono font-medium">
+                  <div className="text-[11.5px] text-amber-300 font-mono font-medium">
                     {getEduInstitution(educationData[0])}
                   </div>
                 </div>
@@ -2095,8 +2249,8 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
 
               <div className="pt-2 border-t border-zinc-800/80 space-y-1">
                 <div className="text-[9px] font-mono text-zinc-400 uppercase tracking-wider font-semibold">Key Academic Highlights & Honors:</div>
-                <div className="text-[10px] text-zinc-300 space-y-0.5">
-                  {getEduHighlights(educationData[0]).map((hl, i) => (
+                <div className="text-[10px] text-zinc-300 space-y-1">
+                  {getEduHighlights(educationData[0]).slice(0, 3).map((hl, i) => (
                     <div key={i} className="flex items-start space-x-1.5">
                       <span className="text-amber-400 font-bold">•</span>
                       <span>{hl}</span>
@@ -2107,20 +2261,20 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
             </div>
 
             {/* Degree 2: Xin Zhong High School */}
-            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col justify-between space-y-2 shadow-sm">
+            <div className="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col justify-between space-y-2 shadow-md h-full">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded bg-sky-400/10 text-sky-400 font-mono text-[9.5px] font-bold border border-sky-400/30">
+                  <span className="px-2.5 py-0.5 rounded bg-sky-400/10 text-sky-400 font-mono text-[9.5px] font-bold border border-sky-400/30">
                     TOP 50 SCORERS CITY SCIENCE OLYMPIAD (OSK) COMPUTER & TECHNOLOGY
                   </span>
                   <span className="text-[10px] font-mono text-zinc-400 font-semibold">{educationData[1]?.period}</span>
                 </div>
 
                 <div>
-                  <h3 className="text-[14px] font-bold text-white mt-0.5">
+                  <h3 className="text-[14.5px] font-bold text-white mt-0.5">
                     {getEduDegree(educationData[1])}
                   </h3>
-                  <div className="text-[11px] text-sky-300 font-mono font-medium">
+                  <div className="text-[11.5px] text-sky-300 font-mono font-medium">
                     {getEduInstitution(educationData[1])}
                   </div>
                 </div>
@@ -2132,8 +2286,8 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
 
               <div className="pt-2 border-t border-zinc-800/80 space-y-1">
                 <div className="text-[9px] font-mono text-zinc-400 uppercase tracking-wider font-semibold">Key Academic Highlights & Honors:</div>
-                <div className="text-[10px] text-zinc-300 space-y-0.5">
-                  {getEduHighlights(educationData[1]).map((hl, i) => (
+                <div className="text-[10px] text-zinc-300 space-y-1">
+                  {getEduHighlights(educationData[1]).slice(0, 3).map((hl, i) => (
                     <div key={i} className="flex items-start space-x-1.5">
                       <span className="text-sky-400 font-bold">•</span>
                       <span>{hl}</span>
@@ -2144,26 +2298,56 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
             </div>
           </div>
 
-          {/* 4x Best Lab Practitioner Awards Strip */}
-          <div className="space-y-1.5 pt-1.5 border-t border-zinc-800/80">
-            <div className="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-wider flex items-center space-x-1.5">
-              <Award className="w-3.5 h-3.5 text-amber-400" />
-              <span>BEST ACADEMIC PRACTITIONER AWARDS (4X RECIPIENT)</span>
+          {/* 4x Best Lab Practitioner Awards Strip with Visual Certificate Images */}
+          <div className="space-y-1.5 pt-2 border-t border-zinc-800/80">
+            <div className="flex items-center justify-between">
+              <div className="text-[10.5px] font-mono font-bold text-amber-400 uppercase tracking-wider flex items-center space-x-1.5">
+                <Award className="w-3.5 h-3.5 text-amber-400" />
+                <span>BEST ACADEMIC PRACTITIONER AWARDS (4X RECIPIENT · 2018–2019)</span>
+              </div>
+              <span className="text-[9px] font-mono text-zinc-400">INSTITUT SAINS DAN TEKNOLOGI TERPADU SURABAYA · COMPUTER SCIENCE LABS</span>
             </div>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-3">
               {awardsData.map((award, idx) => (
-                <div key={idx} className="p-2 rounded-lg bg-zinc-900/90 border border-amber-400/20 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <Award className="w-3 h-3 text-amber-400" />
-                      <span className="text-[8.5px] font-mono text-zinc-400 font-bold">{award.year}</span>
-                    </div>
-                    <div className="text-[9.5px] font-bold text-white mt-1 line-clamp-1">
-                      {getAwardTitle(award)}
+                <div key={idx} className="rounded-xl overflow-hidden bg-zinc-900/90 border border-amber-400/30 flex flex-col justify-between shadow-md group">
+                  {/* Certificate Image Thumbnail */}
+                  <div className="relative h-[115px] w-full bg-zinc-950 overflow-hidden border-b border-zinc-800">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={award.image || "/assets/certificates/award-algo-2018.jpg"}
+                      alt={getAwardTitle(award)}
+                      className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-zinc-950/85 backdrop-blur-sm text-amber-400 font-mono text-[8.5px] font-bold border border-amber-400/30">
+                      {award.year}
                     </div>
                   </div>
-                  <div className="text-[8.5px] text-zinc-400 font-light line-clamp-2 mt-0.5">
-                    {getAwardDescription(award)}
+
+                  {/* Award Details */}
+                  <div className="p-2.5 flex-1 flex flex-col justify-between space-y-1">
+                    <div>
+                      <div className="text-[10px] font-bold text-white leading-snug">
+                        {getAwardTitle(award)}
+                      </div>
+                      <div className="text-[8.5px] text-amber-300/90 font-mono mt-0.5">
+                        {language === "zh" && award.subjectZh ? award.subjectZh : language === "id" && award.subjectId ? award.subjectId : award.subject}
+                      </div>
+                    </div>
+
+                    <div className="pt-1 border-t border-zinc-800/60 flex items-center justify-between">
+                      <span className="text-[7.5px] font-mono text-zinc-400 uppercase tracking-wider">iSTTS LAB</span>
+                      {award.image && (
+                        <a
+                          href={award.image.startsWith("http") ? award.image : `https://jaw12.github.io${award.image.startsWith("/") ? "" : "/"}${award.image}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[8px] font-mono text-amber-400 hover:text-amber-300 underline font-semibold flex items-center gap-0.5"
+                        >
+                          <span>{language === "zh" ? "官方证书" : language === "id" ? "Sertifikat" : "Certificate"}</span>
+                          <span>↗</span>
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -2186,29 +2370,29 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
             </p>
           </div>
 
-          <div className="grid grid-cols-3 gap-2.5 flex-1 items-stretch my-auto">
+          <div className="grid grid-cols-3 gap-3 flex-1 items-stretch py-1">
             {/* Leadership 1: PRENSSIB */}
             {(() => {
               const item = leadershipExperiencesData[0];
               return (
-                <div className="p-3 rounded-xl bg-zinc-900/90 border border-amber-400/25 flex flex-col justify-between space-y-1.5 shadow-sm">
+                <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-amber-400/25 flex flex-col justify-between space-y-1.5 shadow-md h-full">
                   <div className="space-y-1">
-                    <div className="flex items-center justify-between text-[8.5px] font-mono text-zinc-400">
+                    <div className="flex items-center justify-between text-[9px] font-mono text-zinc-400">
                       <span>{getExpPeriod(item)}</span>
-                      <span className="px-1.5 py-0.2 rounded bg-amber-400/10 text-amber-400 border border-amber-400/20 uppercase font-bold">
+                      <span className="px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 border border-amber-400/20 uppercase font-bold text-[8.5px]">
                         LEADERSHIP
                       </span>
                     </div>
-                    <h3 className="text-xs font-bold text-white leading-tight">{getExpRole(item)}</h3>
-                    <div className="text-[10px] font-mono text-amber-300 font-semibold">{getExpCompany(item)}</div>
-                    <p className="text-[9.5px] text-zinc-300 font-light leading-snug">
+                    <h3 className="text-[12.5px] font-bold text-white leading-tight">{getExpRole(item)}</h3>
+                    <div className="text-[10.5px] font-mono text-amber-300 font-semibold">{getExpCompany(item)}</div>
+                    <p className="text-[10px] text-zinc-300 font-light leading-snug">
                       {getExpDescription(item)}
                     </p>
                   </div>
 
                   <div className="space-y-1 pt-1 border-t border-zinc-800/80">
                     {getExpBullets(item).slice(0, 2).map((b, bIdx) => (
-                      <div key={bIdx} className="flex items-start space-x-1 text-[9.5px] text-zinc-300 leading-tight">
+                      <div key={bIdx} className="flex items-start space-x-1.5 text-[9.5px] text-zinc-300 leading-snug">
                         <span className="text-amber-400 font-bold">•</span>
                         <span>{b}</span>
                       </div>
@@ -2218,7 +2402,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   {getExpTags(item).length > 0 && (
                     <div className="flex flex-wrap gap-1 pt-0.5">
                       {getExpTags(item).slice(0, 4).map((tag) => (
-                        <span key={tag} className="px-1 py-0.2 rounded bg-zinc-950 text-zinc-400 text-[8px] font-mono border border-zinc-800">
+                        <span key={tag} className="px-1.5 py-0.5 rounded bg-zinc-950 text-zinc-400 text-[8.5px] font-mono border border-zinc-800">
                           {tag}
                         </span>
                       ))}
@@ -2232,24 +2416,24 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
             {(() => {
               const item = leadershipExperiencesData[1];
               return (
-                <div className="p-3 rounded-xl bg-zinc-900/90 border border-sky-400/25 flex flex-col justify-between space-y-1.5 shadow-sm">
+                <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-sky-400/25 flex flex-col justify-between space-y-1.5 shadow-md h-full">
                   <div className="space-y-1">
-                    <div className="flex items-center justify-between text-[8.5px] font-mono text-zinc-400">
+                    <div className="flex items-center justify-between text-[9px] font-mono text-zinc-400">
                       <span>{getExpPeriod(item)}</span>
-                      <span className="px-1.5 py-0.2 rounded bg-sky-400/10 text-sky-400 border border-sky-400/20 uppercase font-bold">
+                      <span className="px-2 py-0.5 rounded bg-sky-400/10 text-sky-400 border border-sky-400/20 uppercase font-bold text-[8.5px]">
                         TUTORING
                       </span>
                     </div>
-                    <h3 className="text-xs font-bold text-white leading-tight">{getExpRole(item)}</h3>
-                    <div className="text-[10px] font-mono text-sky-300 font-semibold">{getExpCompany(item)}</div>
-                    <p className="text-[9.5px] text-zinc-300 font-light leading-snug">
+                    <h3 className="text-[12.5px] font-bold text-white leading-tight">{getExpRole(item)}</h3>
+                    <div className="text-[10.5px] font-mono text-sky-300 font-semibold">{getExpCompany(item)}</div>
+                    <p className="text-[10px] text-zinc-300 font-light leading-snug">
                       {getExpDescription(item)}
                     </p>
                   </div>
 
                   <div className="space-y-1 pt-1 border-t border-zinc-800/80">
                     {getExpBullets(item).slice(0, 2).map((b, bIdx) => (
-                      <div key={bIdx} className="flex items-start space-x-1 text-[9.5px] text-zinc-300 leading-tight">
+                      <div key={bIdx} className="flex items-start space-x-1.5 text-[9.5px] text-zinc-300 leading-snug">
                         <span className="text-sky-400 font-bold">•</span>
                         <span>{b}</span>
                       </div>
@@ -2259,7 +2443,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   {getExpTags(item).length > 0 && (
                     <div className="flex flex-wrap gap-1 pt-0.5">
                       {getExpTags(item).slice(0, 4).map((tag) => (
-                        <span key={tag} className="px-1 py-0.2 rounded bg-zinc-950 text-zinc-400 text-[8px] font-mono border border-zinc-800">
+                        <span key={tag} className="px-1.5 py-0.5 rounded bg-zinc-950 text-zinc-400 text-[8.5px] font-mono border border-zinc-800">
                           {tag}
                         </span>
                       ))}
@@ -2273,24 +2457,24 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
             {(() => {
               const item = leadershipExperiencesData[2];
               return (
-                <div className="p-3 rounded-xl bg-zinc-900/90 border border-emerald-400/25 flex flex-col justify-between space-y-1.5 shadow-sm">
+                <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-emerald-400/25 flex flex-col justify-between space-y-1.5 shadow-md h-full">
                   <div className="space-y-1">
-                    <div className="flex items-center justify-between text-[8.5px] font-mono text-zinc-400">
+                    <div className="flex items-center justify-between text-[9px] font-mono text-zinc-400">
                       <span>{getExpPeriod(item)}</span>
-                      <span className="px-1.5 py-0.2 rounded bg-emerald-400/10 text-emerald-400 border border-emerald-400/20 uppercase font-bold">
+                      <span className="px-2 py-0.5 rounded bg-emerald-400/10 text-emerald-400 border border-emerald-400/20 uppercase font-bold text-[8.5px]">
                         RELATIONS
                       </span>
                     </div>
-                    <h3 className="text-xs font-bold text-white leading-tight">{getExpRole(item)}</h3>
-                    <div className="text-[10px] font-mono text-emerald-300 font-semibold">{getExpCompany(item)}</div>
-                    <p className="text-[9.5px] text-zinc-300 font-light leading-snug">
+                    <h3 className="text-[12.5px] font-bold text-white leading-tight">{getExpRole(item)}</h3>
+                    <div className="text-[10.5px] font-mono text-emerald-300 font-semibold">{getExpCompany(item)}</div>
+                    <p className="text-[10px] text-zinc-300 font-light leading-snug">
                       {getExpDescription(item)}
                     </p>
                   </div>
 
                   <div className="space-y-1 pt-1 border-t border-zinc-800/80">
                     {getExpBullets(item).slice(0, 2).map((b, bIdx) => (
-                      <div key={bIdx} className="flex items-start space-x-1 text-[9.5px] text-zinc-300 leading-tight">
+                      <div key={bIdx} className="flex items-start space-x-1.5 text-[9.5px] text-zinc-300 leading-snug">
                         <span className="text-emerald-400 font-bold">•</span>
                         <span>{b}</span>
                       </div>
@@ -2300,7 +2484,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   {getExpTags(item).length > 0 && (
                     <div className="flex flex-wrap gap-1 pt-0.5">
                       {getExpTags(item).slice(0, 4).map((tag) => (
-                        <span key={tag} className="px-1 py-0.2 rounded bg-zinc-950 text-zinc-400 text-[8px] font-mono border border-zinc-800">
+                        <span key={tag} className="px-1.5 py-0.5 rounded bg-zinc-950 text-zinc-400 text-[8.5px] font-mono border border-zinc-800">
                           {tag}
                         </span>
                       ))}
@@ -2314,24 +2498,24 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
             {(() => {
               const item = leadershipExperiencesData[3];
               return (
-                <div className="p-3 rounded-xl bg-zinc-900/90 border border-purple-400/25 flex flex-col justify-between space-y-1.5 shadow-sm">
+                <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-purple-400/25 flex flex-col justify-between space-y-1.5 shadow-md h-full">
                   <div className="space-y-1">
-                    <div className="flex items-center justify-between text-[8.5px] font-mono text-zinc-400">
+                    <div className="flex items-center justify-between text-[9px] font-mono text-zinc-400">
                       <span>{getExpPeriod(item)}</span>
-                      <span className="px-1.5 py-0.2 rounded bg-purple-400/10 text-purple-400 border border-purple-400/20 uppercase font-bold">
+                      <span className="px-2 py-0.5 rounded bg-purple-400/10 text-purple-400 border border-purple-400/20 uppercase font-bold text-[8.5px]">
                         SPONSORSHIP
                       </span>
                     </div>
-                    <h3 className="text-xs font-bold text-white leading-tight">{getExpRole(item)}</h3>
-                    <div className="text-[10px] font-mono text-purple-300 font-semibold">{getExpCompany(item)}</div>
-                    <p className="text-[9.5px] text-zinc-300 font-light leading-snug">
+                    <h3 className="text-[12.5px] font-bold text-white leading-tight">{getExpRole(item)}</h3>
+                    <div className="text-[10.5px] font-mono text-purple-300 font-semibold">{getExpCompany(item)}</div>
+                    <p className="text-[10px] text-zinc-300 font-light leading-snug">
                       {getExpDescription(item)}
                     </p>
                   </div>
 
                   <div className="space-y-1 pt-1 border-t border-zinc-800/80">
                     {getExpBullets(item).slice(0, 2).map((b, bIdx) => (
-                      <div key={bIdx} className="flex items-start space-x-1 text-[9.5px] text-zinc-300 leading-tight">
+                      <div key={bIdx} className="flex items-start space-x-1.5 text-[9.5px] text-zinc-300 leading-snug">
                         <span className="text-purple-400 font-bold">•</span>
                         <span>{b}</span>
                       </div>
@@ -2341,7 +2525,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   {getExpTags(item).length > 0 && (
                     <div className="flex flex-wrap gap-1 pt-0.5">
                       {getExpTags(item).slice(0, 4).map((tag) => (
-                        <span key={tag} className="px-1 py-0.2 rounded bg-zinc-950 text-zinc-400 text-[8px] font-mono border border-zinc-800">
+                        <span key={tag} className="px-1.5 py-0.5 rounded bg-zinc-950 text-zinc-400 text-[8.5px] font-mono border border-zinc-800">
                           {tag}
                         </span>
                       ))}
@@ -2355,24 +2539,24 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
             {(() => {
               const item = leadershipExperiencesData[4];
               return (
-                <div className="p-3 rounded-xl bg-zinc-900/90 border border-rose-400/25 flex flex-col justify-between space-y-1.5 shadow-sm">
+                <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-rose-400/25 flex flex-col justify-between space-y-1.5 shadow-md h-full">
                   <div className="space-y-1">
-                    <div className="flex items-center justify-between text-[8.5px] font-mono text-zinc-400">
+                    <div className="flex items-center justify-between text-[9px] font-mono text-zinc-400">
                       <span>{getExpPeriod(item)}</span>
-                      <span className="px-1.5 py-0.2 rounded bg-rose-400/10 text-rose-400 border border-rose-400/20 uppercase font-bold">
+                      <span className="px-2 py-0.5 rounded bg-rose-400/10 text-rose-400 border border-rose-400/20 uppercase font-bold text-[8.5px]">
                         FUNDRAISING
                       </span>
                     </div>
-                    <h3 className="text-xs font-bold text-white leading-tight">{getExpRole(item)}</h3>
-                    <div className="text-[10px] font-mono text-rose-300 font-semibold">{getExpCompany(item)}</div>
-                    <p className="text-[9.5px] text-zinc-300 font-light leading-snug">
+                    <h3 className="text-[12.5px] font-bold text-white leading-tight">{getExpRole(item)}</h3>
+                    <div className="text-[10.5px] font-mono text-rose-300 font-semibold">{getExpCompany(item)}</div>
+                    <p className="text-[10px] text-zinc-300 font-light leading-snug">
                       {getExpDescription(item)}
                     </p>
                   </div>
 
                   <div className="space-y-1 pt-1 border-t border-zinc-800/80">
                     {getExpBullets(item).slice(0, 2).map((b, bIdx) => (
-                      <div key={bIdx} className="flex items-start space-x-1 text-[9.5px] text-zinc-300 leading-tight">
+                      <div key={bIdx} className="flex items-start space-x-1.5 text-[9.5px] text-zinc-300 leading-snug">
                         <span className="text-rose-400 font-bold">•</span>
                         <span>{b}</span>
                       </div>
@@ -2382,7 +2566,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                   {getExpTags(item).length > 0 && (
                     <div className="flex flex-wrap gap-1 pt-0.5">
                       {getExpTags(item).slice(0, 4).map((tag) => (
-                        <span key={tag} className="px-1 py-0.2 rounded bg-zinc-950 text-zinc-400 text-[8px] font-mono border border-zinc-800">
+                        <span key={tag} className="px-1.5 py-0.5 rounded bg-zinc-950 text-zinc-400 text-[8.5px] font-mono border border-zinc-800">
                           {tag}
                         </span>
                       ))}
@@ -2393,36 +2577,36 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
             })()}
 
             {/* Leadership 6: Community Health & Campus Fellowship */}
-            <div className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col justify-between space-y-1.5 shadow-sm">
-              <div className="space-y-1">
+            <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col justify-between space-y-1.5 shadow-md h-full">
+              <div className="space-y-1.5">
                 {/* Donor Darah PMI */}
-                <div className="pb-1.5 border-b border-zinc-800/80 space-y-0.5">
-                  <div className="flex items-center justify-between text-[8.5px] font-mono text-zinc-400">
+                <div className="pb-2 border-b border-zinc-800/80 space-y-0.5">
+                  <div className="flex items-center justify-between text-[9px] font-mono text-zinc-400">
                     <span>Oct 2018 – Nov 2018 (2 Mos)</span>
-                    <span className="text-emerald-400 font-bold">PMI NGO PARTNER</span>
+                    <span className="text-emerald-400 font-bold text-[8.5px]">PMI NGO PARTNER</span>
                   </div>
-                  <div className="text-[11px] font-bold text-white">Donor Darah Dies Natalis XXXIX iSTTS</div>
-                  <div className="text-[9px] text-emerald-300 font-mono">Palang Merah Indonesia (PMI)</div>
-                  <p className="text-[9.5px] text-zinc-300 font-light leading-snug">
+                  <div className="text-[11.5px] font-bold text-white">Donor Darah Dies Natalis XXXIX iSTTS</div>
+                  <div className="text-[9.5px] text-emerald-300 font-mono">Palang Merah Indonesia (PMI)</div>
+                  <p className="text-[10px] text-zinc-300 font-light leading-snug">
                     • Coordinated institutional community blood donation drive with PMI, organizing donor queues and logistics.
                   </p>
                 </div>
 
                 {/* IFJ iSTTS */}
                 <div className="pt-0.5 space-y-0.5">
-                  <div className="flex items-center justify-between text-[8.5px] font-mono text-zinc-400">
+                  <div className="flex items-center justify-between text-[9px] font-mono text-zinc-400">
                     <span>Aug 2018 – Jan 2019 (6 Mos)</span>
-                    <span className="text-sky-400 font-bold">OPERATIONS</span>
+                    <span className="text-sky-400 font-bold text-[8.5px]">OPERATIONS</span>
                   </div>
-                  <div className="text-[11px] font-bold text-white">Service Management & Usher</div>
-                  <div className="text-[9px] text-sky-300 font-mono">IFJ iSTTS Campus Gatherings</div>
-                  <p className="text-[9.5px] text-zinc-300 font-light leading-snug">
+                  <div className="text-[11.5px] font-bold text-white">Service Management & Usher</div>
+                  <div className="text-[9.5px] text-sky-300 font-mono">IFJ iSTTS Campus Gatherings</div>
+                  <p className="text-[10px] text-zinc-300 font-light leading-snug">
                     • Coordinated weekly campus community fellowship flow, stage setup, and ushering operations.
                   </p>
                 </div>
               </div>
 
-              <div className="text-[8.5px] font-mono text-zinc-500 pt-1 border-t border-zinc-800">
+              <div className="text-[9px] font-mono text-zinc-500 pt-1 border-t border-zinc-800">
                 Surabaya, Indonesia
               </div>
             </div>
@@ -2445,23 +2629,41 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
           </div>
 
           {/* TOP: 14 Professional Certifications Grid (4 columns x 4 rows) */}
-          <div className="grid grid-cols-4 gap-2 flex-1 items-stretch">
+          <div className="grid grid-cols-4 gap-2 flex-1 items-stretch py-1">
             {certificationsData.slice(0, 14).map((cert, idx) => (
-              <div key={idx} className="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col justify-between space-y-1 shadow-sm">
+              <div key={idx} className="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800/80 flex flex-col justify-between space-y-1 shadow-sm">
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[9px] font-mono text-zinc-400 font-semibold line-clamp-1">{cert.issuer}</span>
+                    <span className="text-[9px] font-mono text-zinc-400 font-semibold">{cert.issuer}</span>
                     <span className="text-[9px] font-mono text-amber-400 font-bold ml-1">{cert.year}</span>
                   </div>
-                  <div className="text-[10.5px] font-bold text-white mt-0.5 line-clamp-2 leading-tight">
+                  <div className="text-[10.5px] font-bold text-white mt-0.5 leading-snug">
                     {getCertTitle(cert)}
                   </div>
                 </div>
                 <div className="pt-1 flex items-center justify-between border-t border-zinc-800/80">
-                  <span className="text-[8px] font-mono px-1.5 py-0.2 rounded bg-zinc-950 text-cyan-400 border border-zinc-800 uppercase font-semibold">
+                  <span className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-zinc-950 text-cyan-400 border border-zinc-800 uppercase font-semibold">
                     {cert.category || "TECH"}
                   </span>
-                  <span className="text-[8px] font-mono text-zinc-500">VERIFIED</span>
+                  {cert.credentialUrl ? (
+                    <a
+                      href={cert.credentialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[8px] font-mono text-amber-400 hover:text-amber-300 underline font-semibold flex items-center gap-0.5"
+                    >
+                      <span>Verify</span> ↗
+                    </a>
+                  ) : cert.image ? (
+                    <a
+                      href={cert.image.startsWith("http") ? cert.image : `https://jaw12.github.io${cert.image.startsWith("/") ? "" : "/"}${cert.image}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[8px] font-mono text-sky-400 hover:text-sky-300 underline font-semibold flex items-center gap-0.5"
+                    >
+                      <span>View Cert</span> ↗
+                    </a>
+                  ) : null}
                 </div>
               </div>
             ))}
@@ -2568,7 +2770,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               <div className="text-[10px] font-mono text-white font-semibold break-all">
                 jemangkasa.work@gmail.com
               </div>
-              <span className="text-[8.5px] font-mono text-amber-400 font-bold">Kirim Email ↗</span>
+              <span className="text-[8.5px] font-mono text-amber-400 font-bold">{getActionLabel("email")}</span>
             </a>
 
             <a
@@ -2582,7 +2784,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               <div className="text-[10.5px] font-mono text-white font-semibold">
                 +6281273567384
               </div>
-              <span className="text-[8.5px] font-mono text-emerald-400 font-bold">Chat WhatsApp ↗</span>
+              <span className="text-[8.5px] font-mono text-emerald-400 font-bold">{getActionLabel("whatsapp")}</span>
             </a>
 
             <a
@@ -2596,7 +2798,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               <div className="text-[10px] font-mono text-white font-semibold">
                 /in/jem-angkasa-wijaya
               </div>
-              <span className="text-[8.5px] font-mono text-sky-400 font-bold">Lihat Profil ↗</span>
+              <span className="text-[8.5px] font-mono text-sky-400 font-bold">{getActionLabel("linkedin")}</span>
             </a>
 
             <a
@@ -2610,7 +2812,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               <div className="text-[10.5px] font-mono text-white font-semibold">
                 github.com/JAW12
               </div>
-              <span className="text-[8.5px] font-mono text-purple-400 font-bold">Buka Repository ↗</span>
+              <span className="text-[8.5px] font-mono text-purple-400 font-bold">{getActionLabel("github")}</span>
             </a>
 
             <a
@@ -2624,7 +2826,7 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               <div className="text-[10.5px] font-mono text-white font-semibold">
                 JAW12.github.io
               </div>
-              <span className="text-[8.5px] font-mono text-amber-400 font-bold">Kunjungi Web ↗</span>
+              <span className="text-[8.5px] font-mono text-amber-400 font-bold">{getActionLabel("portfolio")}</span>
             </a>
           </div>
 
@@ -2633,7 +2835,11 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
               <span className="text-amber-400">JEM</span> ANGKASA WIJAYA, S.Kom.
             </h3>
             <p className="text-[10.5px] font-mono text-zinc-400 mt-0.5">
-              Surabaya, Indonesia · Business Systems, Full-Stack Software & AI Workflows
+              {language === "zh"
+                ? "印度尼西亚·泗水 · 企业业务系统 · 全栈软件开发 · AI 自动化工作流"
+                : language === "id"
+                ? "Surabaya, Indonesia · Sistem Operasional Bisnis · Full-Stack Software · Otomasi AI"
+                : "Surabaya, Indonesia · Business Systems, Full-Stack Software & AI Workflows"}
             </p>
             <p className="text-[9px] font-mono text-zinc-600 mt-0.5">
               © {new Date().getFullYear()} Jem Angkasa Wijaya. All Rights Reserved.

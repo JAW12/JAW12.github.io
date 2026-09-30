@@ -58,7 +58,7 @@ export function RecruiterCheatSheetModal({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
+      className="no-print print-hidden print:!hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
       onClick={onClose}
     >
       <div
@@ -106,20 +106,16 @@ export function RecruiterCheatSheetModal({
                 <span>{language === "zh" ? "下载 CV" : language === "id" ? "Unduh CV" : "Download CV"}</span>
               </a>
 
-              {onOpenPdfModal && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onClose();
-                    onOpenPdfModal();
-                  }}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-mono text-xs uppercase tracking-wider transition-all cursor-pointer font-medium"
-                  title="Open Complete Master Portfolio"
-                >
-                  <Sparkles className="w-3 h-3 text-[#d4af37]" />
-                  <span>{language === "zh" ? "完整作品集" : language === "id" ? "Portofolio Lengkap" : "Full Portfolio"}</span>
-                </button>
-              )}
+              <a
+                href="/assets/Portfolio_Jem_Angkasa_Wijaya_2026.pdf"
+                download="Portfolio_Jem_Angkasa_Wijaya_2026.pdf"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-mono text-xs uppercase tracking-wider transition-all cursor-pointer font-medium"
+                title="Download Complete Master Portfolio PDF"
+              >
+                <Sparkles className="w-3 h-3 text-[#d4af37]" />
+                <span>{language === "zh" ? "下载作品集" : language === "id" ? "Unduh Portofolio" : "Download Portfolio"}</span>
+              </a>
+
 
               <button
                 onClick={onClose}
