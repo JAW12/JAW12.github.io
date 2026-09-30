@@ -3,8 +3,9 @@
 import React from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
-import { FileText, Download, ArrowUpRight } from "lucide-react";
+import { FileText, Download, ArrowUpRight, Loader2 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
+import { usePortfolioPdfAvailability } from "@/hooks/usePortfolioPdfAvailability";
 
 export interface FooterProps {
   onOpenPdfModal?: () => void;
@@ -12,6 +13,7 @@ export interface FooterProps {
 
 export function Footer({ onOpenPdfModal }: FooterProps) {
   const { t } = useLanguage();
+  const { isChecking, handleDownloadOrPrint } = usePortfolioPdfAvailability(onOpenPdfModal);
 
   return (
     <footer className="pt-16 pb-12 bg-[#070709] relative overflow-hidden selection:bg-[#d4af37] selection:text-zinc-950 border-t border-white/10">
@@ -40,16 +42,21 @@ export function Footer({ onOpenPdfModal }: FooterProps) {
               <span>{t.footer.downloadCv}</span>
             </a>
 
-            {/* 2. Download Portfolio Button (Direct PDF Download) */}
-            <a
-              href="/assets/Portfolio_Jem_Angkasa_Wijaya_2026.pdf"
-              download="Portfolio_Jem_Angkasa_Wijaya_2026.pdf"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.05] hover:bg-white/[0.12] border border-white/15 hover:border-[#d4af37]/50 text-white font-mono text-xs uppercase tracking-wider transition-all duration-300 shadow-md group cursor-pointer"
+            {/* 2. Download Portfolio Button (Smart Download / Fallback Print) */}
+            <button
+              type="button"
+              onClick={handleDownloadOrPrint}
+              disabled={isChecking}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.05] hover:bg-white/[0.12] border border-white/15 hover:border-[#d4af37]/50 text-white font-mono text-xs uppercase tracking-wider transition-all duration-300 shadow-md group cursor-pointer disabled:opacity-50"
               title={t.footer.downloadPortfolio}
             >
-              <FileText className="w-3.5 h-3.5 text-[#d4af37] group-hover:scale-110 transition-transform" />
+              {isChecking ? (
+                <Loader2 className="w-3.5 h-3.5 text-[#d4af37] animate-spin" />
+              ) : (
+                <FileText className="w-3.5 h-3.5 text-[#d4af37] group-hover:scale-110 transition-transform" />
+              )}
               <span>{t.footer.downloadPortfolio}</span>
-            </a>
+            </button>
 
             <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.03] border border-white/10 text-xs font-mono text-zinc-300">
               <span>{t.footer.availabilityStatus}</span>

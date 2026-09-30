@@ -14,10 +14,12 @@ import {
   Clock,
   Globe,
   ArrowUpRight,
+  Loader2,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { CelestialStar } from "@/components/CelestialStar";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
+import { usePortfolioPdfAvailability } from "@/hooks/usePortfolioPdfAvailability";
 
 interface RecruiterCheatSheetModalProps {
   isOpen: boolean;
@@ -31,6 +33,7 @@ export function RecruiterCheatSheetModal({
   onOpenPdfModal,
 }: RecruiterCheatSheetModalProps) {
   const { language } = useLanguage();
+  const { isChecking, handleDownloadOrPrint } = usePortfolioPdfAvailability(onOpenPdfModal);
 
   // Keyboard shortcut ESC to close
   useEffect(() => {
@@ -106,15 +109,20 @@ export function RecruiterCheatSheetModal({
                 <span>{language === "zh" ? "下载 CV" : language === "id" ? "Unduh CV" : "Download CV"}</span>
               </a>
 
-              <a
-                href="/assets/Portfolio_Jem_Angkasa_Wijaya_2026.pdf"
-                download="Portfolio_Jem_Angkasa_Wijaya_2026.pdf"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-mono text-xs uppercase tracking-wider transition-all cursor-pointer font-medium"
+              <button
+                type="button"
+                onClick={handleDownloadOrPrint}
+                disabled={isChecking}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-mono text-xs uppercase tracking-wider transition-all cursor-pointer font-medium disabled:opacity-50"
                 title="Download Complete Master Portfolio PDF"
               >
-                <Sparkles className="w-3 h-3 text-[#d4af37]" />
+                {isChecking ? (
+                  <Loader2 className="w-3 h-3 text-[#d4af37] animate-spin" />
+                ) : (
+                  <Sparkles className="w-3 h-3 text-[#d4af37]" />
+                )}
                 <span>{language === "zh" ? "下载作品集" : language === "id" ? "Unduh Portofolio" : "Download Portfolio"}</span>
-              </a>
+              </button>
 
 
               <button
