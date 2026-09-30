@@ -100,8 +100,8 @@ export function RecruiterCheatSheetModal({
 
             <div className="flex items-center gap-2 shrink-0">
               <a
-                href="/assets/cv/Jem_Angkasa_Wijaya_CV.pdf"
-                download="CV_Jem_Angkasa_Wijaya.pdf"
+                href="/assets/CV_Jem_Angkasa_Wijaya_2026.pdf"
+                download="CV_Jem_Angkasa_Wijaya_2026.pdf"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#d4af37] hover:bg-[#ebdca4] text-zinc-950 font-mono text-xs uppercase font-bold tracking-wider transition-all shadow-md cursor-pointer"
                 title="Download ATS Resume PDF"
               >

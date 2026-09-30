@@ -1183,7 +1183,9 @@ export function PrintableDocument({ exportOptions: _exportOptions }: PrintableDo
                 <div className="grid grid-cols-3 gap-2 pt-0.5">
                   {p.metrics?.map((m, i) => (
                     <div key={i} className="p-2 rounded-lg bg-zinc-900/90 border border-zinc-800">
-                      <div className="text-sm font-bold text-amber-400 font-mono">{m.value}</div>
+                      <div className="text-sm font-bold text-amber-400 font-mono">
+                        {language === "zh" && m.valueZh ? m.valueZh : language === "id" && m.valueId ? m.valueId : m.value}
+                      </div>
                       <div className="text-[8.5px] text-zinc-400 font-mono uppercase tracking-wider mt-0.5">
                         {language === "zh" && m.labelZh ? m.labelZh : language === "id" && m.labelId ? m.labelId : m.label}
                       </div>

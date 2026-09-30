@@ -33,7 +33,7 @@ export function Footer({ onOpenPdfModal }: FooterProps) {
           <div className="flex flex-wrap items-center gap-3">
             {/* 1. Download CV Button (Direct PDF Download) */}
             <a
-              href="/assets/cv/Jem_Angkasa_Wijaya_CV.pdf"
+              href="/assets/CV_Jem_Angkasa_Wijaya_2026.pdf"
               download="CV_Jem_Angkasa_Wijaya_2026.pdf"
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#d4af37] hover:bg-[#ebdca4] text-zinc-950 font-mono text-xs uppercase tracking-wider font-bold transition-all duration-300 shadow-md group cursor-pointer"
               title={t.footer.downloadCv}
