@@ -315,27 +315,47 @@ export function CredentialsSection() {
             {awardsData.map((award, idx) => (
               <InteractiveTiltCard key={idx} maxTilt={9} roundedClassName="rounded-xl" className="h-full">
                 <div className="group rounded-xl bg-[#0c0c10]/80 backdrop-blur-2xl border border-white/10 hover:border-[#dc2626]/50 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-[0_12px_40px_rgba(0,0,0,0.6)] h-full">
-                  {/* Certificate Preview Image */}
+                  {/* Certificate Preview Image (Oriented Correctly) */}
                   {typeof award.image === "string" && award.image.trim().length > 0 && (
                     <div
-                      className="relative aspect-[4/3] w-full bg-zinc-950 overflow-hidden cursor-pointer"
+                      className="relative aspect-[4/3] w-full bg-zinc-950 overflow-hidden cursor-pointer flex items-center justify-center"
                       onClick={() => openLightboxByImage(award.image!)}
                     >
-                      <Image
-                        src={award.image}
-                        alt={language === "zh" && award.titleZh ? award.titleZh : language === "id" ? award.titleId : award.title}
-                        fill
-                        loading="lazy"
-                        quality={75}
-                        className="object-cover object-top filter contrast-[1.05] group-hover:scale-105 transition-transform duration-500"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px"
-                      />
-                      <div className="absolute inset-0 bg-black/30 opacity-70 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      {(() => {
+                        const filename = award.image.split("/").pop() || "";
+                        const rotationMap: Record<string, string> = {
+                          "award-algo-2018.webp": "rotate(90deg)",
+                          "award-web-2018.webp": "rotate(-90deg)",
+                          "award-client-server-2019.webp": "rotate(-90deg)",
+                          "award-pbo-2019.webp": "rotate(-90deg)",
+                        };
+                        const rotation = rotationMap[filename] || "none";
+                        const isRotated = rotation !== "none";
+
+                        return (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img
+                            src={award.image}
+                            alt={language === "zh" && award.titleZh ? award.titleZh : language === "id" ? award.titleId : award.title}
+                            style={{
+                              position: "absolute",
+                              width: isRotated ? "140%" : "100%",
+                              height: isRotated ? "140%" : "100%",
+                              maxWidth: "none",
+                              maxHeight: "none",
+                              objectFit: "cover",
+                              transform: isRotated ? `scale(0.85) ${rotation}` : "none",
+                            }}
+                            className="filter contrast-[1.05] group-hover:scale-105 transition-transform duration-500"
+                          />
+                        );
+                      })()}
+                      <div className="absolute inset-0 bg-black/30 opacity-70 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity flex items-center justify-center z-10">
                         <span className="p-2 rounded-full bg-white/20 backdrop-blur-md text-white shadow-lg">
                           <Maximize2 className="w-4 h-4" />
                         </span>
                       </div>
-                      <div className="absolute top-2 left-2 px-2.5 py-1 rounded text-xs font-mono bg-black/80 text-[#d4af37] border border-white/15 font-semibold">
+                      <div className="absolute top-2 left-2 px-2.5 py-1 rounded text-xs font-mono bg-black/80 text-[#d4af37] border border-white/15 font-semibold z-10">
                         {award.year}
                       </div>
                     </div>
@@ -620,16 +640,33 @@ export function CredentialsSection() {
             </div>
 
             {typeof selectedItem.image === "string" && selectedItem.image.trim().length > 0 && (
-              <div className="relative w-full h-[65vh] rounded-xl overflow-hidden border border-white/20 bg-zinc-950 shadow-2xl">
-                <Image
-                  src={selectedItem.image}
-                  alt={selectedItem.title}
-                  fill
-                  priority
-                  quality={75}
-                  className="object-contain"
-                  sizes="(max-width: 1024px) 100vw, 900px"
-                />
+              <div className="relative w-full h-[65vh] rounded-xl overflow-hidden border border-white/20 bg-zinc-950 shadow-2xl flex items-center justify-center">
+                {(() => {
+                  const filename = selectedItem.image.split("/").pop() || "";
+                  const rotationMap: Record<string, string> = {
+                    "award-algo-2018.webp": "rotate(90deg)",
+                    "award-web-2018.webp": "rotate(-90deg)",
+                    "award-client-server-2019.webp": "rotate(-90deg)",
+                    "award-pbo-2019.webp": "rotate(-90deg)",
+                  };
+                  const rotation = rotationMap[filename] || "none";
+                  const isRotated = rotation !== "none";
+
+                  return (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={selectedItem.image}
+                      alt={selectedItem.title}
+                      style={{
+                        maxWidth: isRotated ? "60vh" : "100%",
+                        maxHeight: isRotated ? "80vw" : "100%",
+                        objectFit: "contain",
+                        transform: rotation !== "none" ? rotation : "none",
+                      }}
+                      className="transition-transform duration-300 shadow-xl"
+                    />
+                  );
+                })()}
               </div>
             )}
 
